@@ -3,8 +3,8 @@ import primitives.Point;
 import primitives.Vector;
 
 public class Plane implements Geometry {
-    private Point p0;
-    private Vector normal;
+    final private Point p0;
+    final private Vector normal;
     /**
      * constructor
      * @param p0 the point
@@ -21,15 +21,12 @@ public class Plane implements Geometry {
      * @param p0 point 0
      * @param p1 point 1
      * @param p2 point 2
+     * @throws IllegalArgumentException when ....
      */
     public Plane(Point p0, Point p1,Point p2) {
         super();
         this.p0 = p0;/* Associated point in which the plane lays*/
-
-        if (p0.equals(p1) || p0.equals(p2) || p1.equals(p2))
-            throw new IllegalArgumentException("2 points cannot be the same");
-        Vector n = p1.subtract(p0).crossProduct(p2.subtract(p0));
-        this.normal = n.normalize();
+        this.normal = p1.subtract(p0).crossProduct(p2.subtract(p0)).normalize();
 
     }
 
@@ -56,12 +53,10 @@ public class Plane implements Geometry {
     public Vector getNormal(Point p) {
         return normal;
     }
-    @Override
-    public boolean equals(Object o) {
+
+    public boolean equals(Plane o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Plane plane = (Plane) o;
-        return p0.equals(plane.p0) && normal.equals(plane.normal);
+        return p0.equals(o.p0) && normal.equals(o.normal);
     }
     @Override
     public String toString() {

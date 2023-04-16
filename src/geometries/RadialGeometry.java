@@ -1,7 +1,7 @@
 package geometries;
 import primitives.*;
 public abstract class RadialGeometry implements Geometry {
-    protected double radius;
+    final protected double radius;
     /**
      * constructor
      * @param R the radius

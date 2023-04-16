@@ -4,7 +4,7 @@ import primitives.Point;
 import primitives.Vector;
 
 public class Sphere extends RadialGeometry {
-    protected Point center;
+    private final Point center;
     /**
      * constructor
      * @param center the center of a Sphere
