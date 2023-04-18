@@ -48,7 +48,7 @@ public class Vector extends Point {
      * dot product between two vectors (scalar product)
      *
      * @param other
-     * @return new vector
+     * @return scalar
      */
     public double dotProduct(Vector other) {
         return other.xyz.d1 * xyz.d1 +
