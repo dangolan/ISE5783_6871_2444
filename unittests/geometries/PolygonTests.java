@@ -34,6 +34,7 @@ public class PolygonTests {
                    () -> new Polygon(new Point(0, 0, 1), new Point(0, 1, 0), new Point(1, 0, 0), new Point(-1, 1, 1)), //
                    "Constructed a polygon with wrong order of vertices");
 
+
       // TC03: Not in the same plane
       assertThrows(IllegalArgumentException.class, //
                    () -> new Polygon(new Point(0, 0, 1), new Point(1, 0, 0), new Point(0, 1, 0), new Point(0, 2, 2)), //

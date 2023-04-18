@@ -64,19 +64,12 @@ public class Vector extends Point {
      */
 
     public Vector crossProduct(Vector other) {
-        double ax = xyz.d1;
-        double ay = xyz.d2;
-        double az = xyz.d3;
 
-        double bx = other.xyz.d1;
-        double by = other.xyz.d2;
-        double bz = other.xyz.d3;
+        double x = xyz.d2 * other.xyz.d3 - xyz.d3 * other.xyz.d2;
+        double y = xyz.d3 * other.xyz.d1 - xyz.d1 * other.xyz.d3;
+        double z = xyz.d1 * other.xyz.d2 - xyz.d2 * other.xyz.d1;
+        return new Vector(x,y,z);
 
-        double cx = ay * bz - az * by;
-        double cy = az * bx - ax * bz;
-        double cz = ax * by - ay * bx;
-
-        return new Vector(cx, cy, cz);
     }
 
     /**

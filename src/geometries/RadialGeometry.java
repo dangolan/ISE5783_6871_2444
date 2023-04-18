@@ -4,10 +4,10 @@ public abstract class RadialGeometry implements Geometry {
     final protected double radius;
     /**
      * constructor
-     * @param R the radius
+     * @param r the radius
      */
-    public RadialGeometry(double R){
-        this.radius = R;
+    public RadialGeometry(double r){
+        this.radius = r;
     }
     /**
      * getter

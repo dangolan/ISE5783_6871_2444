@@ -1,8 +1,6 @@
 package geometries;
 
-import primitives.Point;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 
 /**
  * Cylinder class heir from the Tube class
@@ -30,6 +28,23 @@ public class Cylinder extends Tube {
      */
     public Vector getNormal(Point p) {
 
-        return null;
+        Point o = axisRay.getP0();
+        Vector v = axisRay.getDir();
+
+        // projection of P-O on the ray:
+        double t;
+        try {
+            t = Util.alignZero(p.subtract(o).dotProduct(v));
+        } catch (IllegalArgumentException e) { // P = O
+            return v;
+        }
+
+        // if the point is at a base
+        if (Util.isZero(t) || Util.isZero(height - t)) // if it's close to 0, we'll get ZERO vector exception
+            return v;
+
+        o = o.add(v.scale(t));
+        return p.subtract(o).normalize();
     }
+
 }
