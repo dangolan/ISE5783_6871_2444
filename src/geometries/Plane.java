@@ -32,7 +32,9 @@ public class Plane implements Geometry {
     public Plane(Point p0, Point p1,Point p2) {
         super();
         this.p0 = p0;/* Associated point in which the plane lays*/
-        this.normal = p1.subtract(p0).crossProduct(p2.subtract(p0)).normalize();
+        Vector v1 = p1.subtract(p0);
+        Vector v2 = p2.subtract(p0);
+        this.normal = (p1.subtract(p0).crossProduct(p2.subtract(p0))).normalize();
 
     }
 
@@ -60,16 +62,7 @@ public class Plane implements Geometry {
         return normal;
     }
 
-    /**
-     Indicates whether some other object is "equal to" this one. The method compares this point with
-     the specified object for equality based on the point's coordinates and normal vector.
-     @param o the object to compare with this point
-     @return true if the specified object is equal to this point; false otherwise.
-     */
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        return (o instanceof Point p) && p0.equals(p) && normal.equals(normal);
-    }
+
     @Override
     public String toString() {
         return "Plane [p0=" + p0 + ", normal=" + normal + "]";

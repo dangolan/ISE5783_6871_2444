@@ -21,8 +21,8 @@ public class Point {
      *
      * @param _xyz Double3 value gor x, y, z axis
      */
-    public Point(Double3 _xyz) {
-        xyz = _xyz;
+    public Point(Double3 xyz) {
+        this.xyz = xyz;
     }
 
     public Vector subtract(Point p) {

@@ -22,9 +22,8 @@ public class Cylinder extends Tube {
 
     /**
      * The normal of the cylinder
-     *
-     * @param p point
-     * @return The normal of the cylinder
+     * @param p point on cylinder
+     * @return The normal of the cylinder in this point
      */
     public Vector getNormal(Point p) {
 
@@ -46,5 +45,4 @@ public class Cylinder extends Tube {
         o = o.add(v.scale(t));
         return p.subtract(o).normalize();
     }
-
 }
