@@ -20,7 +20,6 @@ public class Tube extends RadialGeometry {
      * @return The normal of the cylinder
      */
     public Vector getNormal(Point p) {
-
         return null;
     }
     @Override

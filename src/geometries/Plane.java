@@ -1,5 +1,5 @@
 package geometries;
-import primitives.Double3;
+
 import primitives.Point;
 import primitives.Vector;
 

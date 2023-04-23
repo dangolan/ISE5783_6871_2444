@@ -1,5 +1,8 @@
 package primitives;
-
+/**
+ This class represents a point in a 3D Cartesian coordinate system.
+ It holds the point's x, y, and z coordinates as a Double3 object.
+ */
 public class Point {
 
     protected final Double3 xyz;
@@ -18,7 +21,6 @@ public class Point {
 
     /**
      * primary constructor for point
-     *
      * @param _xyz Double3 value gor x, y, z axis
      */
     public Point(Double3 xyz) {
@@ -54,13 +56,21 @@ public class Point {
     public double distance(Point other) {
         return Math.sqrt(distanceSquared(other));
     }
-
+    /**
+     Checks if this point is equal to the given object.
+     Two points are considered equal if their x, y, and z coordinates are equal.
+     @param o The object to compare to this point
+     @return true if this point is equal to the given object, false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         return (o instanceof Point p) && xyz.equals(p.xyz);
     }
-
+    /**
+     Returns a string representation of this point.
+     @return A string representation of this point
+     */
     @Override
     public String toString() { return "Point " + xyz;}
 

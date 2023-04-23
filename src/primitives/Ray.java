@@ -1,5 +1,7 @@
 package primitives;
-
+/**
+ * Represents a ray in 3D space, defined by a starting point and a normalized direction vector.
+ */
 public class Ray {
     /**
      * starting point of the ray
@@ -33,6 +35,11 @@ public class Ray {
     public Vector getDir() {
         return dir;
     }
+    /**
+     * Returns a string representation of the Ray object.
+     *
+     * @return A string representation of the Ray object.
+     */
     @Override
     public String toString() {
         return "Ray{" +
@@ -40,7 +47,12 @@ public class Ray {
                 ", dir=" + dir +
                 '}';
     }
-
+    /**
+     * Determines if the specified object is equal to this Ray object.
+     *
+     * @param o The object to compare with this Ray object.
+     * @return true if the objects are equal, false otherwise.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
