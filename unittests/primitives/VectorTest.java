@@ -6,7 +6,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static primitives.Util.isZero;
 
-
+/*
+vector tests
+*/
 class VectorTest {
 
     @Test
@@ -69,7 +71,7 @@ class VectorTest {
         }
         catch  (IllegalArgumentException e)
         {
-            assertTrue(e.getMessage()!= null);
+            assertNotNull(e.getMessage());
         }
     }
 
@@ -78,23 +80,23 @@ class VectorTest {
         // ============ Equivalence Partitions Tests ==============
         Vector v1 = new Vector(1, 1, 1);
         Vector v2 = new Vector(1, 1, 1);
-        assertTrue((Double.compare(v1.dotProduct(v2),(1+1+1))==0), "ERROR: dotProduct() wrong value");
+        assertEquals((Double.compare(v1.dotProduct(v2), (1 + 1 + 1)) == 0), true, "ERROR: dotProduct() wrong value");
 
         Vector v3 = new Vector(-1, -1, -1);
         Vector v4 = new Vector(-1, -1, -1);
-        assertTrue((Double.compare(v3.dotProduct(v4),(1+1+1))==0), "ERROR: dotProduct() wrong value");
+        assertEquals((Double.compare(v3.dotProduct(v4), (1 + 1 + 1)) == 0), true, "ERROR: dotProduct() wrong value");
 
         Vector v5 = new Vector(2, 2, 2);
         Vector v6 = new Vector(-1, -1, -1);
-        assertTrue((Double.compare(v5.dotProduct(v6),(-2+-2+-2))==0), "ERROR: dotProduct() wrong value");
+        assertEquals((Double.compare(v5.dotProduct(v6), (-2 + -2 + -2)) == 0), true, "ERROR: dotProduct() wrong value");
 
         Vector v7 = new Vector(-1, -1, -1);
         Vector v8 = new Vector(2, 2, 2);
-        assertTrue((Double.compare(v7.dotProduct(v8),(-2+-2+-2))==0), "ERROR: dotProduct() wrong value");
+        assertEquals((Double.compare(v7.dotProduct(v8), (-2 + -2 + -2)) == 0), true, "ERROR: dotProduct() wrong value");
 
         Vector v9 = new Vector(1,0,1);
         Vector v10 = new Vector(-1,0,1);
-        assertTrue((Double.compare(v9.dotProduct(v10),0))==0, "ERROR: dotProduct() for orthogonal vectors is not zero");
+        assertEquals(0, (Double.compare(v9.dotProduct(v10), 0)), "ERROR: dotProduct() for orthogonal vectors is not zero");
     }
 
     @Test
@@ -104,7 +106,7 @@ class VectorTest {
         Vector v2 = new Vector(1,2,3);
         Vector tmp1 = new Vector(1, 1, 1);
         Vector v12 = v1.crossProduct(v2);
-        assertTrue(isZero(v12.dotProduct(v2)),"ERROR: crossProduct() result is not orthogonal to its operands");
+        assertEquals(isZero(v12.dotProduct(v2)), true, "ERROR: crossProduct() result is not orthogonal to its operands");
         assertThrows(IllegalArgumentException.class, ()-> v1.crossProduct(tmp1) , "ERROR: crossProduct() result is not orthogonal to its operands");
         assertEquals((new Vector(1, -2,1)), v12, "ERROR: crossProduct() wrong result length");
 
@@ -112,7 +114,7 @@ class VectorTest {
         Vector v4 = new Vector(-1, -2, -3);
         Vector tmp2 = new Vector(-1, -1, -1);
         Vector v34 = v3.crossProduct(v4);
-        assertTrue(isZero(v34.dotProduct(v4)),"ERROR: crossProduct() result is not orthogonal to its operands");
+        assertEquals(isZero(v34.dotProduct(v4)), true, "ERROR: crossProduct() result is not orthogonal to its operands");
         assertThrows(IllegalArgumentException.class, ()-> v3.crossProduct(tmp2) , "ERROR: crossProduct() result is not orthogonal to its operands");
         assertEquals(new Vector(1,-2,1), v34, "ERROR: crossProduct() wrong result length");
 
@@ -120,7 +122,7 @@ class VectorTest {
         Vector v6 = new Vector(-1, -2, -3);
         Vector tmp3 = new Vector(1, 1, 1);
         Vector v56 = v5.crossProduct(v6);
-        assertTrue(isZero(v56.dotProduct(v6)),"ERROR: crossProduct() result is not orthogonal to its operands");
+        assertEquals(isZero(v56.dotProduct(v6)), true, "ERROR: crossProduct() result is not orthogonal to its operands");
         assertThrows(IllegalArgumentException.class, ()-> v5.crossProduct(tmp3) , "ERROR: crossProduct() result is not orthogonal to its operands");
         assertEquals(new Vector(-1,2,-1), v56, "ERROR: crossProduct() wrong result length");
 
@@ -128,7 +130,7 @@ class VectorTest {
         Vector v8 = new Vector(1, 2, 3);
         Vector tmp4 = new Vector(-1, -1, -1);
         Vector v78 = v7.crossProduct(v8);
-        assertTrue(isZero(v78.dotProduct(v8)),"ERROR: crossProduct() result is not orthogonal to its operands");
+        assertEquals(isZero(v78.dotProduct(v8)), true, "ERROR: crossProduct() result is not orthogonal to its operands");
         assertThrows(IllegalArgumentException.class, ()-> v7.crossProduct(tmp4) , "ERROR: crossProduct() result is not orthogonal to its operands");
         assertEquals(new Vector(-1, 2, -1), v78, "ERROR: crossProduct() wrong result length");
 
@@ -141,16 +143,16 @@ class VectorTest {
         }
         catch  (IllegalArgumentException e)
         {
-            assertTrue(e.getMessage()!= null);
+            assertNotNull(e.getMessage());
         }
     }
     @Test
     void testLengthSquared() {
         // ============ Equivalence Partitions Tests ==============
         Vector v1=new Vector(1,1,1);
-        assertTrue(Double.compare(v1.lengthSquared(),3) == 0, "ERROR: lengthSquared() wrong value");
+        assertEquals(0, Double.compare(v1.lengthSquared(), 3), "ERROR: lengthSquared() wrong value");
         Vector v2=new Vector(-1,-1,-1);
-        assertTrue(Double.compare(v2.lengthSquared(),3) == 0, "ERROR: lengthSquared() wrong value");
+        assertEquals(0, Double.compare(v2.lengthSquared(), 3), "ERROR: lengthSquared() wrong value");
     }
 
     @Test
@@ -169,11 +171,11 @@ class VectorTest {
         Vector u = v1.normalize();
 
         // TC01: unit vector correctness
-        assertTrue(isZero(u.length() - 1), "the normalized vector is not a unit vector");
+        assertEquals(isZero(u.length() - 1), true, "the normalized vector is not a unit vector");
 
         // TC02: parallel to the original one correctness
         assertThrows(IllegalArgumentException.class, () -> v1.crossProduct(u), "the normalized vector is not parallel to the original one");
 
         // TC03: not opposite to the original one
-        assertTrue(v1.dotProduct(u) >= 0, "the normalized vector is opposite to the original one");}
+        assertEquals(v1.dotProduct(u) >= 0, true, "the normalized vector is opposite to the original one");}
 }
