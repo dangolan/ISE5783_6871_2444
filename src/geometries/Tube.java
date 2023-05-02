@@ -24,7 +24,13 @@ public class Tube extends RadialGeometry {
      * @return The normal of the cylinder
      */
     public Vector getNormal(Point p) {
-        return null;
+        double t = axisRay.getDir().dotProduct(p.subtract(axisRay.getP0()));
+        Point O;
+        if (t==0)
+            O = axisRay.getP0();
+        else
+            O = axisRay.getP0().add(axisRay.getDir().scale(t));
+        return p.subtract(O).normalize();
     }
     @Override
     public String toString() {

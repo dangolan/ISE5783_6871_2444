@@ -6,11 +6,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static primitives.Util.isZero;
 
-/*
-vector tests
-*/
+/**
+ A class for testing the {@link Vector} class.*/
 class VectorTest {
 
+    /**
+     * Tests the {@link Vector#add(Vector)} method.
+     */
     @Test
     void testAdd() {
         // ============ Equivalence Partitions Tests ==============
@@ -46,6 +48,9 @@ class VectorTest {
         }
     }
 
+    /**
+     * Tests the {@link Vector#scale(double)} method.
+     */
     @Test
     void testScale() {
         // ============ Equivalence Partitions Tests ==============
@@ -75,6 +80,9 @@ class VectorTest {
         }
     }
 
+    /**
+     * Tests the {@link Vector#dotProduct(Vector)} method.
+     */
     @Test
     void testDotProduct() {
         // ============ Equivalence Partitions Tests ==============
@@ -99,6 +107,9 @@ class VectorTest {
         assertEquals(0, (Double.compare(v9.dotProduct(v10), 0)), "ERROR: dotProduct() for orthogonal vectors is not zero");
     }
 
+    /**
+     * Tests the {@link Vector#crossProduct(Vector)} method.
+     */
     @Test
     void testCrossProduct() {
         // ============ Equivalence Partitions Tests ==============
@@ -146,6 +157,12 @@ class VectorTest {
             assertNotNull(e.getMessage());
         }
     }
+    /**
+     * Test method for the {@link Vector#lengthSquared()} method of the Vector class.
+     *
+     * Tests if the method returns the squared length of the vector.
+     * Uses equivalence partitioning testing strategy.
+     */
     @Test
     void testLengthSquared() {
         // ============ Equivalence Partitions Tests ==============
@@ -154,7 +171,12 @@ class VectorTest {
         Vector v2=new Vector(-1,-1,-1);
         assertEquals(0, Double.compare(v2.lengthSquared(), 3), "ERROR: lengthSquared() wrong value");
     }
-
+    /**
+     * Test method for the {@link Vector#length()} method of the Vector class.
+     *
+     * Tests if the method returns the length of the vector.
+     * Uses equivalence partitioning testing strategy.
+     */
     @Test
     void testLength() {
         // ============ Equivalence Partitions Tests ==============
@@ -163,7 +185,11 @@ class VectorTest {
         Vector v2=new Vector(-1,-1,-1);
         assertTrue(Double.compare(v2.length(),Math.sqrt(3)) == 0, "ERROR: crossProduct() wrong result length");
     }
+    /**
 
+     Tests the normalize method of the Vector class.
+     {@link Vector#normalize()}
+     */
     @Test
     void testNormalize() {
         // ============ Equivalence Partitions Tests ==============

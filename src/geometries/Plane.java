@@ -31,7 +31,7 @@ public class Plane implements Geometry {
      */
     public Plane(Point p0, Point p1,Point p2) {
         super();
-        this.p0 = p0;/* Associated point in which the plane lays*/
+        this.p0 = p0;// Associated point in which the plane lays
         Vector v1 = p1.subtract(p0);
         Vector v2 = p2.subtract(p0);
         this.normal = (p1.subtract(p0).crossProduct(p2.subtract(p0))).normalize();

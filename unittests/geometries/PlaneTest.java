@@ -16,11 +16,12 @@ class PlaneTest {
      * Tests the constructor of the plan
      */
     @Test
-    void testConstructors() {
+    void testConstructor() {
         // ensure there are no exceptions
         assertDoesNotThrow(() -> new Plane(new Point(1, 2, 3), new Point(4, 5, 6), new Point(1, 0, 9)),"exception was thrown 3 point constructor");
         // ensure there are exceptions throw
-        assertThrows(IllegalArgumentException.class,() -> new Plane(new Point(1, 2, 3), new Point(4, 5, 6), new Point(7, 8, 9)),"No exception was thrown on vector 0 in 3 point constructor");
+        assertThrows(IllegalArgumentException.class,() -> new Plane(new Point(1, 2, 3), new Point(4, 5, 6), new Point(7, 8, 9)),"No exception was thrown on vector 0 in 3 point constructor when all 3 points on the same line");
+        assertThrows(IllegalArgumentException.class,() -> new Plane(new Point(1, 2, 3), new Point(4, 5, 6), new Point(1, 2, 3)),"No exception was thrown on vector 0 in 3 point constructor when there is 2 the same points");
     }
     /**
      * Tests the getNormal() method of the Plane class.

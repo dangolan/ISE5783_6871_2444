@@ -5,9 +5,13 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import primitives.*;
 
-// This is a JUnit test class for the Sphere class, which represents a sphere-shaped object in 3D space.
+/** This is a JUnit test class for the geometries.Sphere class*/
 
 class SphereTest {
+
+    /**
+     * * Test for normal vector of Sphere {@link Sphere#getNormal}
+     */
 
     @Test
     void getNormal() {

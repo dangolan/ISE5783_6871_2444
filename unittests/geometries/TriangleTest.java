@@ -8,7 +8,9 @@ import primitives.Vector;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ Unit tests for geometries.Triangle class
+ */
 class TriangleTest {
 
     /**

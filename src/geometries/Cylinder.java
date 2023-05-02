@@ -2,6 +2,8 @@ package geometries;
 
 import primitives.*;
 
+import static primitives.Util.isZero;
+
 /**
  * Cylinder class heir from the Tube class
  */
@@ -19,6 +21,9 @@ public class Cylinder extends Tube {
         super(axisRay, radius);
         this.height = height;
     }
+    public double getHeight(){
+        return height;
+    }
 
     /**
      * The normal of the cylinder
@@ -26,23 +31,31 @@ public class Cylinder extends Tube {
      * @return The normal of the cylinder in this point
      */
     public Vector getNormal(Point p) {
+        // Finding the normal:
+        // n = normalize(p - o)
+        // t = v * (p - p0)
+        // o = p0 + t * v
 
-        Point o = axisRay.getP0();
-        Vector v = axisRay.getDir();
+        Vector v= axisRay.getDir();
+        Point p0 =axisRay.getP0();
 
-        // projection of P-O on the ray:
-        double t;
-        try {
-            t = Util.alignZero(p.subtract(o).dotProduct(v));
-        } catch (IllegalArgumentException e) { // P = O
+        //if p=p0, then (p-p0) is zero vector
+        //returns the vector of the base as a normal
+        if(p.equals(p0)){
+            return v.scale(-1);
+        }
+
+        double t= v.dotProduct(p.subtract(p0));
+        //check if the point on the bottom
+        if(isZero(t)){
+            return v.scale(-1);
+        }
+        //check if the point on the top
+        if(isZero(t-height)){
             return v;
         }
 
-        // if the point is at a base
-        if (Util.isZero(t) || Util.isZero(height - t)) // if it's close to 0, we'll get ZERO vector exception
-            return v;
-
-        o = o.add(v.scale(t));
+        Point o=p0.add(v.scale(t));
         return p.subtract(o).normalize();
     }
 }

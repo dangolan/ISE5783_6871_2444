@@ -1,33 +1,33 @@
 package primitives;
 
-/*
+/**
 Import necessary classes
  */
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-/*
- Define a class called PointTest
+/**
+ Define a class called PointTest to test point class {@link primitives.Point}
  */
 class PointTest {
-    /*
+    /**
      Initialize two points p1 and p2
      */
     Point p1 = new Point(1,2,3);
     Point p2 = new Point(1,1,1);
 
-    /*
+    /**
      Define a test for subtract method
      */
     @Test
     void testSubtract() {
-        /*
+        /**
          Check that subtract method returns a vector with expected values
          */
         assertEquals(new Vector(0,1,2), p1.subtract(p2),"add doesn't work properly");
     }
 
-    /*
+    /**
      Define a test for add method
      */
     @Test
@@ -39,7 +39,7 @@ class PointTest {
         assertEquals(new Point(2,3,4), point.add(v),"add doesn't work properly");
     }
 
-    /*
+    /**
      Define a test for distanceSquared method
      */
     @Test
@@ -48,12 +48,12 @@ class PointTest {
         assertEquals(p1.distanceSquared(p2),5, "distanceSquared doesnt work properly");
     }
 
-    /*
+    /**
      Define a test for distance method
      */
     @Test
     void testDistance() {
-        /*
+        /**
          Check that distance method returns the expected distance
          */
         assertEquals(p1.distance(p2),Math.sqrt(5),"distance doesn't work properly");
