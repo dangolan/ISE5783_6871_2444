@@ -1,7 +1,8 @@
 package primitives;
+
 /**
- This class represents a point in a 3D Cartesian coordinate system.
- It holds the point's x, y, and z coordinates as a Double3 object.
+ * This class represents a point in a 3D Cartesian coordinate system.
+ * It holds the point's x, y, and z coordinates as a Double3 object.
  */
 public class Point {
 
@@ -21,6 +22,7 @@ public class Point {
 
     /**
      * primary constructor for point
+     *
      * @param xyz Double3 value gor x, y, z axis
      */
     public Point(Double3 xyz) {
@@ -57,34 +59,41 @@ public class Point {
         double dx = xyz.d1 - other.xyz.d1;
         double dy = xyz.d2 - other.xyz.d2;
         double dz = xyz.d3 - other.xyz.d3;
-        return dx*dx + dy*dy + dz*dz;
+        return dx * dx + dy * dy + dz * dz;
     }
 
     /**
      * Calculates the distance from this point to another point
+     *
      * @param other another point
      * @return the distance value
      */
     public double distance(Point other) {
         return Math.sqrt(distanceSquared(other));
     }
+
     /**
-     Checks if this point is equal to the given object.
-     Two points are considered equal if their x, y, and z coordinates are equal.
-     @param o The object to compare to this point
-     @return true if this point is equal to the given object, false otherwise
+     * Checks if this point is equal to the given object.
+     * Two points are considered equal if their x, y, and z coordinates are equal.
+     *
+     * @param o The object to compare to this point
+     * @return true if this point is equal to the given object, false otherwise
      */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         return (o instanceof Point p) && xyz.equals(p.xyz);
     }
+
     /**
-     Returns a string representation of this point.
-     @return A string representation of this point
+     * Returns a string representation of this point.
+     *
+     * @return A string representation of this point
      */
     @Override
-    public String toString() { return "Point " + xyz;}
+    public String toString() {
+        return "Point " + xyz;
+    }
 
 
 }

@@ -1,11 +1,14 @@
 package geometries;
 
 import org.junit.jupiter.api.Test;
+import primitives.Point;
+import primitives.Vector;
 
-import static org.junit.jupiter.api.Assertions.*;
-import primitives.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/** This is a JUnit test class for the geometries.Sphere class*/
+/**
+ * This is a JUnit test class for the geometries.Sphere class
+ */
 
 class SphereTest {
 
@@ -22,7 +25,9 @@ class SphereTest {
         // We then check if the returned normal vector is equal to (0,0,1), which is the normal vector at the point (0,0,1)
         // on a unit sphere centered at the origin.
         // If it's not, the test fails.
-        Sphere sp = new Sphere(new Point(0,0,0),1);
-        assertEquals(new Vector(0,0, 1), sp.getNormal(new Point(0, 0, 1)));
+        // ============ Equivalence Partitions Tests ==============
+        Sphere s1 = new Sphere(new Point(0, 0, 0), 1);
+        Vector normal = new Vector(1, 0, 0);
+        assertEquals(normal, s1.getNormal(new Point(1, 0, 0)), "Bad normal for sphere");
     }
 }

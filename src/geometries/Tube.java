@@ -1,5 +1,8 @@
 package geometries;
-import primitives.*;
+
+import primitives.Point;
+import primitives.Ray;
+import primitives.Vector;
 
 /**
  * class A class for representing an infinite cylinder that inherits Radial Geometric
@@ -7,6 +10,7 @@ import primitives.*;
 public class Tube extends RadialGeometry {
 
     protected Ray axisRay;
+
     /**
      * constructor
      *
@@ -17,6 +21,7 @@ public class Tube extends RadialGeometry {
         super(radius);
         this.axisRay = axisRay;
     }
+
     /**
      * The normal of the Tube
      *
@@ -26,12 +31,13 @@ public class Tube extends RadialGeometry {
     public Vector getNormal(Point p) {
         double t = axisRay.getDir().dotProduct(p.subtract(axisRay.getP0()));
         Point O;
-        if (t==0)
+        if (t == 0)
             O = axisRay.getP0();
         else
             O = axisRay.getP0().add(axisRay.getDir().scale(t));
         return p.subtract(O).normalize();
     }
+
     @Override
     public String toString() {
         return "Tube [axisRay=" + axisRay + ", radius=" + radius + "]";

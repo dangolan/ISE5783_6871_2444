@@ -1,17 +1,14 @@
 package geometries;
 
 import org.junit.jupiter.api.Test;
-import primitives.Double3;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
-import java.awt.Color;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
-  Unit tests for geometries.Cylinder class
+ * Unit tests for geometries.Cylinder class
  */
 class CylinderTest {
 
@@ -20,11 +17,11 @@ class CylinderTest {
      */
     @Test
     void getNormalTest() {
-        Cylinder cylinder = new Cylinder(3d,new Ray(new Point(1,1,0),new Vector(0,0,1)),3d);
+        Cylinder cylinder = new Cylinder(3d, new Ray(new Point(1, 1, 0), new Vector(0, 0, 1)), 3d);
 
         // ============ Equivalence Partitions Tests ==============
         //TC01: Test with point on the top of the cylinder
-        assertEquals(new Vector(0, 0, 1), cylinder.getNormal(new Point(1, 1, 3)),"Bad normal to the top of the cylinder");
+        assertEquals(new Vector(0, 0, 1), cylinder.getNormal(new Point(1, 1, 3)), "Bad normal to the top of the cylinder");
         //TC02: Test with point on the bottom of the cylinder
         assertEquals(new Vector(0, 0, -1), cylinder.getNormal(new Point(1, 1, 0)), "Bad normal to the bottom of the cylinder");
 
