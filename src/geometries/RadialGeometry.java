@@ -1,5 +1,8 @@
 package geometries;
-import primitives.*;
+
+/**
+ * class for all the shapes with a rduies
+ */
 public abstract class RadialGeometry implements Geometry {
     final protected double radius;
     /**

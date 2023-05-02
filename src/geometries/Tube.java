@@ -1,5 +1,9 @@
 package geometries;
 import primitives.*;
+
+/**
+ * class A class for representing an infinite cylinder that inherits Radial Geometric
+ */
 public class Tube extends RadialGeometry {
 
     protected Ray axisRay;

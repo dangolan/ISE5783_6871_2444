@@ -35,11 +35,6 @@ public class Ray {
     public Vector getDir() {
         return dir;
     }
-    /**
-     * Returns a string representation of the Ray object.
-     *
-     * @return A string representation of the Ray object.
-     */
     @Override
     public String toString() {
         return "Ray{" +

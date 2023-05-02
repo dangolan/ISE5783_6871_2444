@@ -10,9 +10,9 @@ public class Point {
     /**
      * secondary constructor for Point 3D
      *
-     * @param x
-     * @param y
-     * @param z
+     * @param x first coordinate of the point
+     * @param y second coordinate of the point
+     * @param z three coordinate of the point
      */
     public Point(double x, double y, double z) {
         xyz = new Double3(x, y, z);
@@ -21,31 +21,43 @@ public class Point {
 
     /**
      * primary constructor for point
-     * @param _xyz Double3 value gor x, y, z axis
+     * @param xyz Double3 value gor x, y, z axis
      */
     public Point(Double3 xyz) {
         this.xyz = xyz;
     }
 
+    /**
+     * Subtracts another point from this point, returning a vector that represents the difference.
+     *
+     * @param p the point to subtract from this point
+     * @return a vector representing the difference between this point and the given point
+     */
     public Vector subtract(Point p) {
         return new Vector(xyz.subtract(p.xyz));
     }
 
+    /**
+     * Adds a vector to this point, returning a new point that represents the sum.
+     *
+     * @param vector the vector to add to this point
+     * @return a new point representing the sum of this point and the given vector
+     */
     public Point add(Vector vector) {
         return new Point(xyz.add(vector.xyz));
     }
 
     /**
-     * @param other
-     * @return d = ((x2 = x1) * (x2 = x1) + (y2 - y1) * (y2 - y1)  + (z2 = z1 ) * (z2 = z1 ))
+     * Computes the squared distance between this point and another point.
+     *
+     * @param other the other point to compute the distance to
+     * @return the squared distance between this point and the other point
      */
     public double distanceSquared(Point other) {
-
-            double dx = xyz.d1 - other.xyz.d1;
-            double dy = xyz.d2 - other.xyz.d2;
-            double dz = xyz.d3 - other.xyz.d3;
-
-            return dx*dx + dy*dy + dz*dz;
+        double dx = xyz.d1 - other.xyz.d1;
+        double dy = xyz.d2 - other.xyz.d2;
+        double dz = xyz.d3 - other.xyz.d3;
+        return dx*dx + dy*dy + dz*dz;
     }
 
     /**

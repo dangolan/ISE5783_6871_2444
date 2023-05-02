@@ -9,6 +9,7 @@ package primitives;
  scalar multiplication, normalization
  */
 public class Vector extends Point {
+
     /**
      * Constructs a vector with the specified x, y, and z coordinates.
      * @param x the x-coordinate of the vector
@@ -43,7 +44,7 @@ public class Vector extends Point {
     /**
      * Multiplication of a vector by a scalar
      *
-     * @param scalar
+     * @param scalar multiplied by this scalar
      * @return new vector Multiplication by scalar
      */
     public Vector scale(double scalar) {
@@ -53,8 +54,8 @@ public class Vector extends Point {
     /**
      * dot product between two vectors (scalar product)
      *
-     * @param other
-     * @return scalar
+     * @param other the second vector
+     * @return scalar of the dot product
      */
     public double dotProduct(Vector other) {
         return other.xyz.d1 * xyz.d1 +
@@ -65,7 +66,7 @@ public class Vector extends Point {
     /**
      * cross product between two vectors
      *
-     * @param other
+     * @param other the second vector
      * @return the vector result from the cross product
      */
 
@@ -79,21 +80,27 @@ public class Vector extends Point {
     }
 
     /**
-     * @return the length Squared of vector
+     * Returns the length squared of the vector.
+     *
+     * @return the length squared of the vector
      */
     public double lengthSquared() {
         return xyz.d1 * xyz.d1 + xyz.d2 * xyz.d2 + xyz.d3 * xyz.d3;
     }
 
     /**
-     * @return the sqrt of length Squared (the length of vector)
+     * Returns the length of the vector.
+     *
+     * @return the length of the vector
      */
     public double length() {
         return Math.sqrt(lengthSquared());
     }
 
     /**
-     * @return Normalized vector
+     * Returns a new vector that is the normalized version of this vector (i.e., with the same direction, but a length of 1).
+     *
+     * @return a new vector that is the normalized version of this vector
      */
     public Vector normalize() {
         return new Vector(xyz.reduce((length())));
