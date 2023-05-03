@@ -4,6 +4,8 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import static primitives.Util.isZero;
+
 /**
  * class A class for representing an infinite cylinder that inherits Radial Geometric
  */
@@ -30,12 +32,8 @@ public class Tube extends RadialGeometry {
      */
     public Vector getNormal(Point p) {
         double t = axisRay.getDir().dotProduct(p.subtract(axisRay.getP0()));
-        Point O;
-        if (t == 0)
-            O = axisRay.getP0();
-        else
-            O = axisRay.getP0().add(axisRay.getDir().scale(t));
-        return p.subtract(O).normalize();
+        Point o = isZero(t) ? axisRay.getP0() : axisRay.getP0().add(axisRay.getDir().scale(t));
+        return p.subtract(o).normalize();
     }
 
     @Override

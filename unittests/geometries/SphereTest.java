@@ -26,6 +26,7 @@ class SphereTest {
         // on a unit sphere centered at the origin.
         // If it's not, the test fails.
         // ============ Equivalence Partitions Tests ==============
+        //TC01:There is a simple single test here
         Sphere s1 = new Sphere(new Point(0, 0, 0), 1);
         Vector normal = new Vector(1, 0, 0);
         assertEquals(normal, s1.getNormal(new Point(1, 0, 0)), "Bad normal for sphere");

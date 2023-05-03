@@ -35,7 +35,7 @@ class TubeTest {
 
         // =============== Boundary Values Tests ==================
 
-        // TC11: Test the result for point in front of head ray
+        // TC01: Test the result for point in front of head ray
         Point p2 = new Point(3, 0, -3);
         assertEquals(new Vector(1, 0, 0), t.getNormal(p2), "bad tube normal for point in front of ray");
     }

@@ -28,20 +28,11 @@ public class Sphere extends RadialGeometry {
 
     }
 
-    /**
-     * getter
-     *
-     * @return the normal
-     */
+    @Override
     public Vector getNormal(Point p) {
         return p.subtract(center).normalize();
     }
 
-    /**
-     * Returns a string representation of the Sphere object.
-     *
-     * @return A string representation of the Sphere object.
-     */
     @Override
     public String toString() {
         return "Sphere [center=" + center + ", radius=" + radius + "]";

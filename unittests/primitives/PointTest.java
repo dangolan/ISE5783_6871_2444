@@ -58,6 +58,6 @@ class PointTest {
         /**
          Check that distance method returns the expected distance
          */
-        assertEquals(p1.distance(p2), Math.sqrt(5), "distance doesn't work properly");
+        assertEquals(Math.sqrt(5), p1.distance(p2), "distance doesn't work properly");
     }
 }

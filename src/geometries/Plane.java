@@ -1,6 +1,8 @@
 package geometries;
 
+import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
 
 /**
@@ -75,5 +77,4 @@ public class Plane implements Geometry {
     public String toString() {
         return "Plane [p0=" + p0 + ", normal=" + normal + "]";
     }
-
 }

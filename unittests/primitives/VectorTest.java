@@ -138,7 +138,7 @@ class VectorTest {
         Vector v8 = new Vector(1, 2, 3);
         Vector tmp4 = new Vector(-1, -1, -1);
         Vector v78 = v7.crossProduct(v8);
-        assertEquals(isZero(v78.dotProduct(v8)), true, "ERROR: crossProduct() result is not orthogonal to its operands");
+        assertEquals(0, v78.dotProduct(v8), 0.000001, "ERROR: crossProduct() result is not orthogonal to its operands");
         assertThrows(IllegalArgumentException.class, () -> v7.crossProduct(tmp4), "ERROR: crossProduct() result is not orthogonal to its operands");
         assertEquals(new Vector(-1, 2, -1), v78, "ERROR: crossProduct() wrong result length");
 
@@ -162,10 +162,24 @@ class VectorTest {
     @Test
     void testLengthSquared() {
         // ============ Equivalence Partitions Tests ==============
+        //TC01:simple test
         Vector v1 = new Vector(1, 1, 1);
         assertEquals(0, Double.compare(v1.lengthSquared(), 3), "ERROR: lengthSquared() wrong value");
         Vector v2 = new Vector(-1, -1, -1);
         assertEquals(0, Double.compare(v2.lengthSquared(), 3), "ERROR: lengthSquared() wrong value");
+    }
+
+    @Test
+    void testSubtract() throws IllegalAccessException{
+        Vector v1 =new Vector(1, 2, 3);
+        // ============ Equivalence Partitions Tests ==============
+        //TC01:simple test
+        assertEquals(new Vector(0, 1, 4),v1.subtract(new Vector(1, 1, -1)), "ERROR:wrong result of add function");
+        // =============== Boundary Values Tests ==================
+        // TC01: test if Vector -itself throws an exception
+        assertThrows(IllegalArgumentException.class, () -> v1.subtract(v1),
+                "ERROR: Vector - itself does not throw an exception");
+
     }
 
     /**
@@ -194,7 +208,7 @@ class VectorTest {
         Vector u = v1.normalize();
 
         // TC01: unit vector correctness
-        assertEquals(isZero(u.length() - 1), true, "the normalized vector is not a unit vector");
+        assertEquals( 0,Double.compare(u.length(), 1), "the normalized vector is not a unit vector");
 
         // TC02: parallel to the original one correctness
         assertThrows(IllegalArgumentException.class, () -> v1.crossProduct(u), "the normalized vector is not parallel to the original one");
