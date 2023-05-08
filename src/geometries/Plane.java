@@ -4,6 +4,9 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+import java.util.List;
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 /**
  * The Plane class represents a plane in a three-dimensional space. It implements the Geometry interface
@@ -76,5 +79,36 @@ public class Plane implements Geometry {
     @Override
     public String toString() {
         return "Plane [p0=" + p0 + ", normal=" + normal + "]";
+    }
+
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        Point point0 = ray.getP0();
+        Vector v = ray.getDir();
+
+        Vector n = normal;
+
+        if (p0.equals(point0))
+            return null;
+
+        Vector p0_q = p0.subtract(point0);
+
+        double nemurator = alignZero(n.dotProduct(p0_q));
+
+        if (isZero(nemurator))
+            return null;
+
+        double denominator = alignZero(n.dotProduct(v));
+
+        if (isZero(denominator))
+            return null;
+
+        double t = alignZero(nemurator / denominator);
+
+        if(t<=0)
+            return null;
+
+        Point intersection_point = ray.getPoint(t);
+        return List.of(intersection_point);
     }
 }

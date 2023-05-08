@@ -82,6 +82,17 @@ public class Vector extends Point {
     }
 
     /**
+     *
+     * @param _obj The object to compare to this point
+     * @return
+     */
+    @Override
+    public boolean equals(Object _obj) {
+        if (this == _obj) return true;
+        return _obj instanceof Vector other && super.equals(other);
+    }
+
+    /**
      * Returns the length squared of the vector.
      *
      * @return the length squared of the vector

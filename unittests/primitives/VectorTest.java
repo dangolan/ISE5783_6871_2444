@@ -1,9 +1,7 @@
 package primitives;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static primitives.Util.isZero;
 
 /**
  * A class for testing the {@link Vector} class.
@@ -16,35 +14,35 @@ class VectorTest {
     @Test
     void testAdd() {
         // ============ Equivalence Partitions Tests ==============
+
+        // TC01: Test that add is proper
         Vector v1 = new Vector(1, 1, 1);
         Vector v2 = new Vector(1, 1, 1);
         v1 = v1.add(v2);
-        assertEquals((new Vector(2, 2, 2)), v1, "add() wrong result");
+        assertEquals((new Vector(2, 2, 2)), v1, "TC01: add() wrong result");
 
+        // TC02: Test that add is proper
         Vector v3 = new Vector(-1, -1, -1);
         Vector v4 = new Vector(-1, -1, -1);
         v3 = v3.add(v4);
-        assertEquals(new Vector(-2, -2, -2), v3, "add() wrong result");
+        assertEquals(new Vector(-2, -2, -2), v3, "TC02: add() wrong result");
 
+        // TC03: Test that add is proper
         Vector v5 = new Vector(2, 2, 2);
         Vector v6 = new Vector(-1, -1, -1);
         v5 = v5.add(v6);
-        assertEquals(new Vector(1, 1, 1), v5, "add() wrong result");
+        assertEquals(new Vector(1, 1, 1), v5, "TC03: add() wrong result");
 
+        // TC04: Test that add is proper
         Vector v7 = new Vector(-1, -1, -1);
         Vector v8 = new Vector(2, 2, 2);
         v7 = v7.add(v8);
-        assertEquals(new Vector(1, 1, 1), v7, "add() wrong result");
+        assertEquals(new Vector(1, 1, 1), v7, "TC04: add() wrong result");
 
         // =============== Boundary Values Tests ==================
-        try {
-            Vector v9 = new Vector(-1, -1, -1);
-            Vector v10 = new Vector(1, 1, 1);
-            v9.add(v10);
-            fail("Vector (0,0,0) not valid");
-        } catch (IllegalArgumentException e) {
-            assertTrue(e.getMessage() != null);
-        }
+        //TC11: Test v1 plus -v1 throw exception
+        Vector v9 = new Vector(1, 2, 3);
+        assertThrows(IllegalArgumentException.class, () -> v9.add(new Vector(-1, -2, -3)), "TC11: add() gave wrong result");
     }
 
     /**
@@ -54,27 +52,30 @@ class VectorTest {
     void testScale() {
         // ============ Equivalence Partitions Tests ==============
 
+        // TC01: Test that the scaled vector has a scaled length
         Vector v1 = new Vector(1, 1, 1);
         v1 = v1.scale(-1);
-        assertEquals(new Vector(-1, -1, -1), v1, "scale() wrong result");
+        assertEquals(new Vector(-1, -1, -1), v1, "TC01: scale() wrong result");
+
+        // TC02: Test that the scaled vector has a scaled length
         Vector v2 = new Vector(1, 1, 1);
         v2 = v2.scale(2);
-        assertEquals(new Vector(2, 2, 2), v2, "scale() wrong result");
+        assertEquals(new Vector(2, 2, 2), v2, "TC02: scale() wrong result");
+
+        // TC03: Test that the scaled vector has a scaled length
         Vector v3 = new Vector(-1, -1, -1);
         v3 = v3.scale(2);
-        assertEquals(new Vector(-2, -2, -2), v3);
+        assertEquals(new Vector(-2, -2, -2), v3, "TC03: scale() wrong result");
+
+        // TC04: Test that the scaled vector has a scaled length
         Vector v4 = new Vector(-1, -1, -1);
         v4 = v4.scale(-1);
-        assertEquals(new Vector(1, 1, 1), v4, "scale() wrong result");
+        assertEquals(new Vector(1, 1, 1), v4, "TC04: scale() wrong result");
 
         // =============== Boundary Values Tests ==================
-        try {
-            Vector v9 = new Vector(-1, -1, -1);
-            v9.scale(0);
-            fail("Vector (0,0,0) not valid");
-        } catch (IllegalArgumentException e) {
-            assertNotNull(e.getMessage());
-        }
+        // TC11: Test that scaling a vector by 0 throws an exception
+        Vector v5 = new Vector(1, 2, 3);
+        assertThrows(IllegalArgumentException.class, () -> v5.scale(0), "TC11: scale() by 0 gave wrong result");
     }
 
     /**
@@ -110,30 +111,35 @@ class VectorTest {
     @Test
     void testCrossProduct() {
         // ============ Equivalence Partitions Tests ==============
+
+        //TC01:simple test
         Vector v1 = new Vector(1, 1, 1);
         Vector v2 = new Vector(1, 2, 3);
         Vector tmp1 = new Vector(1, 1, 1);
         Vector v12 = v1.crossProduct(v2);
-        assertEquals(isZero(v12.dotProduct(v2)), true, "ERROR: crossProduct() result is not orthogonal to its operands");
+        assertEquals(0,v12.dotProduct(v2), 0.000001, "ERROR: crossProduct() result is not orthogonal to its operands");
         assertThrows(IllegalArgumentException.class, () -> v1.crossProduct(tmp1), "ERROR: crossProduct() result is not orthogonal to its operands");
         assertEquals((new Vector(1, -2, 1)), v12, "ERROR: crossProduct() wrong result length");
 
+        //TC02:simple test
         Vector v3 = new Vector(-1, -1, -1);
         Vector v4 = new Vector(-1, -2, -3);
         Vector tmp2 = new Vector(-1, -1, -1);
         Vector v34 = v3.crossProduct(v4);
-        assertEquals(isZero(v34.dotProduct(v4)), true, "ERROR: crossProduct() result is not orthogonal to its operands");
+        assertEquals(0,v34.dotProduct(v4), 0.000001, "ERROR: crossProduct() result is not orthogonal to its operands");
         assertThrows(IllegalArgumentException.class, () -> v3.crossProduct(tmp2), "ERROR: crossProduct() result is not orthogonal to its operands");
         assertEquals(new Vector(1, -2, 1), v34, "ERROR: crossProduct() wrong result length");
 
+        //TC03:simple test
         Vector v5 = new Vector(1, 1, 1);
         Vector v6 = new Vector(-1, -2, -3);
         Vector tmp3 = new Vector(1, 1, 1);
         Vector v56 = v5.crossProduct(v6);
-        assertEquals(isZero(v56.dotProduct(v6)), true, "ERROR: crossProduct() result is not orthogonal to its operands");
+        assertEquals(0,v56.dotProduct(v6), 0.000001, "ERROR: crossProduct() result is not orthogonal to its operands");
         assertThrows(IllegalArgumentException.class, () -> v5.crossProduct(tmp3), "ERROR: crossProduct() result is not orthogonal to its operands");
         assertEquals(new Vector(-1, 2, -1), v56, "ERROR: crossProduct() wrong result length");
 
+        //TC04:simple test
         Vector v7 = new Vector(-1, -1, -1);
         Vector v8 = new Vector(1, 2, 3);
         Vector tmp4 = new Vector(-1, -1, -1);

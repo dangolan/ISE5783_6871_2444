@@ -1,6 +1,7 @@
 package geometries;
 
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
 
 import java.util.List;
@@ -89,5 +90,44 @@ public class Polygon implements Geometry {
     @Override
     public Vector getNormal(Point point) {
         return plane.getNormal();
+    }
+
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        List<Point> intersections = this.plane.findIntersections(ray);
+
+        // if there is no Intersections at all in the plane
+        if (intersections == null)
+            return null;
+
+        int numOfVertices = vertices.size();
+        Point p0 = ray.getP0();
+        Vector dir = ray.getDir();
+
+        Vector v1 = vertices.get(numOfVertices - 1).subtract(p0);
+        Vector v2 = vertices.get(0).subtract(p0);
+
+        Vector n = v1.crossProduct(v2).normalize();
+        double vn = dir.dotProduct(n);
+        boolean positive = vn > 0;
+
+        if (isZero(vn))
+            return null;
+
+        for (int i = 1; i < numOfVertices; ++i) {
+            v1 = v2;
+            v2 = vertices.get(i).subtract(p0);
+            n = v1.crossProduct(v2).normalize();
+            vn = dir.dotProduct(n);
+
+            //no intersection
+            if (isZero(vn))
+                return null;
+
+            //not the same sign
+            if (vn > 0 != positive)
+                return null;
+        }
+        return List.of(intersections.get(0));
     }
 }

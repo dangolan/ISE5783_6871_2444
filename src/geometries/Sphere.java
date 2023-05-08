@@ -1,7 +1,10 @@
 package geometries;
 
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
+import static primitives.Util.alignZero;
+import java.util.List;
 
 /**
  * The Sphere class is part of the geometries package and represents
@@ -28,9 +31,60 @@ public class Sphere extends RadialGeometry {
 
     }
 
+    /**
+     *
+     * @param p the point at which the normal vector is to be computed
+     * @return
+     */
     @Override
     public Vector getNormal(Point p) {
         return p.subtract(center).normalize();
+    }
+
+    /**
+     *
+     * @param ray
+     * @return intersection if they exist
+     */
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        Point p0 = ray.getP0();
+        Vector v = ray.getDir();
+
+        if(p0.equals(center))
+            return List.of(center.add(v.scale(radius)));
+        Vector u = center.subtract(p0);
+
+        double tm = alignZero(v.dotProduct(u));
+        double d = alignZero(Math.sqrt(u.lengthSquared() - tm * tm));
+
+        if(d>=radius)
+            return null;
+
+        double th = alignZero(Math.sqrt(radius*radius -d*d));
+        if (th<=0)
+            return null;
+
+        double t1 = alignZero(tm + th);
+        double t2 = alignZero(tm - th);
+
+        if (t1 > 0 && t2 > 0)
+        {
+            Point p1 = p0.add(v.scale(t1));
+            Point p2 = p0.add(v.scale(t2));
+            return List.of(p1,p2);
+        }
+        if (t1 > 0)
+        {
+            Point p1 = ray.getPoint(t1);
+            return List.of(p1);
+        }
+        if (t2 > 0)
+        {
+            Point p2 = ray.getPoint(t2);
+            return List.of(p2);
+        }
+        return null;
     }
 
     @Override

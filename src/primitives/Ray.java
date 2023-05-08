@@ -59,8 +59,12 @@ public class Ray {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Ray ray = (Ray) o;
-        return p0.equals(ray.p0) && dir.equals(ray.dir);
+        if (o instanceof Ray other)
+            return this.p0.equals(other.p0) && this.dir.equals(other.dir);
+        return false;
+    }
+    public Point getPoint(double t)
+    {
+        return p0.add(dir.scale(t));
     }
 }
