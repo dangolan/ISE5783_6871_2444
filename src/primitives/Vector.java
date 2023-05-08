@@ -23,7 +23,6 @@ public class Vector extends Point {
 
     /**
      * constructor to create a vector
-     *
      * @param xyz the point
      */
     public Vector(Double3 xyz) {
@@ -35,7 +34,6 @@ public class Vector extends Point {
 
     /**
      * add this vector to another one
-     *
      * @param other the second vector
      * @return new vector from this vector to the other vector
      */
@@ -45,7 +43,6 @@ public class Vector extends Point {
 
     /**
      * Multiplication of a vector by a scalar
-     *
      * @param scalar multiplied by this scalar
      * @return new vector Multiplication by scalar
      */
@@ -55,7 +52,6 @@ public class Vector extends Point {
 
     /**
      * dot product between two vectors (scalar product)
-     *
      * @param other the second vector
      * @return scalar of the dot product
      */
@@ -67,7 +63,6 @@ public class Vector extends Point {
 
     /**
      * cross product between two vectors
-     *
      * @param other the second vector
      * @return the vector result from the cross product
      */
@@ -82,9 +77,12 @@ public class Vector extends Point {
     }
 
     /**
-     *
-     * @param _obj The object to compare to this point
-     * @return
+     * Compares this vector with the specified object for equality.
+     * The equality check is performed by comparing the specified object with this vector. The objects are considered equal
+     * if they are identical (i.e., the same instance) or if the specified object is an instance of the Vector class and has
+     * the same values as this vector.
+     * @param _obj The object to compare to this vector.
+     * @return {@code true} if the specified object is equal to this vector, {@code false} otherwise.
      */
     @Override
     public boolean equals(Object _obj) {
@@ -94,7 +92,6 @@ public class Vector extends Point {
 
     /**
      * Returns the length squared of the vector.
-     *
      * @return the length squared of the vector
      */
     public double lengthSquared() {
@@ -103,7 +100,6 @@ public class Vector extends Point {
 
     /**
      * Returns the length of the vector.
-     *
      * @return the length of the vector
      */
     public double length() {
@@ -112,7 +108,6 @@ public class Vector extends Point {
 
     /**
      * Returns a new vector that is the normalized version of this vector (i.e., with the same direction, but a length of 1).
-     *
      * @return a new vector that is the normalized version of this vector
      */
     public Vector normalize() {

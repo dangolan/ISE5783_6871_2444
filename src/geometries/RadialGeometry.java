@@ -1,14 +1,13 @@
 package geometries;
 
 /**
- * class for all the shapes with a rduies
+ * class for all the shapes with a radius
  */
 public abstract class RadialGeometry implements Geometry {
     final protected double radius;
 
     /**
      * constructor
-     *
      * @param r the radius
      */
     public RadialGeometry(double r) {
@@ -17,7 +16,6 @@ public abstract class RadialGeometry implements Geometry {
 
     /**
      * getter
-     *
      * @return the radius
      */
     public double getRadius() {

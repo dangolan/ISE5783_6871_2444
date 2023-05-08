@@ -79,30 +79,22 @@ class VectorTest {
     }
 
     /**
-     * Tests the {@link Vector#dotProduct(Vector)} method.
+     * Test method for {@link primitives.Vector#dotProduct(primitives.Vector)}.
      */
     @Test
-    void testDotProduct() {
+    public void testDotProduct() {
+        Vector v1 = new Vector(1, 2, 3);
+
         // ============ Equivalence Partitions Tests ==============
-        Vector v1 = new Vector(1, 1, 1);
-        Vector v2 = new Vector(1, 1, 1);
-        assertEquals((Double.compare(v1.dotProduct(v2), (1 + 1 + 1)) == 0), true, "ERROR: dotProduct() wrong value");
+        // TC01: Simple dotProduct test
+        Vector v2 = new Vector(-2, -4, -6);
+        assertEquals(-28d, v1.dotProduct(v2), 0.00001, "dotProduct() wrong value");
 
-        Vector v3 = new Vector(-1, -1, -1);
-        Vector v4 = new Vector(-1, -1, -1);
-        assertEquals((Double.compare(v3.dotProduct(v4), (1 + 1 + 1)) == 0), true, "ERROR: dotProduct() wrong value");
+        // =============== Boundary Values Tests ==================
 
-        Vector v5 = new Vector(2, 2, 2);
-        Vector v6 = new Vector(-1, -1, -1);
-        assertEquals((Double.compare(v5.dotProduct(v6), (-2 + -2 + -2)) == 0), true, "ERROR: dotProduct() wrong value");
-
-        Vector v7 = new Vector(-1, -1, -1);
-        Vector v8 = new Vector(2, 2, 2);
-        assertEquals((Double.compare(v7.dotProduct(v8), (-2 + -2 + -2)) == 0), true, "ERROR: dotProduct() wrong value");
-
-        Vector v9 = new Vector(1, 0, 1);
-        Vector v10 = new Vector(-1, 0, 1);
-        assertEquals(0, (Double.compare(v9.dotProduct(v10), 0)), "ERROR: dotProduct() for orthogonal vectors is not zero");
+        // TC11: dotProduct for orthogonal vectors
+        Vector v3 = new Vector(0, 3, -2);
+        assertEquals(0d, v1.dotProduct(v3), 0.00001, "dotProduct() for orthogonal vectors is not zero");
     }
 
     /**
@@ -149,14 +141,12 @@ class VectorTest {
         assertEquals(new Vector(-1, 2, -1), v78, "ERROR: crossProduct() wrong result length");
 
         // =============== Boundary Values Tests ==================
-        try {
-            Vector v9 = new Vector(-1, -1, -1);
-            Vector v10 = new Vector(-2, -2, -2);
-            Vector v11 = v9.crossProduct(v10);
-            fail("Vector (0,0,0) not valid");
-        } catch (IllegalArgumentException e) {
-            assertNotNull(e.getMessage());
-        }
+
+        // TC11: test zero vector from cross-product of co-lined vectors
+        Vector v9 = new Vector(-2, -4, -6);
+        Vector v10 = new Vector(1, 2, 3);
+        assertThrows(IllegalArgumentException.class,
+                () -> v10.crossProduct(v9), "crossProduct() for parallel vectors does not throw an exception");
     }
 
     /**
@@ -171,18 +161,29 @@ class VectorTest {
         //TC01:simple test
         Vector v1 = new Vector(1, 1, 1);
         assertEquals(0, Double.compare(v1.lengthSquared(), 3), "ERROR: lengthSquared() wrong value");
+
+        //TC02:simple test
         Vector v2 = new Vector(-1, -1, -1);
         assertEquals(0, Double.compare(v2.lengthSquared(), 3), "ERROR: lengthSquared() wrong value");
     }
 
+    /**
+     *
+     * Test case for the subtract() method of the Vector class.
+     *  This test verifies the correctness of the subtract() method by using different test scenarios.
+     *   It covers equivalence partitions and boundary values.
+     *   @throws IllegalAccessException if there is an illegal access exception while performing the test.
+     */
     @Test
     void testSubtract() throws IllegalAccessException{
         Vector v1 =new Vector(1, 2, 3);
         // ============ Equivalence Partitions Tests ==============
+
         //TC01:simple test
         assertEquals(new Vector(0, 1, 4),v1.subtract(new Vector(1, 1, -1)), "ERROR:wrong result of add function");
         // =============== Boundary Values Tests ==================
-        // TC01: test if Vector -itself throws an exception
+
+        // TC11: test if Vector -itself throws an exception
         assertThrows(IllegalArgumentException.class, () -> v1.subtract(v1),
                 "ERROR: Vector - itself does not throw an exception");
 
@@ -197,8 +198,12 @@ class VectorTest {
     @Test
     void testLength() {
         // ============ Equivalence Partitions Tests ==============
+
+        //TC01:simple test
         Vector v1 = new Vector(1, 1, 1);
         assertTrue(Double.compare(v1.length(), Math.sqrt(3)) == 0, "ERROR: crossProduct() wrong result length");
+
+        //TC02:simple test
         Vector v2 = new Vector(-1, -1, -1);
         assertTrue(Double.compare(v2.length(), Math.sqrt(3)) == 0, "ERROR: crossProduct() wrong result length");
     }
@@ -220,6 +225,6 @@ class VectorTest {
         assertThrows(IllegalArgumentException.class, () -> v1.crossProduct(u), "the normalized vector is not parallel to the original one");
 
         // TC03: not opposite to the original one
-        assertEquals(v1.dotProduct(u) >= 0, true, "the normalized vector is opposite to the original one");
+        assertEquals(v1.dotProduct(u) >= 0, 1 > 0, "the normalized vector is opposite to the original one");
     }
 }

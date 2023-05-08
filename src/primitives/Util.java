@@ -2,7 +2,6 @@ package primitives;
 
 /**
  * Util class is used for some internal utilities, e.g. controlling accuracy
- *
  * @author Dan
  */
 public abstract class Util {
@@ -15,21 +14,22 @@ public abstract class Util {
     private Util() {
     }
 
-    // double store format (bit level):
-    // 1 bit sign, 11 bits exponent, 53 bits (52 stored) normalized mantissa
-    // the number is m+2^e where 1<=m<2
-    // NB: exponent is stored "normalized" (i.e. always positive by adding 1023)
+    /**
+     * Retrieves the exponent of a given number in double precision format.
+     * This method calculates the exponent of the specified number by performing the following steps:
+     * 1. Convert the number to a set of bits using {@link Double#doubleToRawLongBits(double)}.
+     * 2. Shift all 52 bits to the right, effectively removing the mantissa.
+     * 3. Zero the sign of the number bit by applying a mask of 0x7FF.
+     * 4. "De-normalize" the exponent by subtracting 1023.
+     * @param num The number for which the exponent needs to be determined.
+     * @return The exponent of the specified number.
+     */
     private static int getExp(double num) {
-        // 1. doubleToRawLongBits: "convert" the stored number to set of bits
-        // 2. Shift all 52 bits to the right (removing mantissa)
-        // 3. Zero the sign of number bit by mask 0x7FF
-        // 4. "De-normalize" the exponent by subtracting 1023
         return (int) ((Double.doubleToRawLongBits(num) >> 52) & 0x7FFL) - 1023;
     }
 
     /**
      * Checks whether the number is [almost] zero
-     *
      * @param number the number to check
      * @return true if the number is zero or almost zero, false otherwise
      */
@@ -39,7 +39,6 @@ public abstract class Util {
 
     /**
      * Aligns the number to zero if it is almost zero
-     *
      * @param number the number to align
      * @return 0.0 if the number is very close to zero, the number itself otherwise
      */
@@ -49,7 +48,6 @@ public abstract class Util {
 
     /**
      * Check whether two numbers have the same sign
-     *
      * @param n1 1st number
      * @param n2 2nd number
      * @return true if the numbers have the same sign
@@ -60,7 +58,6 @@ public abstract class Util {
 
     /**
      * Provide a real random number in range between min and max
-     *
      * @param min value (included)
      * @param max value (excluded)
      * @return the random value

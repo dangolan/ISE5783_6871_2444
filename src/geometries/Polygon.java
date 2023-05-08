@@ -3,15 +3,12 @@ package geometries;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
-
 import java.util.List;
-
 import static primitives.Util.isZero;
 
 /**
  * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
  * system
- *
  * @author Dan
  */
 public class Polygon implements Geometry {
@@ -53,27 +50,14 @@ public class Polygon implements Geometry {
         this.vertices = List.of(vertices);
         size = vertices.length;
 
-        // Generate the plane according to the first three vertices and associate the
-        // polygon with this plane.
-        // The plane holds the invariant normal (orthogonal unit) vector to the polygon
         plane = new Plane(vertices[0], vertices[1], vertices[2]);
         if (size == 3) return; // no need for more tests for a Triangle
 
         Vector n = plane.getNormal();
-        // Subtracting any subsequent points will throw an IllegalArgumentException
-        // because of Zero Vector if they are in the same point
+
         Vector edge1 = vertices[vertices.length - 1].subtract(vertices[vertices.length - 2]);
         Vector edge2 = vertices[0].subtract(vertices[vertices.length - 1]);
 
-        // Cross Product of any subsequent edges will throw an IllegalArgumentException
-        // because of Zero Vector if they connect three vertices that lay in the same
-        // line.
-        // Generate the direction of the polygon according to the angle between last and
-        // first edge being less than 180 deg. It is hold by the sign of its dot product
-        // with
-        // the normal. If all the rest consequent edges will generate the same sign -
-        // the
-        // polygon is convex ("kamur" in Hebrew).
         boolean positive = edge1.crossProduct(edge2).dotProduct(n) > 0;
         for (var i = 1; i < vertices.length; ++i) {
             // Test that the point is in the same plane as calculated originally
@@ -87,11 +71,27 @@ public class Polygon implements Geometry {
         }
     }
 
+    /**
+     * Computes the normal vector at a given point on the surface of the ConvexPolygon.
+     * This method calculates the normal vector at the specified point on the surface of the ConvexPolygon. The normal vector
+     * represents the direction perpendicular to the surface at that point. Since the ConvexPolygon is planar, the normal
+     * vector is the same across all points on the surface.
+     * @param point The point at which the normal vector is to be computed.
+     * @return The normal vector of the ConvexPolygon, which is the same for all points on the surface.
+     */
     @Override
     public Vector getNormal(Point point) {
         return plane.getNormal();
     }
 
+    /**
+     * Finds the intersection point between this ConvexPolygon and a given Ray.
+     * This method calculates the intersection point between the current ConvexPolygon object and the specified Ray. The method
+     * returns a list containing the intersection point if it exists. If there are no intersections or the Ray does not intersect
+     * the ConvexPolygon, the method returns null.
+     * @param ray The Ray object to find the intersection with.
+     * @return A list containing the intersection point, or null if no intersection exists.
+     */
     @Override
     public List<Point> findIntersections(Ray ray) {
         List<Point> intersections = this.plane.findIntersections(ray);

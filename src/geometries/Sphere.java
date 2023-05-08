@@ -32,9 +32,11 @@ public class Sphere extends RadialGeometry {
     }
 
     /**
-     *
-     * @param p the point at which the normal vector is to be computed
-     * @return
+     * Computes the normal vector at a given point on the surface of the Sphere.
+     * This method calculates the normal vector at the specified point on the surface of the Sphere. The normal vector
+     * represents the direction perpendicular to the surface at that point.
+     * @param p The point at which the normal vector is to be computed.
+     * @return The normal vector at the specified point on the surface of the Sphere.
      */
     @Override
     public Vector getNormal(Point p) {
@@ -42,9 +44,12 @@ public class Sphere extends RadialGeometry {
     }
 
     /**
-     *
-     * @param ray
-     * @return intersection if they exist
+     * Finds the intersection points between this Sphere and a given Ray.
+     * This method calculates the intersection points between the current Sphere object and the specified Ray. The method
+     * returns a list of Point objects representing the intersection points if they exist. If there are no intersections
+     * between the Ray and the Sphere, the method returns null.
+     * @param ray The Ray object to find the intersections with.
+     * @return A list of Point objects representing the intersection points, or null if no intersections exist.
      */
     @Override
     public List<Point> findIntersections(Ray ray) {

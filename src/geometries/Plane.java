@@ -1,6 +1,5 @@
 package geometries;
 
-import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
@@ -18,7 +17,6 @@ public class Plane implements Geometry {
 
     /**
      * constructor
-     *
      * @param p0     the point
      * @param normal the vector that normal to the plane
      */
@@ -26,13 +24,11 @@ public class Plane implements Geometry {
         super();
         this.p0 = p0;
         this.normal = normal;
-
     }
 
     /**
      * constructor that get 3 points and set one of them to witch the plane lays
      * and calculate the normal vector
-     *
      * @param p0 point 0
      * @param p1 point 1
      * @param p2 point 2
@@ -44,12 +40,10 @@ public class Plane implements Geometry {
         Vector v1 = p1.subtract(p0);
         Vector v2 = p2.subtract(p0);
         this.normal = (p1.subtract(p0).crossProduct(p2.subtract(p0))).normalize();
-
     }
 
     /**
      * getter
-     *
      * @return the point 0
      */
     public Point getP0() {
@@ -58,7 +52,6 @@ public class Plane implements Geometry {
 
     /**
      * getter
-     *
      * @return the normal vector
      */
     public Vector getNormal() {
@@ -67,7 +60,6 @@ public class Plane implements Geometry {
 
     /**
      * getter
-     *
      * @param p the point
      * @return the normal vector
      */
@@ -75,24 +67,24 @@ public class Plane implements Geometry {
         return normal;
     }
 
-
-    @Override
-    public String toString() {
-        return "Plane [p0=" + p0 + ", normal=" + normal + "]";
-    }
-
+    /**
+     * Finds the intersection point between this Plane and a given Ray.
+     * This method calculates the intersection point between the current Plane object and the specified Ray. The method
+     * returns a list containing the intersection point if it exists. If there is no intersection or the Ray is parallel to
+     * the Plane, the method returns null.
+     * @param ray The Ray object to find the intersection with.
+     * @return A list containing the intersection point, or null if no intersection exists.
+     */
     @Override
     public List<Point> findIntersections(Ray ray) {
         Point point0 = ray.getP0();
         Vector v = ray.getDir();
-
         Vector n = normal;
 
         if (p0.equals(point0))
             return null;
 
         Vector p0_q = p0.subtract(point0);
-
         double nemurator = alignZero(n.dotProduct(p0_q));
 
         if (isZero(nemurator))
@@ -110,5 +102,10 @@ public class Plane implements Geometry {
 
         Point intersection_point = ray.getPoint(t);
         return List.of(intersection_point);
+    }
+
+    @Override
+    public String toString() {
+        return "Plane [p0=" + p0 + ", normal=" + normal + "]";
     }
 }

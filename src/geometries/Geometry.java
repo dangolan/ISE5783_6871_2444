@@ -11,7 +11,6 @@ public interface Geometry extends Intersectable{
 
     /**
      * Returns the normal vector of the Geometry object at the specified point.
-     *
      * @param point the point at which the normal vector is to be computed
      * @return the normal vector at the specified point
      */
