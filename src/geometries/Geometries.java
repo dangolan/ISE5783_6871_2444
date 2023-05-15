@@ -1,42 +1,38 @@
 package geometries;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import primitives.Point;
+import primitives.Ray;
+
 import java.util.LinkedList;
 import java.util.List;
-import primitives.*;
 
 /**
  * Geometries' class.
  * Represents a collection of geometries.
  */
-public class Geometries implements Intersectable{
-    private final List<Intersectable> geometriesInScene;
+public class Geometries implements Intersectable {
+    private final List<Intersectable> geometriesInScene = new LinkedList<>();
+    //we have chosen in LinkedList because this class will work in better running time when the application demands storing the data and accessing it.
 
     /**
      * A default constructor that create new empty arrayList intersectable-geometries
      */
-    public Geometries(){
-        //we have chosen in ArrayList because this class will work in better running time when the application demands storing the data and accessing it.
-        geometriesInScene = new LinkedList<>();
+    public Geometries() {}
+
+    /**
+     * Constructor that receives list of geometries and puts them in a new arrayList.
+     * @param geometries The geometries to add to the list.
+     */
+    public Geometries(Intersectable... geometries) {
+        add(geometries);
     }
 
     /**
-     Constructor that receives list of geometries and puts them in a new arrayList.
-     @param geometries The geometries to add to the list.
+     * Adds the given geometries to the list of geometries in the scene.
+     * @param geometries The geometries to add to the list.
      */
-    public Geometries(Intersectable... geometries){
-        geometriesInScene = new LinkedList<>(Arrays.asList(geometries));
-    }
-
-    /**
-     Adds the given geometries to the list of geometries in the scene.
-     @param geometries The geometries to add to the list.
-     */
-    public void add(Intersectable... geometries){
-        if (geometries != null) {
-            geometriesInScene.add((Intersectable) List.of(geometries));
-        }
+    public void add(Intersectable... geometries) {
+        geometriesInScene.addAll(List.of(geometries));
     }
 
     /**
@@ -50,26 +46,15 @@ public class Geometries implements Intersectable{
      */
     @Override
     public List<Point> findIntersections(Ray ray) {
-
-        boolean is_have_intersections = false;
-
+        List<Point> listIntersect = null;
         for (Intersectable intersect : geometriesInScene) {
-            if (intersect.findIntersections(ray) != null) {
-                is_have_intersections = true;
-                break;
+            var list = intersect.findIntersections(ray);
+            if (list != null) {
+                if (listIntersect == null)
+                    listIntersect = new LinkedList<>();
+                listIntersect.addAll(list);
             }
         }
-        if (is_have_intersections) {
-            List<Point> listIntersect = new LinkedList<>();
-
-            for (Intersectable intersect : geometriesInScene) {
-                for (Point point : intersect.findIntersections(ray))
-                    if (point != null) {
-                        listIntersect.add(point);
-                    }
-            }
-            return listIntersect;
-        }
-        return null;
+        return listIntersect;
     }
 }

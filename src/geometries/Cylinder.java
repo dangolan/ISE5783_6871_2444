@@ -37,7 +37,9 @@ public class Cylinder extends Tube {
         if (p.equals(p0)) {
             return v.scale(-1);
         }
+
         double t = v.dotProduct(p.subtract(p0));
+
         if (isZero(t)) {
             return v.scale(-1);
         }

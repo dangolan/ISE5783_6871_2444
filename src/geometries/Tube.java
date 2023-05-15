@@ -50,13 +50,13 @@ public class Tube extends RadialGeometry {
         Point pa = this.axisRay.getP0();
         Vector va = this.axisRay.getDir();
         double a, b, c; //coefficients for quadratic equation ax^2 + bx + c
-
         Vector vecA = v;
+
         try {
             double vva = v.dotProduct(va); //(v,va)
 
             if (!isZero(vva)) vecA = v.subtract(va.scale(vva)); //v-(v,va)va
-            a = vecA.lengthSquared(); //(v-(v,va)va)^2
+                a = vecA.lengthSquared(); //(v-(v,va)va)^2
         } catch (IllegalArgumentException e) {
             return null; //if a=0 there are no intersections because Ray is parallel to axisRay
         }
