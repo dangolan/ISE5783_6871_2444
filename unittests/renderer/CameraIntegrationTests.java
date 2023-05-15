@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import geometries.*;
 import primitives.*;
-import renderer.Camera;
 
 /**
  * camera integration tests with a sphere, plane, and triangle.
