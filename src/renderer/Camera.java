@@ -48,10 +48,12 @@ public class Camera {
     }
 
     /**
-     * @param p0
-     * @param vTo
-     * @param vUp
-     * @throws IllegalArgumentException
+     * Constructs a camera with the specified position and orientation vectors.
+     *
+     * @param p0  The position of the camera.
+     * @param vTo The direction vector pointing towards the target.
+     * @param vUp The up vector indicating the camera's vertical orientation.
+     * @throws IllegalArgumentException If the vTo and vUp vectors are not orthogonal.
      */
     public Camera(Point p0, Vector vTo, Vector vUp) throws IllegalArgumentException {
         if (!isZero(vTo.dotProduct(vUp))) {
@@ -64,9 +66,11 @@ public class Camera {
     }
 
     /**
-     * @param width
-     * @param height
-     * @return
+     * Sets the width and height of the viewport.
+     *
+     * @param width  The width of the viewport.
+     * @param height The height of the viewport.
+     * @return This Camera object.
      */
     public Camera setVPSize(double width, double height) {
         this.width = width;
@@ -76,8 +80,10 @@ public class Camera {
     //endregion
 
     /**
-     * @param distance
-     * @return
+     * Sets the distance between the camera and the viewport.
+     *
+     * @param distance The distance between the camera and the viewport.
+     * @return This Camera object.
      */
     public Camera setVPDistance(double distance) {
         this.distance = distance;
