@@ -41,7 +41,7 @@ class SphereTest {
      */
     @Test
     public void testFindIntersections() {
-        Sphere sphere = new Sphere(new Point (1, 0, 0), 1d);
+        Sphere sphere = new Sphere(new Point(1, 0, 0), 1d);
         // ============ Equivalence Partitions Tests ==============
 
         // TC01: Ray's line is outside the sphere (0 points)
@@ -112,11 +112,11 @@ class SphereTest {
                 "Ray's line out of sphere");
 
         // TC12: Ray starts after sphere (0 points)
-        assertNull(sphere.findIntersections(new Ray(new Point(1 ,0, 2), new Vector(0, 0, 1))),
+        assertNull(sphere.findIntersections(new Ray(new Point(1, 0, 2), new Vector(0, 0, 1))),
                 "Ray's line out of sphere");
 
         // TC13: Ray starts before the tangent point
-        assertNull(sphere.findIntersections(new Ray(new Point(0,0, 1), new Vector(1, 0, 0))),
+        assertNull(sphere.findIntersections(new Ray(new Point(0, 0, 1), new Vector(1, 0, 0))),
                 "Ray's line out of sphere");
 
         // TC14: Ray starts at the tangent point
@@ -124,11 +124,11 @@ class SphereTest {
                 "Ray's line out of sphere");
 
         // TC15: Ray starts after the tangent point
-        assertNull(sphere.findIntersections(new Ray(new Point(2 ,0, 1), new Vector(0, 0, 1))),
+        assertNull(sphere.findIntersections(new Ray(new Point(2, 0, 1), new Vector(0, 0, 1))),
                 "Ray's line out of sphere");
 
         // TC16: Ray's line is outside, ray is orthogonal to ray start to sphere's center line (0 points)
-        assertNull(sphere.findIntersections(new Ray(new Point(3 ,0, 0), new Vector(0, 0, 1))),
+        assertNull(sphere.findIntersections(new Ray(new Point(3, 0, 0), new Vector(0, 0, 1))),
                 "Ray's line out of sphere");
     }
 }

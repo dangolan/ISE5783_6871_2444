@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,7 +19,7 @@ class PlaneTest {
      * Test method for {@link Plane#Plane(Point, Point, Point)}.
      */
     @Test
-    void Constructor() {
+    void testConstructor() {
 
         // =============== Boundary Values Tests ==================
 
@@ -43,14 +44,12 @@ class PlaneTest {
     @Test
     void testgetNormal() {
         // ============ Equivalence Partitions Tests ==============
+        //TC01 test if normal vector is of length 1 and orthogonal to two vectors in the plane
         Plane p1 = new Plane(new Point(0, 0, 0), new Point(0, 5, 0), new Point(5, 0, 0));
         Vector normal = new Vector(0, 0, 1);
-
-        //TC01 test if normal vector is orthogonal to one vector in the plane
-        assertEquals(0, normal.dotProduct(new Point(0, 0, 0).subtract(new Point(5,0,0))), 0.000001);
-
-        //TC02 test if normal vector is orthogonal to second vector in the plane
-        assertEquals(0, normal.dotProduct(new Point(0, 0, 0).subtract(new Point(0,5,0))), 0.000001);
+        assertEquals(1, normal.length(), 0.000001, "normal is not of length 1");
+        assertEquals(0, normal.dotProduct(new Point(0, 0, 0).subtract(new Point(5, 0, 0))), 0.000001);
+        assertEquals(0, normal.dotProduct(new Point(0, 0, 0).subtract(new Point(0, 5, 0))), 0.000001);
     }
 
     /**
@@ -69,7 +68,7 @@ class PlaneTest {
         r = new Ray(new Point(0, 0, 2), new Vector(3, 0, -2));
         p = new Point(1.5, 0, 1);
         result = pl.findIntersections(r);
-        assertTrue(isZero(result.size() - 1), "Ray intersects the plane - wrong number of intersections");
+        assertEquals(1, result.size(), "Ray intersects the plane - wrong number of intersections");
         assertEquals(p, result.get(0), "Ray intersects the plane - wrong Point of intersection");
 
         // TC02: Ray does not intersect the plane
@@ -93,8 +92,8 @@ class PlaneTest {
         r = new Ray(new Point(1, 0, -1), new Vector(0, 0, 1));
         result = pl.findIntersections(r);
         p = new Point(1, 0, 1);
-        assertTrue(isZero(result.size() - 1), "Ray starts before the plane - didn't find an intersection");
-        assertEquals(p, result.get(0), "Ray starts before the plane - wrong Point of intersection");
+        assertEquals(1, result.size(), "Ray starts before the plane - didn't find an intersection");
+        assertEquals(List.of(p), result, "Ray starts before the plane - wrong Point of intersection");
 
         // TC06: Ray starts on the plane
         r = new Ray(new Point(1, 0, 1), new Vector(0, 0, 1));

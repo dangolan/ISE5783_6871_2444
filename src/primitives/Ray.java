@@ -1,5 +1,7 @@
 package primitives;
 
+import static primitives.Util.isZero;
+
 /**
  * Represents a ray in 3D space, defined by a starting point and a normalized direction vector.
  */
@@ -15,6 +17,7 @@ public class Ray {
 
     /**
      * constructor
+     *
      * @param p0  the start point
      * @param dir the direction of the ray
      */
@@ -25,6 +28,7 @@ public class Ray {
 
     /**
      * getter
+     *
      * @return the point 0
      */
     public Point getP0() {
@@ -33,6 +37,7 @@ public class Ray {
 
     /**
      * getter
+     *
      * @return the direction vector
      */
     public Vector getDir() {
@@ -41,26 +46,25 @@ public class Ray {
 
     /**
      * Determines if the specified object is equal to this Ray object.
+     *
      * @param o The object to compare with this Ray object.
      * @return true if the objects are equal, false otherwise.
      */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o instanceof Ray other)
-            return this.p0.equals(other.p0) && this.dir.equals(other.dir);
-        return false;
+        return o instanceof Ray other &&
+                this.p0.equals(other.p0) && this.dir.equals(other.dir);
     }
+
     /**
-     * Calculates the point along the line at a given parameter value.
-     * This method computes the point on the line defined by this Line object at the specified parameter value. The parameter
-     * value represents the distance along the line from the starting point (p0) in the direction of the line (dir).
-     * @param t The parameter value indicating the distance along the line.
-     * @return The point on the line at the given parameter value.
+     * Calculates the point along the line at a given distance from the ray head.
+     *
+     * @param t the distance
+     * @return the calculated point
      */
-    public Point getPoint(double t)
-    {
-        return p0.add(dir.scale(t));
+    public Point getPoint(double t) {
+        return isZero(t) ? p0 : p0.add(dir.scale(t));
     }
 
     @Override

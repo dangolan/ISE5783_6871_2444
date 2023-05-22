@@ -3,7 +3,9 @@ package geometries;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+
 import java.util.List;
+
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
@@ -17,6 +19,7 @@ public class Plane implements Geometry {
 
     /**
      * constructor
+     *
      * @param p0     the point
      * @param normal the vector that normal to the plane
      */
@@ -29,6 +32,7 @@ public class Plane implements Geometry {
     /**
      * constructor that get 3 points and set one of them to witch the plane lays
      * and calculate the normal vector
+     *
      * @param p0 point 0
      * @param p1 point 1
      * @param p2 point 2
@@ -44,6 +48,7 @@ public class Plane implements Geometry {
 
     /**
      * getter
+     *
      * @return the point 0
      */
     public Point getP0() {
@@ -52,6 +57,7 @@ public class Plane implements Geometry {
 
     /**
      * getter
+     *
      * @return the normal vector
      */
     public Vector getNormal() {
@@ -60,6 +66,7 @@ public class Plane implements Geometry {
 
     /**
      * getter
+     *
      * @param p the point
      * @return the normal vector
      */
@@ -72,6 +79,7 @@ public class Plane implements Geometry {
      * This method calculates the intersection point between the current Plane object and the specified Ray. The method
      * returns a list containing the intersection point if it exists. If there is no intersection or the Ray is parallel to
      * the Plane, the method returns null.
+     *
      * @param ray The Ray object to find the intersection with.
      * @return A list containing the intersection point, or null if no intersection exists.
      */
@@ -79,29 +87,18 @@ public class Plane implements Geometry {
     public List<Point> findIntersections(Ray ray) {
         Point point0 = ray.getP0();
         Vector v = ray.getDir();
-        Vector n = normal;
-
         if (p0.equals(point0))
             return null;
 
         Vector p0_q = p0.subtract(point0);
-        double nemurator = alignZero(n.dotProduct(p0_q));
+        double numerator = normal.dotProduct(p0_q);
+        if (isZero(numerator)) return null;
 
-        if (isZero(nemurator))
-            return null;
+        double denominator = normal.dotProduct(v);
+        if (isZero(denominator)) return null;
 
-        double denominator = alignZero(n.dotProduct(v));
-
-        if (isZero(denominator))
-            return null;
-
-        double t = alignZero(nemurator / denominator);
-
-        if(t<=0)
-            return null;
-
-        Point intersection_point = ray.getPoint(t);
-        return List.of(intersection_point);
+        double t = alignZero(numerator / denominator);
+        return t <= 0 ? null : List.of(ray.getPoint(t));
     }
 
     @Override

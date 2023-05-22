@@ -10,6 +10,7 @@ public class Point {
 
     /**
      * secondary constructor for Point 3D
+     *
      * @param x first coordinate of the point
      * @param y second coordinate of the point
      * @param z three coordinate of the point
@@ -21,6 +22,7 @@ public class Point {
 
     /**
      * primary constructor for point
+     *
      * @param xyz Double3 value gor x, y, z axis
      */
     public Point(Double3 xyz) {
@@ -29,6 +31,7 @@ public class Point {
 
     /**
      * Subtracts another point from this point, returning a vector that represents the difference.
+     *
      * @param p the point to subtract from this point
      * @return a vector representing the difference between this point and the given point
      */
@@ -38,6 +41,7 @@ public class Point {
 
     /**
      * Adds a vector to this point, returning a new point that represents the sum.
+     *
      * @param vector the vector to add to this point
      * @return a new point representing the sum of this point and the given vector
      */
@@ -47,6 +51,7 @@ public class Point {
 
     /**
      * Computes the squared distance between this point and another point.
+     *
      * @param other the other point to compute the distance to
      * @return the squared distance between this point and the other point
      */
@@ -59,6 +64,7 @@ public class Point {
 
     /**
      * Calculates the distance from this point to another point
+     *
      * @param other another point
      * @return the distance value
      */
@@ -69,6 +75,7 @@ public class Point {
     /**
      * Checks if this point is equal to the given object.
      * Two points are considered equal if their x, y, and z coordinates are equal.
+     *
      * @param o The object to compare to this point
      * @return true if this point is equal to the given object, false otherwise
      */
@@ -80,6 +87,7 @@ public class Point {
 
     /**
      * Returns a string representation of this point.
+     *
      * @return A string representation of this point
      */
     @Override
@@ -90,6 +98,7 @@ public class Point {
     /**
      * Retrieves the x-coordinate of this point.
      * This method returns the x-coordinate of this point, which is the value stored in the d1 field of the xyz object.
+     *
      * @return The x-coordinate of this point.
      */
     public double getX() {
@@ -99,6 +108,7 @@ public class Point {
     /**
      * Retrieves the y-coordinate of this point.
      * This method returns the y-coordinate of this point, which is the value stored in the d2 field of the xyz object.
+     *
      * @return The y-coordinate of this point.
      */
     public double getY() {
@@ -108,6 +118,7 @@ public class Point {
     /**
      * Retrieves the z-coordinate of this point.
      * This method returns the z-coordinate of this point, which is the value stored in the d3 field of the xyz object.
+     *
      * @return The z-coordinate of this point.
      */
     public double getZ() {

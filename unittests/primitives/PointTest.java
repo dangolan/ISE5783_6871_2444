@@ -1,15 +1,16 @@
 package primitives;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
- Define a class called PointTest to test point class {@link primitives.Point}
+ * Define a class called PointTest to test point class {@link primitives.Point}
  */
 class PointTest {
     /**
-     Initialize two points p1 and p2
+     * Initialize two points p1 and p2
      */
     Point p1 = new Point(1, 2, 3);
 

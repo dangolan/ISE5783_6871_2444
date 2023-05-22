@@ -3,7 +3,9 @@ package geometries;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+
 import java.util.List;
+
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
@@ -12,10 +14,11 @@ import static primitives.Util.isZero;
  */
 public class Tube extends RadialGeometry {
 
-    protected Ray axisRay;
+    protected final Ray axisRay;
 
     /**
      * constructor
+     *
      * @param axisRay the Ray
      * @param radius  the radius
      */
@@ -26,13 +29,13 @@ public class Tube extends RadialGeometry {
 
     /**
      * The normal of the Tube
+     *
      * @param p point
      * @return The normal of the cylinder
      */
     public Vector getNormal(Point p) {
         double t = axisRay.getDir().dotProduct(p.subtract(axisRay.getP0()));
-        Point o = isZero(t) ? axisRay.getP0() : axisRay.getP0().add(axisRay.getDir().scale(t));
-        return p.subtract(o).normalize();
+        return p.subtract(axisRay.getPoint(t)).normalize();
     }
 
     /**
@@ -40,6 +43,7 @@ public class Tube extends RadialGeometry {
      * This method calculates the intersection points between the current Cylinder object and the specified Ray. The method
      * returns a list of Point objects representing the intersection points, if any exist. If there are no intersections
      * or the Ray is parallel to the axisRay of the Cylinder, the method returns null.
+     *
      * @param ray The Ray object to find the intersections with.
      * @return A list of Point objects representing the intersection points, or null if no intersections exist.
      */
@@ -56,7 +60,7 @@ public class Tube extends RadialGeometry {
             double vva = v.dotProduct(va); //(v,va)
 
             if (!isZero(vva)) vecA = v.subtract(va.scale(vva)); //v-(v,va)va
-                a = vecA.lengthSquared(); //(v-(v,va)va)^2
+            a = vecA.lengthSquared(); //(v-(v,va)va)^2 (always positive)
         } catch (IllegalArgumentException e) {
             return null; //if a=0 there are no intersections because Ray is parallel to axisRay
         }
@@ -77,16 +81,13 @@ public class Tube extends RadialGeometry {
 
         if (discriminator <= 0) return null; //there are no intersections because Ray is parallel to axisRay
 
-        double sqrtDiscriminator = Math.sqrt(discriminator);
-        double t1 = alignZero(-b + sqrtDiscriminator) / (2 * a);
+        double sqrtDiscriminator = Math.sqrt(discriminator); // always positive
+        // "a" and square root of discriminator are always positive, than t1 > t2 (always)
+        double t1 = alignZero(-b + sqrtDiscriminator) / (2 * a); // it is greater than t2
+        if (t1 <= 0) return null;
+
         double t2 = alignZero(-b - sqrtDiscriminator) / (2 * a);
-
-        if (t1 > 0 && t2 > 0)
-            return List.of(ray.getPoint(t1),ray.getPoint(t2));
-        if (t1 > 0) return List.of(ray.getPoint(t1));
-        if (t2 > 0) return List.of(ray.getPoint(t2));
-
-        return null; //if there are no positive solutions
+        return t2 <= 0 ? List.of(ray.getPoint(t1)) : List.of(ray.getPoint(t1), ray.getPoint(t2));
     }
 
     @Override

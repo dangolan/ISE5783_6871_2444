@@ -4,45 +4,53 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
-import static primitives.Util.*;
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 public class Camera {
     /**
      * a class that represents a camera.
      */
-    private Point p0;
-    private Vector vUp;
-    private Vector vTo;
-    private Vector vRight;
+    private final Point p0;
+    private final Vector vUp;
+    private final Vector vTo;
+    private final Vector vRight;
     private double width;
     private double height;
     private double distance;
 
     //region getters
+    @SuppressWarnings("unused")
     public Point getP0() {
         return p0;
     }
 
-    public Vector getvUp() {
+    @SuppressWarnings("unused")
+    public Vector getVUp() {
         return vUp;
     }
 
-    public Vector getvTo() {
+    @SuppressWarnings("unused")
+    public Vector getVTo() {
         return vTo;
     }
 
-    public Vector getvRight() {
+    @SuppressWarnings("unused")
+    public Vector getVRight() {
         return vRight;
     }
 
+    @SuppressWarnings("unused")
     public double getWidth() {
         return width;
     }
 
+    @SuppressWarnings("unused")
     public double getHeight() {
         return height;
     }
 
+    @SuppressWarnings("unused")
     public double getDistance() {
         return distance;
     }
@@ -55,10 +63,10 @@ public class Camera {
      * @param vUp The up vector indicating the camera's vertical orientation.
      * @throws IllegalArgumentException If the vTo and vUp vectors are not orthogonal.
      */
-    public Camera(Point p0, Vector vTo, Vector vUp) throws IllegalArgumentException {
-        if (!isZero(vTo.dotProduct(vUp))) {
+    public Camera(Point p0, Vector vTo, Vector vUp) {
+        if (!isZero(vTo.dotProduct(vUp)))
             throw new IllegalArgumentException("constructor threw - vUp and vTo are not orthogonal");
-        }
+
         this.p0 = p0;
         this.vUp = vUp.normalize();
         this.vTo = vTo.normalize();
@@ -91,7 +99,6 @@ public class Camera {
     }
     //endregion
 
-
     //region constructRay
 
     /**
@@ -105,17 +112,17 @@ public class Camera {
      */
     public Ray constructRay(int nX, int nY, int j, int i) {
         Point pc = p0.add(vTo.scale(distance));     // center of the view plane
-        double Ry = height / nY;                      // Ratio - pixel height
-        double Rx = width / nX;                       // Ratio - pixel width
+        double ry = height / nY;                      // Ratio - pixel height
+        double rx = width / nX;                       // Ratio - pixel width
 
-        double yJ = alignZero(-(i - (nY - 1) / 2d) * Ry);       // move pc Yi pixels
-        double xJ = alignZero((j - (nX - 1) / 2d) * Rx);        // move pc Xj pixels
+        double yJ = alignZero(-(i - (nY - 1) / 2d) * ry);       // move pc Yi pixels
+        double xJ = alignZero((j - (nX - 1) / 2d) * rx);        // move pc Xj pixels
 
-        Point PIJ = pc;
-        if (!isZero(xJ)) PIJ = PIJ.add(vRight.scale(xJ));
-        if (!isZero(yJ)) PIJ = PIJ.add(vUp.scale(yJ));
+        Point pij = pc;
+        if (!isZero(xJ)) pij = pij.add(vRight.scale(xJ));
+        if (!isZero(yJ)) pij = pij.add(vUp.scale(yJ));
 
-        return new Ray(p0, PIJ.subtract(p0));
+        return new Ray(p0, pij.subtract(p0));
     }
     //endregion
 }

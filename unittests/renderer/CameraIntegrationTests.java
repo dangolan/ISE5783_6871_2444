@@ -1,11 +1,14 @@
 package renderer;
 
-import java.util.List;
-
+import geometries.Geometry;
+import geometries.Plane;
+import geometries.Sphere;
+import geometries.Triangle;
 import org.junit.jupiter.api.Test;
+import primitives.Point;
+import primitives.Vector;
 
-import geometries.*;
-import primitives.*;
+import java.util.List;
 
 /**
  * camera integration tests with a sphere, plane, and triangle.

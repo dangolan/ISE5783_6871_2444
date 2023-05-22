@@ -3,8 +3,10 @@ package geometries;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
-import static primitives.Util.alignZero;
+
 import java.util.List;
+
+import static primitives.Util.alignZero;
 
 /**
  * The Sphere class is part of the geometries package and represents
@@ -35,6 +37,7 @@ public class Sphere extends RadialGeometry {
      * Computes the normal vector at a given point on the surface of the Sphere.
      * This method calculates the normal vector at the specified point on the surface of the Sphere. The normal vector
      * represents the direction perpendicular to the surface at that point.
+     *
      * @param p The point at which the normal vector is to be computed.
      * @return The normal vector at the specified point on the surface of the Sphere.
      */
@@ -48,48 +51,28 @@ public class Sphere extends RadialGeometry {
      * This method calculates the intersection points between the current Sphere object and the specified Ray. The method
      * returns a list of Point objects representing the intersection points if they exist. If there are no intersections
      * between the Ray and the Sphere, the method returns null.
+     *
      * @param ray The Ray object to find the intersections with.
      * @return A list of Point objects representing the intersection points, or null if no intersections exist.
      */
     @Override
     public List<Point> findIntersections(Ray ray) {
         Point p0 = ray.getP0();
-        Vector v = ray.getDir();
+        if (p0.equals(center))
+            return List.of(ray.getPoint(radius));
 
-        if(p0.equals(center))
-            return List.of(center.add(v.scale(radius)));
         Vector u = center.subtract(p0);
+        double tm = ray.getDir().dotProduct(u);
+        double dSquared = u.lengthSquared() - tm * tm;
+        double thSquared = alignZero(radiusSquared - dSquared);
+        if (thSquared <= 0) return null; // outside ot tangent to the sphere
+        double th = Math.sqrt(thSquared); // always positive
 
-        double tm = alignZero(v.dotProduct(u));
-        double d = alignZero(Math.sqrt(u.lengthSquared() - tm * tm));
+        double t1 = alignZero(tm + th); // always t1 > t2
+        if (t1 <= 0) return null;
 
-        if(d>=radius)
-            return null;
-
-        double th = alignZero(Math.sqrt(radius*radius -d*d));
-        if (th<=0)
-            return null;
-
-        double t1 = alignZero(tm + th);
         double t2 = alignZero(tm - th);
-
-        if (t1 > 0 && t2 > 0)
-        {
-            Point p1 = p0.add(v.scale(t1));
-            Point p2 = p0.add(v.scale(t2));
-            return List.of(p1,p2);
-        }
-        if (t1 > 0)
-        {
-            Point p1 = ray.getPoint(t1);
-            return List.of(p1);
-        }
-        if (t2 > 0)
-        {
-            Point p2 = ray.getPoint(t2);
-            return List.of(p2);
-        }
-        return null;
+        return t2 <= 0 ? List.of(ray.getPoint(t1)) : List.of(ray.getPoint(t1), ray.getPoint(t2));
     }
 
     @Override

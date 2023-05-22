@@ -5,17 +5,21 @@ package geometries;
  */
 public abstract class RadialGeometry implements Geometry {
     final protected double radius;
+    final protected double radiusSquared;
 
     /**
      * constructor
+     *
      * @param r the radius
      */
     public RadialGeometry(double r) {
         this.radius = r;
+        this.radiusSquared = r * r;
     }
 
     /**
      * getter
+     *
      * @return the radius
      */
     public double getRadius() {

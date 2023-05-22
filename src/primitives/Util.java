@@ -2,6 +2,7 @@ package primitives;
 
 /**
  * Util class is used for some internal utilities, e.g. controlling accuracy
+ *
  * @author Dan
  */
 public abstract class Util {
@@ -21,6 +22,7 @@ public abstract class Util {
      * 2. Shift all 52 bits to the right, effectively removing the mantissa.
      * 3. Zero the sign of the number bit by applying a mask of 0x7FF.
      * 4. "De-normalize" the exponent by subtracting 1023.
+     *
      * @param num The number for which the exponent needs to be determined.
      * @return The exponent of the specified number.
      */
@@ -30,6 +32,7 @@ public abstract class Util {
 
     /**
      * Checks whether the number is [almost] zero
+     *
      * @param number the number to check
      * @return true if the number is zero or almost zero, false otherwise
      */
@@ -39,6 +42,7 @@ public abstract class Util {
 
     /**
      * Aligns the number to zero if it is almost zero
+     *
      * @param number the number to align
      * @return 0.0 if the number is very close to zero, the number itself otherwise
      */
@@ -48,6 +52,7 @@ public abstract class Util {
 
     /**
      * Check whether two numbers have the same sign
+     *
      * @param n1 1st number
      * @param n2 2nd number
      * @return true if the numbers have the same sign
@@ -58,6 +63,7 @@ public abstract class Util {
 
     /**
      * Provide a real random number in range between min and max
+     *
      * @param min value (included)
      * @param max value (excluded)
      * @return the random value

@@ -3,6 +3,7 @@ package geometries;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+
 import static primitives.Util.isZero;
 
 /**
@@ -13,6 +14,7 @@ public class Cylinder extends Tube {
 
     /**
      * constructor
+     *
      * @param height  the height
      * @param axisRay the Ray
      * @param radius  the radius
@@ -22,31 +24,26 @@ public class Cylinder extends Tube {
         this.height = height;
     }
 
+    @SuppressWarnings("unused")
     public double getHeight() {
         return height;
     }
 
     /**
      * The normal of the cylinder
+     *
      * @param p point on cylinder
      * @return The normal of the cylinder in this point
      */
     public Vector getNormal(Point p) {
         Vector v = axisRay.getDir();
         Point p0 = axisRay.getP0();
-        if (p.equals(p0)) {
-            return v.scale(-1);
-        }
+        if (p.equals(p0)) return v.scale(-1);
 
         double t = v.dotProduct(p.subtract(p0));
+        if (isZero(t)) return v.scale(-1);
+        if (isZero(t - height)) return v;
 
-        if (isZero(t)) {
-            return v.scale(-1);
-        }
-        if (isZero(t - height)) {
-            return v;
-        }
-        Point o = p0.add(v.scale(t));
-        return p.subtract(o).normalize();
+        return super.getNormal(p);
     }
 }
