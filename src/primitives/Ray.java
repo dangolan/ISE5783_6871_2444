@@ -1,7 +1,7 @@
 package primitives;
 
 import java.util.List;
-
+import geometries.Intersectable.GeoPoint;
 import static primitives.Util.isZero;
 
 /**
@@ -83,6 +83,27 @@ public class Ray {
             }
         }
         return closestPoint;
+    }
+
+    /**
+     * Try to think of a better solution
+     *  find the point that is the closet one to the head of the ray
+     * @param intersections
+     * @return the closest geo-point to the head of the ray
+     */
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> intersections) {
+        GeoPoint closestpoint = null;
+        double minDistance = Double.MAX_VALUE;
+        double ptDistance;
+
+        for (GeoPoint geoPoint : intersections) {
+            ptDistance = geoPoint.point.distanceSquared(p0);
+            if (ptDistance < minDistance) {
+                minDistance = ptDistance;
+                closestpoint = geoPoint;
+            }
+        }
+        return closestpoint;
     }
 
     @Override

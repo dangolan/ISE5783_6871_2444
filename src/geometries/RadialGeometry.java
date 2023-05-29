@@ -3,7 +3,7 @@ package geometries;
 /**
  * class for all the shapes with a radius
  */
-public abstract class RadialGeometry implements Geometry {
+public abstract class RadialGeometry extends Geometry {
     final protected double radius;
     final protected double radiusSquared;
 

@@ -10,19 +10,16 @@ import java.util.List;
  * Geometries' class.
  * Represents a collection of geometries.
  */
-public class Geometries implements Intersectable {
+public class Geometries extends Intersectable {
     private final List<Intersectable> geometriesInScene = new LinkedList<>();
-    //we have chosen in LinkedList because this class will work in better running time when the application demands storing the data and accessing it.
 
     /**
      * A default constructor that create new empty arrayList intersectable-geometries
      */
-    public Geometries() {
-    }
+    public Geometries() {}
 
     /**
      * Constructor that receives list of geometries and puts them in a new arrayList.
-     *
      * @param geometries The geometries to add to the list.
      */
     public Geometries(Intersectable... geometries) {
@@ -39,26 +36,21 @@ public class Geometries implements Intersectable {
     }
 
     /**
-     * Finds a list of intersections between the geometries in the scene and a given ray.
-     * This method calculates the intersection points between the geometries in the scene and the specified Ray. It iterates
-     * through the list of geometries in the scene, invoking the findIntersections() method of each intersectable geometry.
-     * It collects all the intersection points from each geometry and returns them as a list. If there are no intersections
-     * or the scene has no geometries, the method returns null.
-     *
-     * @param ray The Ray object to find the intersections with.
-     * @return A list of Point objects representing the intersection points, or null if no intersections exist or the scene has no geometries.
+     * @param ray
+     * @return list of intersection points
      */
     @Override
-    public List<Point> findIntersections(Ray ray) {
-        List<Point> listIntersect = null;
-        for (Intersectable intersect : geometriesInScene) {
-            var list = intersect.findIntersections(ray);
-            if (list != null) {
-                if (listIntersect == null)
-                    listIntersect = new LinkedList<>();
-                listIntersect.addAll(list);
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        List<GeoPoint> result = null;
+        for (Intersectable item : geometriesInScene) {
+            List<GeoPoint> itemList = item.findGeoIntersectionsHelper(ray);
+            if (itemList != null) {
+                if (result == null) {
+                    result = new LinkedList<>();
+                }
+                result.addAll(itemList);
             }
         }
-        return listIntersect;
+        return result;
     }
 }

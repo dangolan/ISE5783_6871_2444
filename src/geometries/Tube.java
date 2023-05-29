@@ -3,9 +3,7 @@ package geometries;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
-
 import java.util.List;
-
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
@@ -29,7 +27,6 @@ public class Tube extends RadialGeometry {
 
     /**
      * The normal of the Tube
-     *
      * @param p point
      * @return The normal of the cylinder
      */
@@ -39,55 +36,48 @@ public class Tube extends RadialGeometry {
     }
 
     /**
-     * Finds the intersection points between this Cylinder and a given Ray.
-     * This method calculates the intersection points between the current Cylinder object and the specified Ray. The method
-     * returns a list of Point objects representing the intersection points, if any exist. If there are no intersections
-     * or the Ray is parallel to the axisRay of the Cylinder, the method returns null.
-     *
-     * @param ray The Ray object to find the intersections with.
-     * @return A list of Point objects representing the intersection points, or null if no intersections exist.
+     * @param ray ray intersecting the geometry
+     * @return
      */
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         Point p0 = ray.getP0();
         Vector v = ray.getDir();
         Point pa = this.axisRay.getP0();
         Vector va = this.axisRay.getDir();
-        double a, b, c; //coefficients for quadratic equation ax^2 + bx + c
+        double a, b, c;
         Vector vecA = v;
-
         try {
-            double vva = v.dotProduct(va); //(v,va)
-
-            if (!isZero(vva)) vecA = v.subtract(va.scale(vva)); //v-(v,va)va
-            a = vecA.lengthSquared(); //(v-(v,va)va)^2 (always positive)
+            double vva = v.dotProduct(va);
+            if (!isZero(vva)) vecA = v.subtract(va.scale(vva));
+            a = vecA.lengthSquared();
         } catch (IllegalArgumentException e) {
-            return null; //if a=0 there are no intersections because Ray is parallel to axisRay
+            return null;
         }
         try {
-            Vector deltaP = p0.subtract(pa); //p0-pa
+            Vector deltaP = p0.subtract(pa);
             Vector deltaPMinusDeltaPVaVa = deltaP;
-            double deltaPVa = deltaP.dotProduct(va); //(delP,va)va)
-
-            if (!isZero(deltaPVa)) deltaPMinusDeltaPVaVa = deltaP.subtract(va.scale(deltaPVa)); //(delP-(delP,va)va)
-            b = 2 * (vecA.dotProduct(deltaPMinusDeltaPVaVa)); //2(v-(v,va)va,delP-(delP,va)va)
-            c = deltaPMinusDeltaPVaVa.lengthSquared() - this.radius; //(delP-(delP,va)va)^2 - r^2
+            double deltaPVa = deltaP.dotProduct(va);
+            if (!isZero(deltaPVa)) deltaPMinusDeltaPVaVa = deltaP.subtract(va.scale(deltaPVa));
+            b = 2 * (vecA.dotProduct(deltaPMinusDeltaPVaVa));
+            c = deltaPMinusDeltaPVaVa.lengthSquared() - this.radius;
         } catch (IllegalArgumentException e) {
             b = 0;
             c = -1 * this.radius;
         }
 
-        double discriminator = alignZero(b * b - 4 * a * c); //discriminator: b^2 - 4ac
+        double discriminator = alignZero(b * b - 4 * a * c);
+        if (discriminator <= 0) return null;
 
-        if (discriminator <= 0) return null; //there are no intersections because Ray is parallel to axisRay
-
-        double sqrtDiscriminator = Math.sqrt(discriminator); // always positive
-        // "a" and square root of discriminator are always positive, than t1 > t2 (always)
-        double t1 = alignZero(-b + sqrtDiscriminator) / (2 * a); // it is greater than t2
-        if (t1 <= 0) return null;
-
+        double sqrtDiscriminator = Math.sqrt(discriminator);
+        double t1 = alignZero(-b + sqrtDiscriminator) / (2 * a);
         double t2 = alignZero(-b - sqrtDiscriminator) / (2 * a);
-        return t2 <= 0 ? List.of(ray.getPoint(t1)) : List.of(ray.getPoint(t1), ray.getPoint(t2));
+
+        if (t1 > 0 && t2 > 0)
+            return List.of(new GeoPoint(this, ray.getPoint(t1)),new GeoPoint(this, ray.getPoint(t2)));
+        if (t1 > 0) return List.of(new GeoPoint(this, ray.getPoint(t1)));
+        if (t2 > 0) return List.of(new GeoPoint(this, ray.getPoint(t2)));
+        return null; //if there are no positive solutions
     }
 
     @Override

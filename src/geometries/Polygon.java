@@ -3,9 +3,7 @@ package geometries;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
-
 import java.util.List;
-
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
@@ -15,7 +13,7 @@ import static primitives.Util.isZero;
  *
  * @author Dan
  */
-public class Polygon implements Geometry {
+public class Polygon extends Geometry {
     /**
      * List of polygon's vertices
      */
@@ -80,33 +78,47 @@ public class Polygon implements Geometry {
         return plane.getNormal();
     }
 
-    @Override
-    public List<Point> findIntersections(Ray ray) {
-        List<Point> intersections = this.plane.findIntersections(ray);
-        // if there is no Intersections at all in the plane
-        if (intersections == null)
+    /**
+     * @param ray ray intersecting the geometry
+     * @return
+     */
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray);
+        if (planeIntersections == null) {
             return null;
-
-        Point p0 = ray.getP0();
-        Vector dir = ray.getDir();
-
-        Vector v1 = vertices.get(size - 1).subtract(p0);
-        Vector v2 = vertices.get(0).subtract(p0);
-
-        Vector n = v1.crossProduct(v2).normalize();
-        double vn1 = alignZero(dir.dotProduct(n));
-        if (vn1 == 0)
-            return null;
-
-        for (int i = 1; i < size; ++i) {
-            v1 = v2;
-            v2 = vertices.get(i).subtract(p0);
-            n = v1.crossProduct(v2).normalize();
-            double vn = alignZero(dir.dotProduct(n));
-            //no intersection
-            if (vn1 * vn <= 0)
-                return null;
         }
-        return List.of(intersections.get(0));
+
+        Point P0 = ray.getP0();
+        Vector v = ray.getDir();
+
+        Point P1 = vertices.get(1);
+        Point P2 = vertices.get(0);
+
+        Vector v1 = P0.subtract(P1);
+        Vector v2 = P0.subtract(P2);
+
+        double sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
+        if (isZero(sign)) {
+            return null;
+        }
+
+        boolean positive = sign > 0;
+
+        for (int i = vertices.size() - 1; i > 0; --i) {
+            v1 = v2;
+            v2 = P0.subtract(vertices.get(i));
+
+            sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
+            if (isZero(sign)) {
+                return null;
+            }
+
+            if (positive != (sign > 0)) {
+                return null;
+            }
+        }
+        Point point = planeIntersections.get(0).point;
+        return List.of(new GeoPoint(this, point));
     }
+
 }
