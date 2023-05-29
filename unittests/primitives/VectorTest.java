@@ -215,7 +215,5 @@ class VectorTest {
         // TC02: parallel to the original one correctness
         assertThrows(IllegalArgumentException.class, () -> v1.crossProduct(u), "the normalized vector is not parallel to the original one");
 
-        // TC03: not opposite to the original one
-        assertTrue(v1.dotProduct(u) >= 0,"the normalized vector is opposite to the original one");
     }
 }

@@ -44,8 +44,6 @@ public class RenderTests {
    }
 
    // For stage 6 - please disregard in stage 5
-   /** Produce a scene with basic 3D model - including individual lights of the
-    * bodies and render it into a png image with a grid */
    // @Test
    // public void basicRenderMultiColorTest() {
    // Scene scene = new Scene("Test scene")//
@@ -95,4 +93,6 @@ public class RenderTests {
       camera.printGrid(100, new Color(YELLOW));
       camera.writeToImage();
    }
+
+
 }

@@ -5,7 +5,6 @@ import primitives.Color;
 
 /**
  * Testing renderer.ImageWriter
- * @author Shilo and Aviad
  */
 class ImageWriterTest {
 

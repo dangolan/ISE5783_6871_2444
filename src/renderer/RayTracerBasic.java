@@ -8,13 +8,14 @@ import scene.Scene;
 import java.util.List;
 
 /**
- *  implementation of the abstract class RayTracerBase
+ * implementation of the abstract class RayTracerBase
  */
-public class RayTracerBasic extends RayTracerBase{
+public class RayTracerBasic extends RayTracerBase {
 
     public RayTracerBasic(Scene scene) {
         super(scene);
     }
+
     @Override
     public Color traceRay(Ray ray) {
         List<Point> intersectionPoints = scene.geometries.findIntersections(ray);
@@ -23,9 +24,11 @@ public class RayTracerBasic extends RayTracerBase{
         Point point = ray.findClosestPoint(intersectionPoints);
         return calcColor(point);
     }
+
     /**
      * calculating the color of a specific point, taking into account the lightning,
      * transparency of the point itself and other affects of the surrounding are of the point in space
+     *
      * @param point calculate the color of this point
      * @return for now - the ambient light's intensity
      */

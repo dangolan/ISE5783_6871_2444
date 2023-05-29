@@ -1,52 +1,58 @@
 package renderer;
 
-import primitives.*;
+import primitives.Color;
+import primitives.Point;
+import primitives.Ray;
+import primitives.Vector;
 
 import java.util.MissingResourceException;
 
-import static primitives.Util.*;
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 /**
  * a class that represents a camera.
  */
 public class Camera {
-    private Point p0;
-    private Vector vUp;
-    private Vector vTo;
-    private Vector vRight;
+    private final Point p0;
+    private final Vector vUp;
+    private final Vector vTo;
+    private final Vector vRight;
     private double width;
     private double height;
     private double distance;
     private ImageWriter imageWriter;
     private RayTracerBase rayTracer;
 
+    @SuppressWarnings("unused")
     public Point getP0() {
         return p0;
     }
-
-    public Vector getvUp() {
+    @SuppressWarnings("unused")
+    public Vector getVUp() {
         return vUp;
     }
-
-    public Vector getvTo() {
+    @SuppressWarnings("unused")
+    public Vector getVTo() {
         return vTo;
     }
-
-    public Vector getvRight() {
+    @SuppressWarnings("unused")
+    public Vector getVRight() {
         return vRight;
     }
-
+    @SuppressWarnings("unused")
     public double getWidth() {
         return width;
     }
-
+    @SuppressWarnings("unused")
     public double getHeight() {
         return height;
     }
-
+    @SuppressWarnings("unused")
     public double getDistance() {
         return distance;
     }
+
     public Camera setImageWriter(ImageWriter imageWriter) {
         this.imageWriter = imageWriter;
         return this;
@@ -67,6 +73,7 @@ public class Camera {
         this.rayTracer = rayTracer;
         return this;
     }
+
     public Camera(Point p0, Vector vTo, Vector vUp) throws IllegalArgumentException {
         if (!isZero(vTo.dotProduct(vUp))) {
             throw new IllegalArgumentException("constructor threw - vUp and vTo are not orthogonal");
@@ -76,6 +83,7 @@ public class Camera {
         this.vTo = vTo.normalize();
         this.vRight = vTo.crossProduct(vUp).normalize();
     }
+
     /**
      * constructs a ray from the camera through pixel i,j.
      *
@@ -87,17 +95,17 @@ public class Camera {
      */
     public Ray constructRay(int nX, int nY, int j, int i) {
         Point pc = p0.add(vTo.scale(distance));     // center of the view plane
-        double Ry = height / nY;                      // Ratio - pixel height
-        double Rx = width / nX;                       // Ratio - pixel width
+        double ry = height / nY;                      // Ratio - pixel height
+        double rx = width / nX;                       // Ratio - pixel width
 
-        double yJ = alignZero(-(i - (nY - 1) / 2d) * Ry);       // move pc Yi pixels
-        double xJ = alignZero((j - (nX - 1) / 2d) * Rx);        // move pc Xj pixels
+        double yJ = alignZero(-(i - (nY - 1) / 2d) * ry);       // move pc Yi pixels
+        double xJ = alignZero((j - (nX - 1) / 2d) * rx);        // move pc Xj pixels
 
-        Point PIJ = pc;
-        if (!isZero(xJ)) PIJ = PIJ.add(vRight.scale(xJ));
-        if (!isZero(yJ)) PIJ = PIJ.add(vUp.scale(yJ));
+        Point pij = pc;
+        if (!isZero(xJ)) pij = pij.add(vRight.scale(xJ));
+        if (!isZero(yJ)) pij = pij.add(vUp.scale(yJ));
 
-        return new Ray(p0, PIJ.subtract(p0));
+        return new Ray(p0, pij.subtract(p0));
     }
 
     /**
@@ -107,7 +115,7 @@ public class Camera {
      *
      * @throws MissingResourceException if one of the fields are uninitialized
      */
-    public void renderImage() throws MissingResourceException {
+    public void renderImage() {
         if (imageWriter == null || rayTracer == null || width == 0 || height == 0 || distance == 0) { //default values
             throw new MissingResourceException("Camera is missing some fields", "Camera", "field");
         }
@@ -120,14 +128,15 @@ public class Camera {
             }
         }
     }
+
     /**
      * print a grid on the image without running over the original image
      *
      * @param interval the size of the grid squares
      * @param color    the color of the grid
-     * @throws MissingResourceException
+     * @throws MissingResourceException throws when Camera is missing some fields
      */
-    public void printGrid(int interval, Color color) throws MissingResourceException {
+    public void printGrid(int interval, Color color) {
         if (this.imageWriter == null) // the image writer is uninitialized
             throw new MissingResourceException("Camera is missing some fields", "Camera", "imageWriter");
         for (int i = 0; i < imageWriter.getNy(); i++)
@@ -135,6 +144,7 @@ public class Camera {
                 if (i % interval == 0 || j % interval == 0)  // color the grid
                     imageWriter.writePixel(j, i, color);
     }
+
     /**
      * create the image file using the image writer
      */
