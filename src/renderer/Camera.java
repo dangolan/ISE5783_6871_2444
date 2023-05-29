@@ -115,7 +115,7 @@ public class Camera {
      *
      * @throws MissingResourceException if one of the fields are uninitialized
      */
-    public void renderImage() {
+    public Camera renderImage() {
         if (imageWriter == null || rayTracer == null || width == 0 || height == 0 || distance == 0) { //default values
             throw new MissingResourceException("Camera is missing some fields", "Camera", "field");
         }
@@ -127,6 +127,7 @@ public class Camera {
                 // and intersecting with the geometries
             }
         }
+        return this;
     }
 
     /**

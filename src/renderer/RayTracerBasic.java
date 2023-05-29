@@ -38,33 +38,33 @@ public class RayTracerBasic extends RayTracerBase {
                 .add(calcLocalEffects(geoPoint, ray));
     }
 
-//    private Color calcLocalEffects(GeoPoint geoPoint, Ray ray) {
-//        Vector v = ray.getDir ();
-//        Vector n = geoPoint.geometry.getNormal(geoPoint.point);
-//
-//        double nv = alignZero(n.dotProduct(v));
-//        if (nv == 0)
-//            return Color.BLACK;
-//
-//
-//        int nShininess = geoPoint.geometry.getMaterial().nShininess;
-//        Double3 kd = geoPoint.geometry.getMaterial().Kd;
-//        Double3 ks = geoPoint.geometry.getMaterial().Ks;
-//        Color color = Color.BLACK;
-//
-//        for (LightSource lightSource : scene.lights) {
-//            Vector l = lightSource.getL(geoPoint.point);
-//            double nl = alignZero(n.dotProduct(l));
-//
-//            if (nl * nv > 0) {
-//                Color lightIntensity = lightSource.getIntensity(geoPoint.point);
-//                color = color.add(
-//                        calcDiffusive(kd, l, n, lightIntensity),
-//                        calcSpecular(ks, l, n, v, nShininess, lightIntensity));
-//            }
-//        }
-//        return color;
-//    }
+    private Color calcLocalEffects(GeoPoint geoPoint, Ray ray) {
+        Vector v = ray.getDir ();
+        Vector n = geoPoint.geometry.getNormal(geoPoint.point);
+
+        double nv = alignZero(n.dotProduct(v));
+        if (nv == 0)
+            return Color.BLACK;
+
+
+        int nShininess = geoPoint.geometry.getMaterial().nShininess;
+        Double3 kd = geoPoint.geometry.getMaterial().Kd;
+        Double3 ks = geoPoint.geometry.getMaterial().Ks;
+        Color color = Color.BLACK;
+
+        for (LightSource lightSource : scene.lights) {
+            Vector l = lightSource.getL(geoPoint.point);
+            double nl = alignZero(n.dotProduct(l));
+
+            if (nl * nv > 0) {
+                Color lightIntensity = lightSource.getIntensity(geoPoint.point);
+                color = color.add(
+                        calcDiffusive(kd, l, n, lightIntensity),
+                        calcSpecular(ks, l, n, v, nShininess, lightIntensity));
+            }
+        }
+        return color;
+    }
 
     /**
      * the specular effect on the object according to the phong reflection model
