@@ -9,7 +9,6 @@ public abstract class RadialGeometry extends Geometry {
 
     /**
      * constructor
-     *
      * @param r the radius
      */
     public RadialGeometry(double r) {
@@ -19,7 +18,6 @@ public abstract class RadialGeometry extends Geometry {
 
     /**
      * getter
-     *
      * @return the radius
      */
     public double getRadius() {

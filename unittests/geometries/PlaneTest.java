@@ -36,9 +36,6 @@ class PlaneTest {
     }
 
     /**
-     * Test method for {@link Plane#getNormal(Point)}.
-     */
-    /**
      * Test method for {@link Plane#getNormal(Point)} (primitives.Point)}.
      */
     @Test

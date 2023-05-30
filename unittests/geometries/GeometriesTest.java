@@ -10,6 +10,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+/**
+ * This class contains tests for the {@link Geometries} class, specifically for the {@link Geometries#findIntersections(Ray)}
+ * method. The tests include equivalence partitions and boundary values to ensure correct behavior.
+ * @see Geometries
+ */
 class GeometriesTest {
 
     /**
@@ -17,7 +22,6 @@ class GeometriesTest {
      * It includes equivalence partitions and boundary values tests to ensure correct behavior.
      * For each test case, a ray is created and passed to the findIntersections() method,
      * and the result is compared against the expected number of intersections or a null value.
-     *
      * @link { Geometries#findIntersections(Ray)}
      * @see Geometries
      */

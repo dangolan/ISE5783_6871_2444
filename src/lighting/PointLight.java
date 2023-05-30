@@ -1,69 +1,64 @@
 package lighting;
 
 import primitives.*;
-//TODO javadoc
+
 /**
  * a representation of a point light - an ordinary lamp
  */
 public class PointLight extends Light implements LightSource{
     private final Point position;
+    private double kc = 1;
+    private double kl = 0;
+    private double kq = 0;
 
-    // the attenuation factors
-    private double kC = 1;
-    private double kL = 0;
-    private double kQ = 0;
-
-    //region constructor
+    /**
+     * Constructs a PointLight object with the specified intensity and position.
+     * @param intensity the intensity of the point light
+     * @param position the position of the light source
+     */
     public PointLight(Color intensity, Point position) {
         super(intensity);
         this.position = position;
     }
-    //endregion
 
-    //region getL
     @Override
     public Vector getL(Point point){
         return point.subtract(this.position).normalize();
     }
-    //endregion
 
-    //region getIntensity
     @Override
     public Color getIntensity(Point point) {
-        double d = point.distance(this.position);                           // distance from the light source
-        return this.getIntensity().reduce (kC + kL * d + kQ * d * d);
+        double d = point.distance(this.position);
+        return this.getIntensity().reduce (kc + kl * d + kq * d * d);
     }
-    //endregion
 
-    //region setters
     /**
-     * set the kC attenuation factor
-     * @param kC the attenuation factor
+     * set the kc attenuation factor
+     * @param kc the attenuation factor
      * @return the point light. builder pattern
      */
-    public PointLight setKc(double kC) {
-        this.kC = kC;
+    public PointLight setKc(double kc) {
+        this.kc = kc;
         return this;
     }
 
     /**
-     * set the kL attenuation factor
-     * @param kL the attenuation factor
+     * set the kl attenuation factor
+     * @param kl the attenuation factor
      * @return the point light. builder pattern
      */
-    public PointLight setKl(double kL) {
-        this.kL = kL;
+    public PointLight setKl(double kl) {
+        this.kl = kl;
         return this;
     }
 
     /**
-     * set the kQ attenuation factor
-     * @param kQ the attenuation factor
+     * set the kq attenuation factor
+     * @param kq the attenuation factor
      * @return the point light. builder pattern
      */
-    public PointLight setKq(double kQ) {
-        this.kQ = kQ;
+    public PointLight setKq(double kq) {
+        this.kq = kq;
         return this;
     }
-    //endregion
 }

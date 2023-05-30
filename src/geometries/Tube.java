@@ -16,7 +16,6 @@ public class Tube extends RadialGeometry {
 
     /**
      * constructor
-     *
      * @param axisRay the Ray
      * @param radius  the radius
      */
@@ -35,10 +34,6 @@ public class Tube extends RadialGeometry {
         return p.subtract(axisRay.getPoint(t)).normalize();
     }
 
-    /**
-     * @param ray ray intersecting the geometry
-     * @return
-     */
     @Override
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         Point p0 = ray.getP0();

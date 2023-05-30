@@ -3,26 +3,22 @@ package lighting;
 import primitives.Color;
 
 /**
- *
+ * Represents a light source in a scene.
  */
-//TODO javadoc
 abstract class Light {
-    /**
-     *
-     */
     private Color intensity;
 
     /**
-     * constructor
-     * @param intensity
+     * Constructs a Light object with the specified intensity.
+     * @param intensity the intensity of the light
      */
     protected Light(Color intensity) {
         this.intensity = intensity;
     }
 
     /**
-     * get. intensity don't have set.
-     * @return intensity
+     * Retrieves the intensity of the light.
+     * @return the intensity of the light
      */
     public Color getIntensity() {
         return intensity;

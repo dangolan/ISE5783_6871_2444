@@ -7,28 +7,26 @@ import primitives.Vector;
 /**
  * representation if a directional light that has a direction, intensity and no attenuation
  */
-//TODO javadoc
 public class DirectionalLight extends Light implements LightSource{
     private final Vector direction;
 
-    //region constructor
+    /**
+     * Constructs a DirectionalLight object with the specified intensity and direction.
+     * @param intensity the intensity of the directional light
+     * @param direction the direction of the light rays
+     */
     public DirectionalLight(Color intensity, Vector direction) {
         super(intensity);
         this.direction = direction.normalize();
     }
-    //endregion
 
-    //region getIntensity
     @Override
     public Color getIntensity(Point p) {
         return this.getIntensity();
     }
-    //endregion
 
-    //region getL
     @Override
     public Vector getL(Point point){
         return this.direction;
     }
-    //endregion
 }

@@ -10,7 +10,6 @@ import static primitives.Util.isZero;
 /**
  * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
  * system
- *
  * @author Dan
  */
 public class Polygon extends Geometry {
@@ -27,7 +26,6 @@ public class Polygon extends Geometry {
     /**
      * Polygon constructor based on vertices list. The list must be ordered by edge
      * path. The polygon must be convex.
-     *
      * @param vertices list of vertices according to their order by
      *                 edge path
      * @throws IllegalArgumentException in any case of illegal combination of
@@ -53,7 +51,7 @@ public class Polygon extends Geometry {
         this.vertices = List.of(vertices);
 
         plane = new Plane(vertices[0], vertices[1], vertices[2]);
-        if (size == 3) return; // no need for more tests for a Triangle
+        if (size == 3) return;
 
         Vector n = plane.getNormal();
 
@@ -62,10 +60,8 @@ public class Polygon extends Geometry {
 
         boolean positive = edge1.crossProduct(edge2).dotProduct(n) > 0;
         for (var i = 1; i < size; ++i) {
-            // Test that the point is in the same plane as calculated originally
             if (!isZero(vertices[i].subtract(vertices[0]).dotProduct(n)))
                 throw new IllegalArgumentException("All vertices of a polygon must lay in the same plane");
-            // Test the consequent edges have
             edge1 = edge2;
             edge2 = vertices[i].subtract(vertices[i - 1]);
             if (positive != (edge1.crossProduct(edge2).dotProduct(n) > 0))
@@ -79,8 +75,9 @@ public class Polygon extends Geometry {
     }
 
     /**
-     * @param ray ray intersecting the geometry
-     * @return
+     * Helper method to find the intersection points between the given ray and the geometry.
+     * @param ray the ray intersecting the geometry
+     * @return a list of GeoPoint objects representing the intersection points,
      */
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray);
@@ -120,5 +117,4 @@ public class Polygon extends Geometry {
         Point point = planeIntersections.get(0).point;
         return List.of(new GeoPoint(this, point));
     }
-
 }

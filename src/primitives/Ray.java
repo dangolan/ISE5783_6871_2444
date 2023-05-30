@@ -19,7 +19,6 @@ public class Ray {
 
     /**
      * constructor
-     *
      * @param p0  the start point
      * @param dir the direction of the ray
      */
@@ -30,7 +29,6 @@ public class Ray {
 
     /**
      * getter
-     *
      * @return the point 0
      */
     public Point getP0() {
@@ -39,19 +37,12 @@ public class Ray {
 
     /**
      * getter
-     *
      * @return the direction vector
      */
     public Vector getDir() {
         return dir;
     }
 
-    /**
-     * Determines if the specified object is equal to this Ray object.
-     *
-     * @param o The object to compare with this Ray object.
-     * @return true if the objects are equal, false otherwise.
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -61,7 +52,6 @@ public class Ray {
 
     /**
      * Calculates the point along the line at a given distance from the ray head.
-     *
      * @param t the distance
      * @return the calculated point
      */
@@ -69,16 +59,20 @@ public class Ray {
         return isZero(t) ? p0 : p0.add(dir.scale(t));
     }
 
+    /**
+     * Finds the closest point from a list of points.
+     * @param points the list of points to search from
+     * @return the closest point, or null if the list is null or empty
+     */
     public Point findClosestPoint(List<Point> points) {
         return points == null || points.isEmpty() ? null
                 : findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList()).point;
     }
 
     /**
-     * Try to think of a better solution
-     *  find the point that is the closet one to the head of the ray
-     * @param intersections
-     * @return the closest geo-point to the head of the ray
+     * Finds the closest GeoPoint to the head of the ray among the given list of intersections.
+     * @param intersections the list of GeoPoints to search from
+     * @return the closest GeoPoint to the head of the ray, or null if the list is null or empty
      */
     public GeoPoint findClosestGeoPoint(List<GeoPoint> intersections) {
         GeoPoint closestpoint = null;

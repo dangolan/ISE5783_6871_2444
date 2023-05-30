@@ -17,7 +17,7 @@ public class Plane extends Geometry {
 
     /**
      * constructor
-     * @param p0     the point
+     * @param p0 the point
      * @param normal the vector that normal to the plane
      */
     public Plane(Point p0, Vector normal) {
@@ -29,7 +29,6 @@ public class Plane extends Geometry {
     /**
      * constructor that get 3 points and set one of them to witch the plane lays
      * and calculate the normal vector
-     *
      * @param p0 point 0
      * @param p1 point 1
      * @param p2 point 2
@@ -37,7 +36,7 @@ public class Plane extends Geometry {
      */
     public Plane(Point p0, Point p1, Point p2) {
         super();
-        this.p0 = p0;// Associated point in which the plane lays
+        this.p0 = p0;
         Vector v1 = p1.subtract(p0);
         Vector v2 = p2.subtract(p0);
         this.normal = (p1.subtract(p0).crossProduct(p2.subtract(p0))).normalize();
@@ -45,7 +44,6 @@ public class Plane extends Geometry {
 
     /**
      * getter
-     *
      * @return the point 0
      */
     public Point getP0() {
@@ -54,7 +52,6 @@ public class Plane extends Geometry {
 
     /**
      * getter
-     *
      * @return the normal vector
      */
     public Vector getNormal() {
@@ -63,7 +60,6 @@ public class Plane extends Geometry {
 
     /**
      * getter
-     *
      * @param p the point
      * @return the normal vector
      */
@@ -71,10 +67,6 @@ public class Plane extends Geometry {
         return normal;
     }
 
-    /**
-     * @param ray ray intersecting the geometry
-     * @return
-     */
     @Override
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         Point p1 = ray.getP0();

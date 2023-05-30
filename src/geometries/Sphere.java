@@ -21,7 +21,6 @@ public class Sphere extends RadialGeometry {
 
     /**
      * constructor
-     *
      * @param center the center of a Sphere
      * @param radius the radius
      */
@@ -31,24 +30,11 @@ public class Sphere extends RadialGeometry {
 
     }
 
-    /**
-     * Computes the normal vector at a given point on the surface of the Sphere.
-     * This method calculates the normal vector at the specified point on the surface of the Sphere. The normal vector
-     * represents the direction perpendicular to the surface at that point.
-     *
-     * @param p The point at which the normal vector is to be computed.
-     * @return The normal vector at the specified point on the surface of the Sphere.
-     */
     @Override
     public Vector getNormal(Point p) {
         return p.subtract(center).normalize();
     }
 
-    /**
-     *
-     * @param ray
-     * @return GeoPoint intersection if they exist
-     */
     @Override
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         Point p0 = ray.getP0();
@@ -91,5 +77,4 @@ public class Sphere extends RadialGeometry {
     public String toString() {
         return "Sphere [center=" + center + ", radius=" + radius + "]";
     }
-
 }

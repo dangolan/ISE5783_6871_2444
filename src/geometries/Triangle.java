@@ -20,10 +20,6 @@ public class Triangle extends Polygon {
         super(p1, p2, p3);
     }
 
-    /**
-     * @param ray
-     * @return intersection if they exist
-     */
     @Override
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray);
@@ -52,5 +48,4 @@ public class Triangle extends Polygon {
         }
         return null;
     }
-
 }

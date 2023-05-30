@@ -4,22 +4,18 @@ import org.junit.jupiter.api.Test;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
-
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * This is a JUnit test class for the geometries.Sphere class
  */
-
 class SphereTest {
 
     /**
-     * * Test for normal vector of Sphere {@link Sphere#getNormal}
+     * Test for normal vector of Sphere {@link Sphere#getNormal}
      */
-
     @Test
     void getNormal() {
         // ============ Equivalence Partitions Test ==============

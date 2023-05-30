@@ -2,7 +2,6 @@ package geometries;
 
 import primitives.Point;
 import primitives.Ray;
-
 import java.util.List;
 
 /**
@@ -26,21 +25,25 @@ public abstract class Intersectable {
         return geoList == null ? null : geoList.stream().map(gp -> gp.point).toList();
     }
 
-    public List<GeoPoint> findGeoIntersections(Ray ray)
-    {
+    /**
+     * Finds the intersection points between the given ray and the geometries in the scene.
+     * @param ray the ray to intersect with the geometries
+     * @return a list of intersection points between the ray and the geometries,
+     */
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
         return findGeoIntersectionsHelper(ray);
     }
     /**
-     *
+     * Represents a point of intersection between a ray and a geometry in a scene.
      */
     public static class GeoPoint {
         public Geometry geometry;
         public Point point;
 
         /**
-         * GeoPoint constructor
-         * @param geometry paramater
-         * @param point parmater
+         * Constructs a new GeoPoint object.
+         * @param geometry the geometry that was intersected
+         * @param point the point of intersection
          */
         public  GeoPoint(Geometry geometry, Point point)
         {
@@ -48,7 +51,6 @@ public abstract class Intersectable {
             this.point = point;
         }
 
-        //return if two GeoPoints are equals
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;

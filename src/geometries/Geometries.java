@@ -28,7 +28,6 @@ public class Geometries extends Intersectable {
 
     /**
      * Adds the given geometries to the list of geometries in the scene.
-     *
      * @param geometries The geometries to add to the list.
      */
     public void add(Intersectable... geometries) {
@@ -36,8 +35,9 @@ public class Geometries extends Intersectable {
     }
 
     /**
-     * @param ray
-     * @return list of intersection points
+     * Finds the intersection points between the given ray and the geometries in the scene.
+     * @param ray the ray to intersect with the geometries
+     * @return a list of intersection points between the ray and the geometries,
      */
     @Override
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {

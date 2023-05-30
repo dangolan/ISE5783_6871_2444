@@ -1,12 +1,15 @@
 package primitives;
 
 import org.junit.jupiter.api.Test;
-
 import java.util.LinkedList;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class contains tests for the {@link Ray} class, specifically for the {@link Ray#getPoint(double)} and
+ * {@link Ray#findClosestPoint(List)} methods.
+ * @see Ray
+ */
 class RayTest {
 
     /**

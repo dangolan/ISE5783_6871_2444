@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -63,7 +62,5 @@ class TriangleTest {
         // TC13 ray intersects edge continuation imaginary line
         ray = new Ray(new Point(0.5, 0, 3), new Vector(0, 0, -1));
         assertNull(triangle.findIntersections(ray));
-
     }
-
 }

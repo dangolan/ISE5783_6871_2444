@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * This is a JUnit test class for the Tube class, which represents a cylinder-shaped object in 3D space.
  */
-
 class TubeTest {
 
     /**
@@ -23,7 +22,6 @@ class TubeTest {
      * If it's not, the test fails with the message "get normal() wrong value"
      * {@link geometries.Tube#getNormal(primitives.Point)}.
      */
-
     @Test
     void getNormal() {
         Tube t = new Tube(new Ray(new Point(0, 0, -3), new Vector(0, 0, 1)), 3);
@@ -41,8 +39,11 @@ class TubeTest {
         assertEquals(new Vector(1, 0, 0), t.getNormal(p2), "bad tube normal for point in front of ray");
     }
 
+
+    /**
+     *  Test method for {@link Tube#findIntersections(Ray)}  (primitives.Ray)}.
+     */
     @Test
-    /** Test method for {@link Tube#findIntersections(Ray)}  (primitives.Ray)}. */
     void testFindIntersections() {
 
         Tube tube1 = new Tube(new Ray(new Point(1, 0, 0), new Vector(0, 1, 0)), 1d);

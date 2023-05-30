@@ -5,14 +5,12 @@ import geometries.Intersectable;
 import lighting.AmbientLight;
 import lighting.LightSource;
 import primitives.Color;
-
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Represents a scene that contains objects, background color, and ambient light.
  */
-//TODO javadoc
 public class Scene {
     public String name;
     public Color background;
@@ -31,7 +29,6 @@ public class Scene {
     }
     /**
      * Sets the background color of the scene.
-     *
      * @param background the background color to set
      * @return the updated Scene object
      */
@@ -42,7 +39,6 @@ public class Scene {
 
     /**
      * Sets the geometries of the scene.
-     *
      * @param geometries the geometries to set
      * @return the updated Scene object
      */
@@ -52,7 +48,6 @@ public class Scene {
     }
     /**
      * Adds a geometry to the scene.
-     *
      * @param geometry the geometry to add
      * @return the updated Scene object
      */
@@ -62,7 +57,6 @@ public class Scene {
     }
     /**
      * Sets the ambient light of the scene.
-     *
      * @param ambientLight the ambient light to set
      * @return the updated Scene object
      */
@@ -71,8 +65,8 @@ public class Scene {
         return this;
     }
     /**
-     *
-     * @param lights
+     * Sets the light sources in the scene.
+     * @param lights the list of light sources to be set
      * @return this scene
      */
     public Scene setLights(List<LightSource> lights) {

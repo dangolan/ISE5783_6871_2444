@@ -1,7 +1,6 @@
 package primitives;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -151,8 +150,7 @@ class VectorTest {
     }
 
     /**
-     * Test method for the {@link Vector#lengthSquared()} method of the Vector class.
-     * <p>
+     * Test method for the {@link Vector#lengthSquared()} method of the Vector class. <p>
      * Tests if the method returns the squared length of the vector.
      * Uses equivalence partitioning testing strategy.
      */
@@ -165,8 +163,8 @@ class VectorTest {
     }
 
     /**
-     * Test case for the subtract() method of the Vector class.
-     * This test verifies the correctness of the subtract() method by using different test scenarios.
+     * Test case for to subtract() method of the Vector class.
+     * This test verifies the correctness of to subtract() method by using different test scenarios.
      * It covers equivalence partitions and boundary values.
      */
     @Test
@@ -185,8 +183,7 @@ class VectorTest {
     }
 
     /**
-     * Test method for the {@link Vector#length()} method of the Vector class.
-     * <p>
+     * Test method for the {@link Vector#length()} method of the Vector class. <p>
      * Tests if the method returns the length of the vector.
      * Uses equivalence partitioning testing strategy.
      */
@@ -214,6 +211,5 @@ class VectorTest {
 
         // TC02: parallel to the original one correctness
         assertThrows(IllegalArgumentException.class, () -> v1.crossProduct(u), "the normalized vector is not parallel to the original one");
-
     }
 }
