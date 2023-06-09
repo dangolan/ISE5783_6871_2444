@@ -16,6 +16,19 @@ public class Material {
      * ks - specular component, represents the reflectance of the light source over the surface
      */
     public Double3 ks = Double3.ZERO;
+    /**
+     *  Kt - transparency component
+     * 0.0 is opaque
+     * 1.0 is clear
+     */
+    public Double3 Kt = Double3.ZERO;
+
+    /**
+     *  Kr - reflection component
+     * 0.0 is matte
+     * 1.0 is very reflexive
+     */
+    public Double3 Kr = Double3.ZERO;
 
     /**
      * Shininess - how shiny the material is
@@ -63,6 +76,42 @@ public class Material {
      */
     public Material setKd(Double3 kd) {
         this.kd = kd;
+        return this;
+    }
+    /**
+     * set (According to the builder design template)
+     * @param kt typed double
+     * @return this material
+     */
+    public Material setKt(double kt) {
+        this.Kt = new Double3(kt);
+        return this;
+    }
+
+    /** set (According to the builder design template)
+     * @param kr typed double
+     * @return this material
+     */
+    public Material setKr(double kr) {
+        this.Kr = new Double3(kr);
+        return this;
+    }
+    /**
+     * set (According to the builder design template)
+     * @param kt typed Double3
+     * @return this material
+     */
+    public Material setKt(Double3 kt) {
+        this.Kt = kt;
+        return this;
+    }
+
+    /** set (According to the builder design template)
+     * @param kr typed Double3
+     * @return this material
+     */
+    public Material setKr(Double3 kr) {
+        this.Kr = kr;
         return this;
     }
 
