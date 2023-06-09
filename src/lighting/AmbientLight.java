@@ -9,7 +9,13 @@ import primitives.Double3;
 public class AmbientLight extends Light {
 
     /**
+     * A constant representing no ambient light (black).
+     */
+    public static final AmbientLight NONE = new AmbientLight(Color.BLACK, Double3.ZERO);
+
+    /**
      * Constructs an AmbientLight object with the specified intensity and ambient coefficient.
+     *
      * @param ia the intensity of the ambient light
      * @param ka the ambient coefficient representing the reflectance properties of the objects in the scene
      */
@@ -18,9 +24,13 @@ public class AmbientLight extends Light {
     }
 
     /**
-     * A constant representing no ambient light (black).
+     * Constructs an AmbientLight object with the specified intensity and ambient coefficient.
+     *
+     * @param ia the intensity of the ambient light
+     * @param ka the ambient coefficient representing the reflectance properties of the objects in the scene
      */
-    public static final AmbientLight NONE = new AmbientLight(Color.BLACK, Double3.ZERO);
-
+    public AmbientLight(Color ia, double ka) {
+        super(ia.scale(ka));
+    }
 
 }

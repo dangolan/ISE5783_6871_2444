@@ -2,6 +2,7 @@ package geometries;
 
 import primitives.Point;
 import primitives.Ray;
+
 import java.util.List;
 
 /**
@@ -14,25 +15,22 @@ public abstract class Intersectable {
      * @param ray ray intersecting the geometry
      * @return list of intersection points
      */
-    protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
-
-    /** Intersectable interface for geometry bodies to calculate intersections points between ray and body
-     * @param ray parameter of class ray to check cuttings
-     * @return List<Point>
-     */
     public List<Point> findIntersections(Ray ray) {
         var geoList = findGeoIntersections(ray);
-        return geoList == null ? null : geoList.stream().map(gp -> gp.point).toList();
+        return geoList == null ? null
+                : geoList.stream().map(gp -> gp.point).toList();
     }
 
-    /**
-     * Finds the intersection points between the given ray and the geometries in the scene.
-     * @param ray the ray to intersect with the geometries
-     * @return a list of intersection points between the ray and the geometries,
-     */
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
-        return findGeoIntersectionsHelper(ray);
+    public final List<GeoPoint> findGeoIntersections(Ray ray) {
+        return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
     }
+
+    public final List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+        return findGeoIntersectionsHelper(ray, maxDistance);
+    }
+
+    protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance);
+
     /**
      * Represents a point of intersection between a ray and a geometry in a scene.
      */
@@ -42,11 +40,11 @@ public abstract class Intersectable {
 
         /**
          * Constructs a new GeoPoint object.
+         *
          * @param geometry the geometry that was intersected
-         * @param point the point of intersection
+         * @param point    the point of intersection
          */
-        public  GeoPoint(Geometry geometry, Point point)
-        {
+        public GeoPoint(Geometry geometry, Point point) {
             this.geometry = geometry;
             this.point = point;
         }
@@ -55,7 +53,7 @@ public abstract class Intersectable {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o instanceof GeoPoint other)
-                return this.geometry.equals(other.geometry) && this.point.equals(other.point);
+                return this.geometry == other.geometry && this.point.equals(other.point);
             return false;
         }
 

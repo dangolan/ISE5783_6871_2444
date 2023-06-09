@@ -3,7 +3,9 @@ package geometries;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+
 import java.util.List;
+
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
@@ -16,6 +18,7 @@ public class Tube extends RadialGeometry {
 
     /**
      * constructor
+     *
      * @param axisRay the Ray
      * @param radius  the radius
      */
@@ -26,6 +29,7 @@ public class Tube extends RadialGeometry {
 
     /**
      * The normal of the Tube
+     *
      * @param p point
      * @return The normal of the cylinder
      */
@@ -34,46 +38,110 @@ public class Tube extends RadialGeometry {
         return p.subtract(axisRay.getPoint(t)).normalize();
     }
 
+    /**
+     * A method that receives a ray and checks the points of GeoIntersection of the ray with the tube
+     *
+     * @param ray the ray received
+     *
+     * @return null / list that includes all the GeoIntersection points (contains the geometry (shape) and the point in 3D)
+     */
+    //TODO
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-        Point p0 = ray.getP0();
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
+
+
         Vector v = ray.getDir();
-        Point pa = this.axisRay.getP0();
         Vector va = this.axisRay.getDir();
-        double a, b, c;
-        Vector vecA = v;
-        try {
-            double vva = v.dotProduct(va);
-            if (!isZero(vva)) vecA = v.subtract(va.scale(vva));
-            a = vecA.lengthSquared();
-        } catch (IllegalArgumentException e) {
+
+        // if vectors are parallel then there is no intersections possible
+        if (v.normalize().equals(va.normalize()))
             return null;
-        }
-        try {
-            Vector deltaP = p0.subtract(pa);
-            Vector deltaPMinusDeltaPVaVa = deltaP;
-            double deltaPVa = deltaP.dotProduct(va);
-            if (!isZero(deltaPVa)) deltaPMinusDeltaPVaVa = deltaP.subtract(va.scale(deltaPVa));
-            b = 2 * (vecA.dotProduct(deltaPMinusDeltaPVaVa));
-            c = deltaPMinusDeltaPVaVa.lengthSquared() - this.radius;
-        } catch (IllegalArgumentException e) {
+
+        // use of calculated variables to avoid vector ZERO
+        double vva;
+        double pva;
+        double a;
+        double b;
+        double c;
+
+        // check every variable to avoid ZERO vector
+        if (ray.getP0().equals(this.axisRay.getP0())){
+            vva = v.dotProduct(va);
+            if (vva == 0){
+                a = v.dotProduct(v);
+            }
+            else{
+                a = (v.subtract(va.scale(vva))).dotProduct(v.subtract(va.scale(vva)));
+            }
             b = 0;
-            c = -1 * this.radius;
+            c = - getRadius() * getRadius();
+        }
+        else{
+            Vector deltaP = ray.getP0().subtract(this.axisRay.getP0());
+            vva = v.dotProduct(va);
+            pva = deltaP.dotProduct(va);
+
+            if (vva == 0 && pva == 0){
+                a = v.dotProduct(v);
+                b = 2 * v.dotProduct(deltaP);
+                c = deltaP.dotProduct(deltaP) - getRadius() * getRadius();
+            }
+            else if (vva == 0){
+                a = v.dotProduct(v);
+                if (deltaP.equals(va.scale(deltaP.dotProduct(va)))){
+                    b = 0;
+                    c = - getRadius() * getRadius();
+                }
+                else{
+                    b = 2 * v.dotProduct(deltaP.subtract(va.scale(deltaP.dotProduct(va))));
+                    c = (deltaP.subtract(va.scale(deltaP.dotProduct(va))).dotProduct(deltaP.subtract(va.scale(deltaP.dotProduct(va))))) - this.getRadius() * this.getRadius();
+                }
+            }
+            else if (pva == 0){
+                a = (v.subtract(va.scale(vva))).dotProduct(v.subtract(va.scale(vva)));
+                b = 2 * v.subtract(va.scale(vva)).dotProduct(deltaP);
+                c = (deltaP.dotProduct(deltaP)) - this.getRadius() * this.getRadius();
+            }
+            else {
+                a = (v.subtract(va.scale(vva))).dotProduct(v.subtract(va.scale(vva)));
+                if (deltaP.equals(va.scale(deltaP.dotProduct(va)))){
+                    b = 0;
+                    c = - getRadius() * getRadius();
+                }
+                else{
+                    b = 2 * v.subtract(va.scale(vva)).dotProduct(deltaP.subtract(va.scale(deltaP.dotProduct(va))));
+                    c = (deltaP.subtract(va.scale(deltaP.dotProduct(va))).dotProduct(deltaP.subtract(va.scale(deltaP.dotProduct(va))))) - this.getRadius() * this.getRadius();
+                }
+            }
         }
 
-        double discriminator = alignZero(b * b - 4 * a * c);
-        if (discriminator <= 0) return null;
+        // calculate delta for result of equation
+        double delta = b * b - 4 * a * c;
 
-        double sqrtDiscriminator = Math.sqrt(discriminator);
-        double t1 = alignZero(-b + sqrtDiscriminator) / (2 * a);
-        double t2 = alignZero(-b - sqrtDiscriminator) / (2 * a);
-
-        if (t1 > 0 && t2 > 0)
-            return List.of(new GeoPoint(this, ray.getPoint(t1)),new GeoPoint(this, ray.getPoint(t2)));
-        if (t1 > 0) return List.of(new GeoPoint(this, ray.getPoint(t1)));
-        if (t2 > 0) return List.of(new GeoPoint(this, ray.getPoint(t2)));
-        return null; //if there are no positive solutions
+        if (delta <= 0) {
+            return null; // no intersections
+        }
+        else {
+            // calculate points taking only those with t > 0
+            double t1 = alignZero((- b - Math.sqrt(delta)) / (2 * a));
+            double t2 = alignZero((- b + Math.sqrt(delta)) / (2 * a));
+            if (t1 > 0 && t2 > 0) {
+                Point p1 = ray.getPoint(t1);
+                Point p2 = ray.getPoint(t2);
+                return List.of(new GeoPoint(this,p1),new GeoPoint(this, p2));
+            }
+            else if (t1 > 0) {
+                Point p1 = ray.getPoint(t1);
+                return List.of(new GeoPoint(this,p1));
+            }
+            else if (t2 > 0) {
+                Point p2 = ray.getPoint(t2);
+                return List.of(new GeoPoint(this,p2));
+            }
+        }
+        return null;
     }
+
 
     @Override
     public String toString() {

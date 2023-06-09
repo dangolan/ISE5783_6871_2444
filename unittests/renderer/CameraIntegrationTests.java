@@ -7,6 +7,7 @@ import geometries.Triangle;
 import org.junit.jupiter.api.Test;
 import primitives.Point;
 import primitives.Vector;
+
 import java.util.List;
 
 /**
@@ -19,8 +20,9 @@ public class CameraIntegrationTests {
      * Performs camera integration test for a given geometry and camera configuration.
      * It constructs rays from the camera to different positions on the view plane,
      * and checks the number of intersections with the geometry.
-     * @param geo The geometry to test for intersections.
-     * @param camera The camera object representing the viewpoint.
+     *
+     * @param geo      The geometry to test for intersections.
+     * @param camera   The camera object representing the viewpoint.
      * @param expected The expected number of intersections.
      * @param testCase A description of the test case.
      */
@@ -68,11 +70,13 @@ public class CameraIntegrationTests {
 
     /**
      * Asserts that the two integer values are equal and throws an assertion error if they are not.
-     * @param string The error message to be displayed if the assertion fails.
-     * @param i The expected integer value.
+     *
+     * @param string        The error message to be displayed if the assertion fails.
+     * @param i             The expected integer value.
      * @param intersections The actual integer value to compare against the expected value.
      */
-    private void assertEquals(String string, int i, int intersections) {}
+    private void assertEquals(String string, int i, int intersections) {
+    }
 
     /**
      * integration tests for constructing a ray through a pixel with a plane

@@ -41,7 +41,7 @@ class TubeTest {
 
 
     /**
-     *  Test method for {@link Tube#findIntersections(Ray)}  (primitives.Ray)}.
+     * Test method for {@link Tube#findIntersections(Ray)}  (primitives.Ray)}.
      */
     @Test
     void testFindIntersections() {

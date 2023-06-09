@@ -3,7 +3,9 @@ package geometries;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+
 import java.util.List;
+
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
@@ -17,7 +19,8 @@ public class Plane extends Geometry {
 
     /**
      * constructor
-     * @param p0 the point
+     *
+     * @param p0     the point
      * @param normal the vector that normal to the plane
      */
     public Plane(Point p0, Vector normal) {
@@ -29,6 +32,7 @@ public class Plane extends Geometry {
     /**
      * constructor that get 3 points and set one of them to witch the plane lays
      * and calculate the normal vector
+     *
      * @param p0 point 0
      * @param p1 point 1
      * @param p2 point 2
@@ -44,6 +48,7 @@ public class Plane extends Geometry {
 
     /**
      * getter
+     *
      * @return the point 0
      */
     public Point getP0() {
@@ -52,6 +57,7 @@ public class Plane extends Geometry {
 
     /**
      * getter
+     *
      * @return the normal vector
      */
     public Vector getNormal() {
@@ -60,32 +66,34 @@ public class Plane extends Geometry {
 
     /**
      * getter
+     *
      * @param p the point
      * @return the normal vector
      */
     public Vector getNormal(Point p) {
         return normal;
     }
-
+    //TODO
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
         Point p1 = ray.getP0();
-        Vector v = ray.getDir();
-        Vector n = normal;
         if (p0.equals(p1))
             return null;
+
+        Vector v = ray.getDir();
         Vector p0_q = p0.subtract(p1);
-        double nemurator = alignZero(n.dotProduct(p0_q));
-        if (isZero(nemurator))
+        double numerator = alignZero(normal.dotProduct(p0_q));
+        if (isZero(numerator))
             return null;
-        double denominator = alignZero(n.dotProduct(v));
+
+        double denominator = alignZero(normal.dotProduct(v));
         if (isZero(denominator))
             return null;
-        double t = alignZero(nemurator / denominator);
-        if(t<=0)
+
+        double t = alignZero(numerator / denominator);
+        if (alignZero(t - maxDistance) > 0)
             return null;
-        GeoPoint intersection_point = new GeoPoint(this, ray.getPoint(t));
-        return List.of(intersection_point);
+        return t <= 0 ? null : List.of(new GeoPoint(this, ray.getPoint(t)));
     }
 
     @Override

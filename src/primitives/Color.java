@@ -5,14 +5,14 @@ package primitives;
  */
 public class Color {
     /**
+     * The constant for black color (RGB: 0, 0, 0).
+     */
+    public static final Color BLACK = new Color();
+    /**
      * The internal fields maintain RGB components as double numbers from 0 to
      * whatever...
      */
     private final Double3 rgb;
-    /**
-     * The constant for black color (RGB: 0, 0, 0).
-     */
-    public static final Color BLACK = new Color();
 
     /**
      * Default constructor - to generate Black Color (privately)
@@ -24,6 +24,7 @@ public class Color {
     /**
      * Constructor to generate a color according to RGB components Each component in
      * range 0..255 (for printed white color) or more [for lights]
+     *
      * @param r Red component
      * @param g Green component
      * @param b Blue component
@@ -36,6 +37,7 @@ public class Color {
     /**
      * Constructor to generate a color according to RGB components Each component in
      * range 0..255 (for printed white color) or more [for lights]
+     *
      * @param rgb triad of Red/Green/Blue components
      */
     private Color(Double3 rgb) {
@@ -46,6 +48,7 @@ public class Color {
 
     /**
      * Constructor on base of java.awt.Color object
+     *
      * @param other java.awt.Color's source object
      */
     public Color(java.awt.Color other) {
@@ -55,6 +58,7 @@ public class Color {
     /**
      * Color getter - returns the color after converting it into java.awt.Color
      * object During the conversion any component bigger than 255 is set to 255
+     *
      * @return java.awt.Color object based on this Color RGB components
      */
     public java.awt.Color getColor() {
@@ -66,6 +70,7 @@ public class Color {
 
     /**
      * Operation of adding this and one or more other colors (by component)
+     *
      * @param colors one or more other colors to add
      * @return new Color object which is a result of the operation
      */
@@ -83,6 +88,7 @@ public class Color {
 
     /**
      * Scale the color by a scalar triad per rgb
+     *
      * @param k scale factor per rgb
      * @return new Color object which is the result of the operation
      */
@@ -94,6 +100,7 @@ public class Color {
 
     /**
      * Scale the color by a scalar
+     *
      * @param k scale factor
      * @return new Color object which is the result of the operation
      */
@@ -104,6 +111,7 @@ public class Color {
 
     /**
      * Scale the color by (1 / reduction factor)
+     *
      * @param k reduction factor
      * @return new Color object which is the result of the operation
      */
@@ -114,6 +122,7 @@ public class Color {
 
     /**
      * Scale the color by (1 / reduction factor)
+     *
      * @param k reduction factor
      * @return new Color object which is the result of the operation
      */

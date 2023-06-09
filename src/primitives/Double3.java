@@ -7,6 +7,14 @@ import static primitives.Util.isZero;
  */
 public class Double3 {
     /**
+     * Zero triad (0,0,0)
+     */
+    public static final Double3 ZERO = new Double3(0, 0, 0);
+    /**
+     * One's triad (1,1,1)
+     */
+    public static final Double3 ONE = new Double3(1, 1, 1);
+    /**
      * First number
      */
     final double d1;
@@ -20,17 +28,8 @@ public class Double3 {
     final double d3;
 
     /**
-     * Zero triad (0,0,0)
-     */
-    public static final Double3 ZERO = new Double3(0, 0, 0);
-
-    /**
-     * One's triad (1,1,1)
-     */
-    public static final Double3 ONE = new Double3(1, 1, 1);
-
-    /**
      * Constructor to initialize Double3 based object with its three number values
+     *
      * @param d1 first number value
      * @param d2 second number value
      * @param d3 third number value
@@ -43,6 +42,7 @@ public class Double3 {
 
     /**
      * Constructor to initialize Double3 based object the same number values
+     *
      * @param value number value for all 3 numbers
      */
     public Double3(double value) {
@@ -69,6 +69,7 @@ public class Double3 {
     /**
      * Sum two floating point triads into a new triad where each couple of numbers
      * is summarized
+     *
      * @param rhs right handle side operand for addition
      * @return result of add
      */
@@ -79,6 +80,7 @@ public class Double3 {
     /**
      * Subtract two floating point triads into a new triad where each couple of
      * numbers is subtracted
+     *
      * @param rhs right handle side operand for addition
      * @return result of add
      */
@@ -89,6 +91,7 @@ public class Double3 {
     /**
      * Scale (multiply) floating point triad by a number into a new triad where each
      * number is multiplied by the number
+     *
      * @param rhs right handle side operand for scaling
      * @return result of scale
      */
@@ -99,6 +102,7 @@ public class Double3 {
     /**
      * Reduce (divide) floating point triad by a number into a new triad where each
      * number is divided by the number
+     *
      * @param rhs right handle side operand for reducing
      * @return result of scale
      */
@@ -109,6 +113,7 @@ public class Double3 {
     /**
      * Product two floating point triads into a new triad where each couple of
      * numbers is multiplied
+     *
      * @param rhs right handle side operand for product
      * @return result of product
      */
@@ -118,6 +123,7 @@ public class Double3 {
 
     /**
      * Checks whether all the numbers are lower than a test number
+     *
      * @param k the test number
      * @return true if all the numbers are less than k, false otherwise
      */
@@ -128,6 +134,7 @@ public class Double3 {
 
     /**
      * Checks whether all the numbers are lower than three numbers in another triad
+     *
      * @param other other triad
      * @return true if all the numbers are less that appropriate numbers in
      * other

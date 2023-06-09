@@ -3,7 +3,8 @@ package lighting;
 import primitives.Color;
 import primitives.Point;
 import primitives.Vector;
-import static primitives.Util.isZero;
+
+import static primitives.Util.alignZero;
 
 /**
  * The SpotLight object specifies an attenuated light source at a fixed point in space that radiates light
@@ -29,8 +30,9 @@ public class SpotLight extends PointLight {
 
     /**
      * Constructs a SpotLight object with the specified intensity, position, and direction.
+     *
      * @param intensity the intensity of the spotlight
-     * @param position the position of the light source
+     * @param position  the position of the light source
      * @param direction the direction of the light rays
      */
     public SpotLight(Color intensity, Point position, Vector direction) {
@@ -40,29 +42,24 @@ public class SpotLight extends PointLight {
 
     @Override
     public Color getIntensity(Point point) {
-        Color Ic = super.getIntensity(point);
         double projection = getL(point).dotProduct(direction);
-
-        if (isZero(projection)) {
-            return Color.BLACK;
-        }
-
-        double factor = Math.max(0,projection);
-
-        factor = Math.pow(factor, narrowBeam);
-        return Ic.scale(factor);
+        return alignZero(projection) <= 0 ? Color.BLACK
+                : super.getIntensity(point).scale(Math.pow(projection, narrowBeam));
     }
 
     /**
      * Retrieves the narrow beam value of the point light.
+     *
      * @return the narrow beam value of the point light
      */
+    @SuppressWarnings("unused")
     public double getNarrowBeam() {
         return narrowBeam;
     }
 
     /**
-     *Sets the narrow beam value of the point light.
+     * Sets the narrow beam value of the point light.
+     *
      * @param narrow the narrow beam value to set
      * @return a reference to this PointLight object
      */

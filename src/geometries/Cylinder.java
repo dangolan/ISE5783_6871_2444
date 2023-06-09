@@ -3,6 +3,7 @@ package geometries;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+
 import static primitives.Util.isZero;
 
 /**
@@ -13,6 +14,7 @@ public class Cylinder extends Tube {
 
     /**
      * constructor
+     *
      * @param height  the height
      * @param axisRay the Ray
      * @param radius  the radius
@@ -28,6 +30,7 @@ public class Cylinder extends Tube {
 
     /**
      * The normal of the cylinder
+     *
      * @param p point on cylinder
      * @return The normal of the cylinder in this point
      */

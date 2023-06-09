@@ -7,11 +7,12 @@ import primitives.Vector;
 /**
  * representation if a directional light that has a direction, intensity and no attenuation
  */
-public class DirectionalLight extends Light implements LightSource{
+public class DirectionalLight extends Light implements LightSource {
     private final Vector direction;
 
     /**
      * Constructs a DirectionalLight object with the specified intensity and direction.
+     *
      * @param intensity the intensity of the directional light
      * @param direction the direction of the light rays
      */
@@ -22,11 +23,14 @@ public class DirectionalLight extends Light implements LightSource{
 
     @Override
     public Color getIntensity(Point p) {
-        return this.getIntensity();
+        return this.intensity;
     }
 
     @Override
-    public Vector getL(Point point){
+    public Vector getL(Point point) {
         return this.direction;
     }
+    //TODO
+    public double getDistance(Point point) { return Double.POSITIVE_INFINITY; }
+
 }

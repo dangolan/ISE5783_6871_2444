@@ -1,7 +1,9 @@
 package primitives;
 
-import java.util.List;
 import geometries.Intersectable.GeoPoint;
+
+import java.util.List;
+
 import static primitives.Util.isZero;
 
 /**
@@ -19,6 +21,7 @@ public class Ray {
 
     /**
      * constructor
+     *
      * @param p0  the start point
      * @param dir the direction of the ray
      */
@@ -29,6 +32,7 @@ public class Ray {
 
     /**
      * getter
+     *
      * @return the point 0
      */
     public Point getP0() {
@@ -37,6 +41,7 @@ public class Ray {
 
     /**
      * getter
+     *
      * @return the direction vector
      */
     public Vector getDir() {
@@ -52,6 +57,7 @@ public class Ray {
 
     /**
      * Calculates the point along the line at a given distance from the ray head.
+     *
      * @param t the distance
      * @return the calculated point
      */
@@ -61,6 +67,7 @@ public class Ray {
 
     /**
      * Finds the closest point from a list of points.
+     *
      * @param points the list of points to search from
      * @return the closest point, or null if the list is null or empty
      */
@@ -71,16 +78,15 @@ public class Ray {
 
     /**
      * Finds the closest GeoPoint to the head of the ray among the given list of intersections.
+     *
      * @param intersections the list of GeoPoints to search from
      * @return the closest GeoPoint to the head of the ray, or null if the list is null or empty
      */
     public GeoPoint findClosestGeoPoint(List<GeoPoint> intersections) {
         GeoPoint closestpoint = null;
-        double minDistance = Double.MAX_VALUE;
-        double ptDistance;
-
+        double minDistance = Double.POSITIVE_INFINITY;
         for (GeoPoint geoPoint : intersections) {
-            ptDistance = geoPoint.point.distanceSquared(p0);
+            double ptDistance = geoPoint.point.distanceSquared(p0);
             if (ptDistance < minDistance) {
                 minDistance = ptDistance;
                 closestpoint = geoPoint;

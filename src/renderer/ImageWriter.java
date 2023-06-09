@@ -1,6 +1,7 @@
 package renderer;
 
 import primitives.Color;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -15,15 +16,16 @@ import java.util.logging.Logger;
  * size and resolution
  */
 public class ImageWriter {
+    private static final String FOLDER_PATH = System.getProperty("user.dir") + "/images";
     private int nX;
     private int nY;
-    private static final String FOLDER_PATH = System.getProperty("user.dir") + "/images";
     private BufferedImage image;
     private String imageName;
     private Logger logger = Logger.getLogger("ImageWriter");
 
     /**
      * Image Writer constructor accepting image name and View Plane parameters,
+     *
      * @param imageName the name of jpeg file
      * @param nX        amount of pixels by Width
      * @param nY        amount of pixels by height
@@ -37,6 +39,7 @@ public class ImageWriter {
 
     /**
      * View Plane Y axis resolution
+     *
      * @return the amount of vertical pixels
      */
     public int getNy() {
@@ -45,6 +48,7 @@ public class ImageWriter {
 
     /**
      * View Plane X axis resolution
+     *
      * @return the amount of horizontal pixels
      */
     public int getNx() {
@@ -67,6 +71,7 @@ public class ImageWriter {
 
     /**
      * The function writePixel writes a color of a specific pixel into pixel color matrix
+     *
      * @param xIndex X-axis index of the pixel
      * @param yIndex Y-axis index of the pixel
      * @param color  final color of the pixel

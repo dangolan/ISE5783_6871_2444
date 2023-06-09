@@ -8,22 +8,23 @@ package primitives;
 public class Material {
 
     /**
-     *  kd - diffuse component, represents the scattering of light rays to all directions from the surface
+     * kd - diffuse component, represents the scattering of light rays to all directions from the surface
      */
     public Double3 kd = Double3.ZERO;
 
     /**
-     *  ks - specular component, represents the reflectance of the light source over the surface
+     * ks - specular component, represents the reflectance of the light source over the surface
      */
     public Double3 ks = Double3.ZERO;
 
     /**
-     *  Shininess - how shiny the material is
+     * Shininess - how shiny the material is
      */
     public int nShininess = 0;
 
     /**
      * set (According to the builder design template)
+     *
      * @param ks typed double
      * @return this material
      */
@@ -34,6 +35,7 @@ public class Material {
 
     /**
      * set (According to the builder design template)
+     *
      * @param kd typed double
      * @return this material
      */
@@ -44,6 +46,7 @@ public class Material {
 
     /**
      * set (According to the builder design template)
+     *
      * @param ks typed Double3
      * @return this material
      */
@@ -54,6 +57,7 @@ public class Material {
 
     /**
      * set (According to the builder design template)
+     *
      * @param kd typed Double3
      * @return this material
      */
@@ -64,6 +68,7 @@ public class Material {
 
     /**
      * Sets the shininess value of the material.
+     *
      * @param nShininess the shininess value to set
      * @return a reference to this Material object
      */

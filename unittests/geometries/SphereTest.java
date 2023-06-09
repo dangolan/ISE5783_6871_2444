@@ -4,9 +4,10 @@ import org.junit.jupiter.api.Test;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * This is a JUnit test class for the geometries.Sphere class
@@ -47,10 +48,11 @@ class SphereTest {
         // TC02: Ray starts before and crosses the sphere (2 points)
         Point p1 = new Point(0.0651530771650466, 0.355051025721682, 0);
         Point p2 = new Point(1.53484692283495, 0.844948974278318, 0);
-        List<Point> result = sphere.findIntersections(new Ray(new Point(-1, 0, 0),
-                new Vector(3, 1, 0)));
+        Point p0 = new Point(-1, 0, 0);
+        List<Point> result = sphere.findIntersections(new Ray(p0, new Vector(3, 1, 0)));
+        assertNotNull(result, "Empty list...");
         assertEquals(2, result.size(), "Wrong number of points");
-        if (result.get(0).getX() > result.get(1).getX())
+        if (p0.distanceSquared(result.get(1)) < p0.distanceSquared(result.get(0)))
             result = List.of(result.get(1), result.get(0));
         assertEquals(List.of(p1, p2), result, "Ray crosses sphere at two points");
 
@@ -81,12 +83,13 @@ class SphereTest {
         // TC07: Ray starts before the sphere (2 points)
         Point p5 = new Point(1, 0, -1);
         Point p6 = new Point(1, 0, 1);
-        List<Point> result3 = sphere.findIntersections(new Ray(new Point(1, 0, -2),
-                new Vector(0, 0, 1)));
+        p0 = new Point(1, 0, -2);
+        List<Point> result3 = sphere.findIntersections(new Ray(p0, new Vector(0, 0, 1)));
+        assertNotNull(result3, "Empty list...");
         assertEquals(2, result3.size(), "Wrong number of points");
-        if (result3.get(0).getX() > result3.get(1).getX())
-            result3 = List.of(result3.get(1), result3.get(0));
-        assertEquals(List.of(p6, p5), result3, "Ray crosses sphere at two points");
+        if (p0.distanceSquared(result3.get(1)) < p0.distanceSquared(result3.get(0)))
+            result3 = List.of(result.get(1), result.get(0));
+        assertEquals(List.of(p5, p6), result3, "Ray crosses sphere at two points");
 
         // TC08: Ray starts at sphere and goes inside (1 point)
         List<Point> result4 = sphere.findIntersections(new Ray(p5, new Vector(0, 0, 1)));

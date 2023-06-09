@@ -3,13 +3,16 @@ package geometries;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+
 import java.util.List;
+
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 /**
  * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
  * system
+ *
  * @author Dan
  */
 public class Polygon extends Geometry {
@@ -26,6 +29,7 @@ public class Polygon extends Geometry {
     /**
      * Polygon constructor based on vertices list. The list must be ordered by edge
      * path. The polygon must be convex.
+     *
      * @param vertices list of vertices according to their order by
      *                 edge path
      * @throws IllegalArgumentException in any case of illegal combination of
@@ -76,14 +80,14 @@ public class Polygon extends Geometry {
 
     /**
      * Helper method to find the intersection points between the given ray and the geometry.
+     *
      * @param ray the ray intersecting the geometry
      * @return a list of GeoPoint objects representing the intersection points,
      */
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-        List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray);
-        if (planeIntersections == null) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
+        List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray,maxDistance);
+        if (planeIntersections == null)
             return null;
-        }
 
         Point P0 = ray.getP0();
         Vector v = ray.getDir();
@@ -106,15 +110,14 @@ public class Polygon extends Geometry {
             v2 = P0.subtract(vertices.get(i));
 
             sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
-            if (isZero(sign)) {
+            if (isZero(sign))
                 return null;
-            }
 
-            if (positive != (sign > 0)) {
+            if (positive != (sign > 0))
                 return null;
-            }
         }
-        Point point = planeIntersections.get(0).point;
-        return List.of(new GeoPoint(this, point));
+
+        planeIntersections.get(0).geometry = this;
+        return planeIntersections;
     }
 }
