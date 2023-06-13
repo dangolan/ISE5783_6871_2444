@@ -32,13 +32,11 @@ public class Sphere extends RadialGeometry {
         this.center = center;
 
     }
-
     @Override
     public Vector getNormal(Point p) {
         return p.subtract(center).normalize();
     }
 
-    //TODO
     @Override
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
         Point p0 = ray.getP0();

@@ -14,7 +14,6 @@ import static java.awt.Color.WHITE;
 
 /** Testing basic shadows
  * @author Dan */
-//TODO
 public class ShadowTests {
     private Intersectable sphere     = new Sphere(new Point(0, 0, -200), 60d)                                         //
             .setEmission(new Color(BLUE))                                                                                  //

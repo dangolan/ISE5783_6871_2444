@@ -10,8 +10,6 @@ import static primitives.Util.isZero;
  * Represents a ray in 3D space, defined by a starting point and a normalized direction vector.
  */
 public class Ray {
-
-    //TODO
     private static final double DELTA = 0.1;
 
     /**

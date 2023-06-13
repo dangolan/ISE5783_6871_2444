@@ -44,7 +44,6 @@ public class Geometries extends Intersectable {
      * @param ray the ray to intersect with the geometries
      * @return a list of intersection points between the ray and the geometries,
      */
-    //TODO
     @Override
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
         List<GeoPoint> result = null;

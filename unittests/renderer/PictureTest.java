@@ -37,7 +37,7 @@ public class PictureTest {
     @Test
     public void PictureTest() {
 
-        Scene scene = new Scene("final picture").setBackground(new Color(0,0,0));
+        Scene scene = new Scene("pictureForBonus").setBackground(new Color(0,0,0));
         Camera camera = new Camera(new Point(0, -600, 10), new Vector(0, 1, 0), new Vector(0, 0, 1));
         camera.setVPSize(150, 150).setVPDistance(100);
 
@@ -75,7 +75,7 @@ public class PictureTest {
             scene.geometries.add(item);
 
         }
-        camera.setImageWriter(new ImageWriter("final picture", 2000, 2000))
+        camera.setImageWriter(new ImageWriter("pictureForBonus", 2000, 2000))
                 .setRayTracer(new ForwardRayTracer(scene))
                 .renderImage()
                 .writeToImage();
