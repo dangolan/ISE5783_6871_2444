@@ -150,8 +150,8 @@ public class ForwardRayTracer extends RayTracerBase {
         Material material = gp.geometry.getMaterial();
         Ray reflectedRay = constructReflectedRay(gp, gp.geometry.getNormal(gp.point), ray.getDir());
         Ray refractedRay = constructRefractedRay(gp, gp.geometry.getNormal(gp.point), ray.getDir());
-        return calcGlobalEffects(gp, level, color, material.Kr, k, reflectedRay)
-                .add(calcGlobalEffects(gp, level, color, material.Kt, k, refractedRay));
+        return calcGlobalEffects(gp, level, color, material.kr, k, reflectedRay)
+                .add(calcGlobalEffects(gp, level, color, material.kt, k, refractedRay));
     }
 
     /**
@@ -228,7 +228,7 @@ public class ForwardRayTracer extends RayTracerBase {
         for (GeoPoint intersection : intersections) {
 
             if (distance > intersection.point.distance(geoPoint.point)) {
-                ktr = ktr.product(intersection.geometry.getMaterial().Kt);
+                ktr = ktr.product(intersection.geometry.getMaterial().kt);
             }
         }
         return ktr;

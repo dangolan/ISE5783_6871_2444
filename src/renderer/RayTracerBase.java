@@ -8,6 +8,9 @@ import scene.Scene;
  * represents a ray tracer traces rays through a scene and provides its color
  */
 public abstract class RayTracerBase {
+    /**
+     * The scene object representing the scene being rendered.
+     */
     protected final Scene scene;
 
     /**

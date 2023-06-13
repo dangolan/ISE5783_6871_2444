@@ -4,7 +4,13 @@ package geometries;
  * class for all the shapes with a radius
  */
 public abstract class RadialGeometry extends Geometry {
+    /**
+     * The radius of the radial geometry.
+     */
     final protected double radius;
+    /**
+     * The squared value of the radius of the radial geometry.
+     */
     final protected double radiusSquared;
 
     /**

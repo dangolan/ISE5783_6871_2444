@@ -23,7 +23,11 @@ public class Cylinder extends Tube {
         super(axisRay, radius);
         this.height = height;
     }
-
+    /**
+     * getter for height of the Cylinder.
+     *
+     * @return The height of the Cylinder.
+     */
     public double getHeight() {
         return height;
     }

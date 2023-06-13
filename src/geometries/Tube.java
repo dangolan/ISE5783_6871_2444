@@ -13,9 +13,10 @@ import static primitives.Util.isZero;
  * class A class for representing an infinite cylinder that inherits Radial Geometric
  */
 public class Tube extends RadialGeometry {
-
+    /**
+     * The axis ray of the tube, representing its direction and position.
+     */
     protected final Ray axisRay;
-
     /**
      * constructor
      *
@@ -45,7 +46,6 @@ public class Tube extends RadialGeometry {
      *
      * @return null / list that includes all the GeoIntersection points (contains the geometry (shape) and the point in 3D)
      */
-    //TODO
     @Override
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
 

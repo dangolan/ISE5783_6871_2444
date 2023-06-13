@@ -98,6 +98,9 @@ public class LightsTests {
         ImageWriter imageWriter = new ImageWriter("lightSphereSpot", 500, 500);
         camera1.setImageWriter(imageWriter).setRayTracer(new ForwardRayTracer(scene1)).renderImage().writeToImage();
     }
+    /**
+     * Produce a picture of a sphere #2 lighted by a spotlight
+     */
     @Test
     public void sphere2Spot() {
         scene1.geometries.add(sphere);

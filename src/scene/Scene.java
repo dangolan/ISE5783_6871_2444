@@ -13,10 +13,29 @@ import java.util.List;
  * Represents a scene that contains objects, background color, and ambient light.
  */
 public class Scene {
+    /**
+     * The name of the scene.
+     */
     public final String name;
+
+    /**
+     * The background color of the scene.
+     */
     public Color background = Color.BLACK;
+
+    /**
+     * The ambient light in the scene.
+     */
     public AmbientLight ambientLight = AmbientLight.NONE;
+
+    /**
+     * The geometries in the scene.
+     */
     public Geometries geometries = new Geometries();
+
+    /**
+     * The light sources in the scene.
+     */
     public List<LightSource> lights = new LinkedList<>();
 
     /**

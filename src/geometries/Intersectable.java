@@ -20,14 +20,34 @@ public abstract class Intersectable {
         return geoList == null ? null
                 : geoList.stream().map(gp -> gp.point).toList();
     }
-
+    /**
+     * Finds the intersections between a ray and geometric objects, up to a maximum distance.
+     * This method searches for intersections up to a distance of positive infinity.
+     *
+     * @param ray the ray for which to find intersections
+     * @return a list of GeoPoint objects representing the intersections between the ray and geometric objects
+     */
     public final List<GeoPoint> findGeoIntersections(Ray ray) {
         return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
     }
+    /**
+     * Finds the intersections between a ray and geometric objects, up to a maximum distance.
+     *
+     * @param ray         the ray for which to find intersections
+     * @param maxDistance the maximum distance up to which to search for intersections
+     * @return a list of GeoPoint objects representing the intersections between the ray and geometric objects
+     */
 
     public final List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         return findGeoIntersectionsHelper(ray, maxDistance);
     }
+    /**
+     * Helper method to find the intersections between a ray and geometric objects, up to a maximum distance.
+     *
+     * @param ray         the ray for which to find intersections
+     * @param maxDistance the maximum distance up to which to search for intersections
+     * @return a list of GeoPoint objects representing the intersections between the ray and geometric objects
+     */
 
     protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance);
 
@@ -35,7 +55,14 @@ public abstract class Intersectable {
      * Represents a point of intersection between a ray and a geometry in a scene.
      */
     public static class GeoPoint {
+        /**
+         * The geometry object associated with the point.
+         */
         public Geometry geometry;
+
+        /**
+         * The point of intersection between the ray and the geometry.
+         */
         public Point point;
 
         /**

@@ -21,14 +21,14 @@ public class Material {
      * 0.0 is opaque
      * 1.0 is clear
      */
-    public Double3 Kt = Double3.ZERO;
+    public Double3 kt = Double3.ZERO;
 
     /**
      *  Kr - reflection component
      * 0.0 is matte
      * 1.0 is very reflexive
      */
-    public Double3 Kr = Double3.ZERO;
+    public Double3 kr = Double3.ZERO;
 
     /**
      * Shininess - how shiny the material is
@@ -84,7 +84,7 @@ public class Material {
      * @return this material
      */
     public Material setKt(double kt) {
-        this.Kt = new Double3(kt);
+        this.kt = new Double3(kt);
         return this;
     }
 
@@ -93,7 +93,7 @@ public class Material {
      * @return this material
      */
     public Material setKr(double kr) {
-        this.Kr = new Double3(kr);
+        this.kr = new Double3(kr);
         return this;
     }
     /**
@@ -102,7 +102,7 @@ public class Material {
      * @return this material
      */
     public Material setKt(Double3 kt) {
-        this.Kt = kt;
+        this.kt = kt;
         return this;
     }
 
@@ -111,7 +111,7 @@ public class Material {
      * @return this material
      */
     public Material setKr(Double3 kr) {
-        this.Kr = kr;
+        this.kr = kr;
         return this;
     }
 

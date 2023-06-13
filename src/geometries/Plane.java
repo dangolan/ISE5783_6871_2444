@@ -73,7 +73,6 @@ public class Plane extends Geometry {
     public Vector getNormal(Point p) {
         return normal;
     }
-    //TODO
     @Override
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
         Point p1 = ray.getP0();
@@ -81,8 +80,8 @@ public class Plane extends Geometry {
             return null;
 
         Vector v = ray.getDir();
-        Vector p0_q = p0.subtract(p1);
-        double numerator = alignZero(normal.dotProduct(p0_q));
+        Vector p0Q = p0.subtract(p1);
+        double numerator = alignZero(normal.dotProduct(p0Q));
         if (isZero(numerator))
             return null;
 

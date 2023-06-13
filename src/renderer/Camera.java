@@ -41,37 +41,72 @@ public class Camera {
         this.vTo = vTo.normalize();
         this.vRight = vTo.crossProduct(vUp).normalize();
     }
-
+    /**
+     * Retrieves the Point object representing the starting point (p0) of the camera.
+     *
+     * @return The starting point of the camera.
+     */
     @SuppressWarnings("unused")
     public Point getP0() {
         return p0;
     }
 
+
+    /**
+     * Retrieves the Vector object representing the upward direction (vUp) of the camera.
+     *
+     * @return The upward direction vector of the camera.
+     */
     @SuppressWarnings("unused")
     public Vector getVUp() {
         return vUp;
     }
 
+    /**
+     * Retrieves the Vector object representing the target direction (vTo) of the camera.
+     *
+     * @return The target direction vector of the camera.
+     */
     @SuppressWarnings("unused")
     public Vector getVTo() {
         return vTo;
     }
 
+    /**
+     * Retrieves the Vector object representing the right direction (vRight) of the camera.
+     *
+     * @return The right direction vector of the camera.
+     */
     @SuppressWarnings("unused")
     public Vector getVRight() {
         return vRight;
     }
 
+    /**
+     * Retrieves the width of the camera's view.
+     *
+     * @return The width of the camera's view.
+     */
     @SuppressWarnings("unused")
     public double getWidth() {
         return width;
     }
 
+    /**
+     * Retrieves the height of the camera's view.
+     *
+     * @return The height of the camera's view.
+     */
     @SuppressWarnings("unused")
     public double getHeight() {
         return height;
     }
 
+    /**
+     * Retrieves the distance from the camera's position to the target.
+     *
+     * @return The distance from the camera to the target.
+     */
     @SuppressWarnings("unused")
     public double getDistance() {
         return distance;
@@ -149,8 +184,8 @@ public class Camera {
      * render the image and fill the pixels with the desired colors
      * using the ray tracer to find the colors
      * and the image writer to color the pixels
-     *
      * @throws MissingResourceException if one of the fields are uninitialized
+     * @return this camera obj
      */
     public Camera renderImage() {
         if (imageWriter == null || rayTracer == null || width == 0 || height == 0 || distance == 0)
