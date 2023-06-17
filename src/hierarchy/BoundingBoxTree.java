@@ -21,40 +21,17 @@ public class BoundingBoxTree extends Intersectable {
     }
 
     public void buildHierarchy(List<Intersectable> geometries) {
-        // Create an empty tree
-        root = new Box(null,new AABB(new Point(0,0,0),new Point(0,0,0)));
-
-        // Calculate the combined AABB for all geometries
-        AABB combinedAABB = calculateCombinedAABB(geometries);
 
         // Build the hierarchy recursively
-        buildHierarchyRecursive(geometries, root, combinedAABB);
+        buildHierarchyRecursive(geometries, root);
     }
 
-    private void buildHierarchyRecursive(List<Intersectable> geometries, Box node, AABB nodeAABB) {
-        if (geometries.size() == 1) {
-            // Create a leaf node for the geometry
-            Intersectable geometry = geometries.get(0);
-
-            // Insert the leaf node into the tree
-            node.insertGeometry(geometry, nodeAABB);
-        } else {
-//            // Partition the geometries into subgroups
-//            List<List<Intersectable>> subgroups = partitionGeometries(geometries);
+    private void buildHierarchyRecursive(List<Intersectable> geometries, Box node) {
 
             for (Intersectable item : geometries) {
-                // Create a new internal node
 
-//                // Calculate the combined AABB for the subgroup
-//                AABB subgroupAABB = calculateCombinedAABB(subgroup);
-//
-//                // Recursively build the hierarchy for the subgroup
-//                buildHierarchyRecursive(subgroup, internalNode, subgroupAABB);
-
-                // Insert the internal node into the tree
                 node.insertGeometry(item,item.calculateAABB());
             }
-        }
     }
 
     public void addGeometry(Intersectable geometry) {

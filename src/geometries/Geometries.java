@@ -58,8 +58,7 @@ public class Geometries extends Intersectable {
      * @param geometries The geometries to add to the list.
      */
     public void add(Intersectable... geometries) {
-        geometriesInScene.addAll(List.of(geometries));
-        boundingBoxTree.buildHierarchy(geometriesInScene);
+        boundingBoxTree.buildHierarchy(List.of(geometries));
 
     }
 
