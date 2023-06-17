@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 class TriangleTest {
 
     /**
-     * Test method for {@link geometries.Triangle# Triangle.getNormal(Point).}
+     * Test method for {@link Triangle#getNormal(Point)}.
      */
     @Test
     public void testGetNormal() {

@@ -1,5 +1,6 @@
 package geometries;
 
+import hierarchy.AABB;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
@@ -77,6 +78,31 @@ public class Polygon extends Geometry {
     public Vector getNormal(Point point) {
         return plane.getNormal();
     }
+    @Override
+    public AABB calculateAABB() {
+        double minX = Double.POSITIVE_INFINITY;
+        double minY = Double.POSITIVE_INFINITY;
+        double minZ = Double.POSITIVE_INFINITY;
+        double maxX = Double.NEGATIVE_INFINITY;
+        double maxY = Double.NEGATIVE_INFINITY;
+        double maxZ = Double.NEGATIVE_INFINITY;
+
+        for (Point vertex : vertices) {
+            double x = vertex.getX();
+            double y = vertex.getY();
+            double z = vertex.getZ();
+
+            minX = Math.min(minX, x);
+            minY = Math.min(minY, y);
+            minZ = Math.min(minZ, z);
+            maxX = Math.max(maxX, x);
+            maxY = Math.max(maxY, y);
+            maxZ = Math.max(maxZ, z);
+        }
+
+        return new AABB(new Point(minX, minY, minZ), new Point(maxX, maxY, maxZ));
+    }
+
 
     /**
      * Helper method to find the intersection points between the given ray and the geometry.
@@ -84,8 +110,8 @@ public class Polygon extends Geometry {
      * @param ray the ray intersecting the geometry
      * @return a list of GeoPoint objects representing the intersection points,
      */
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
-        List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray,maxDistance);
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
+        List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray, maxDistance);
         if (planeIntersections == null)
             return null;
 

@@ -42,7 +42,7 @@ public class PictureTest {
         camera.setVPSize(150, 150).setVPDistance(100);
 
         Material material = new Material().setKd(0.4).setKs(1).setShininess(50).setKt(0).setKr(0.5).setKs(0.5);
-        Material material1 = new Material().setKd(0.4).setKs(1).setShininess(100).setKt(0).setKr(0);
+        Material material1 = new Material().setKd(0.4).setKs(1).setShininess(100).setKt(0.5).setKr(0);
         SpotLight light = new SpotLight(new Color(255, 255, 255), new Point(0, -50, 25), new Vector(0, 2, -1));
         SpotLight light2 = new SpotLight(new Color(255, 255, 255), new Point(0, 50, 25), new Vector(0, -2, -1));
         light.setKc(0).setKl(0.01).setKq(0.05);
@@ -75,7 +75,7 @@ public class PictureTest {
             scene.geometries.add(item);
 
         }
-        camera.setImageWriter(new ImageWriter("pictureForBonus", 2000, 2000))
+        camera.setImageWriter(new ImageWriter("pictureForBonus", 1000, 1000))
                 .setRayTracer(new ForwardRayTracer(scene))
                 .renderImage()
                 .writeToImage();

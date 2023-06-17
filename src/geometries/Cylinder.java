@@ -1,5 +1,6 @@
 package geometries;
 
+import hierarchy.AABB;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
@@ -23,6 +24,22 @@ public class Cylinder extends Tube {
         super(axisRay, radius);
         this.height = height;
     }
+//    @Override
+//    public AABB calculateAABB() {
+//        double radius = getRadius();
+//        double height = getHeight();
+//        Point center = getCenter();
+//
+//        double minX = center.getX() - radius;
+//        double minY = center.getY() - height / 2.0;
+//        double minZ = center.getZ() - radius;
+//        double maxX = center.getX() + radius;
+//        double maxY = center.getY() + height / 2.0;
+//        double maxZ = center.getZ() + radius;
+//
+//        return new AABB(new Point(minX, minY, minZ), new Point(maxX, maxY, maxZ));
+//    }
+
     /**
      * getter for height of the Cylinder.
      *

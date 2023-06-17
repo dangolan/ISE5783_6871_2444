@@ -1,5 +1,6 @@
 package geometries;
 
+import hierarchy.AABB;
 import primitives.Point;
 import primitives.Ray;
 
@@ -11,11 +12,13 @@ import java.util.List;
  */
 public abstract class Intersectable {
 
+    public abstract AABB calculateAABB();
+
     /**
      * @param ray ray intersecting the geometry
      * @return list of intersection points
      */
-    public List<Point> findIntersections(Ray ray) {
+    public final List<Point> findIntersections(Ray ray) {
         var geoList = findGeoIntersections(ray);
         return geoList == null ? null
                 : geoList.stream().map(gp -> gp.point).toList();
@@ -63,7 +66,7 @@ public abstract class Intersectable {
         /**
          * The point of intersection between the ray and the geometry.
          */
-        public Point point;
+        public final Point point;
 
         /**
          * Constructs a new GeoPoint object.

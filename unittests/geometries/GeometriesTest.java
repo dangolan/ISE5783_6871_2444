@@ -24,7 +24,7 @@ class GeometriesTest {
      * For each test case, a ray is created and passed to the findIntersections() method,
      * and the result is compared against the expected number of intersections or a null value.
      *
-     * @link { Geometries#findIntersections(Ray)}
+     * {@link Geometries#findIntersections(Ray)}
      * @see Geometries
      */
     @Test

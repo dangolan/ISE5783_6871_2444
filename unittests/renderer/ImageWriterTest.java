@@ -9,7 +9,7 @@ import primitives.Color;
 class ImageWriterTest {
 
     /**
-     * Test method for {@link .renderer.ImageWriter# WriteToImage(.renderer.ImageWriter)}.
+     * Test method for {@link ImageWriter#writeToImage()}.
      * In this test we will create a grid of 10x16 red squares
      * on a yellow background measuring 800x500 pixels
      */

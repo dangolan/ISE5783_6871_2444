@@ -1,5 +1,6 @@
 package geometries;
 
+import hierarchy.AABB;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
@@ -26,6 +27,21 @@ public class Tube extends RadialGeometry {
         super(radius);
         this.axisRay = axisRay;
     }
+    @Override
+    public AABB calculateAABB() {
+        double radius = getRadius();
+        Point center = axisRay.getP0();
+
+        double minX = center.getX() - radius;
+        double minY = Double.NEGATIVE_INFINITY;
+        double minZ = center.getZ() - radius;
+        double maxX = center.getX() + radius;
+        double maxY = Double.POSITIVE_INFINITY;
+        double maxZ = center.getZ() + radius;
+
+        return new AABB(new Point(minX, minY, minZ), new Point(maxX, maxY, maxZ));
+    }
+
 
     /**
      * The normal of the Tube
@@ -47,8 +63,6 @@ public class Tube extends RadialGeometry {
      */
     @Override
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
-
-
         Vector v = ray.getDir();
         Vector va = this.axisRay.getDir();
 
