@@ -11,13 +11,13 @@ public class AABB {
         this.minPoint = minPoint;
         this.maxPoint = maxPoint;
     }
-    public double calculateAABBSize() {
+    public double calculateAABBVolume() {
 
         double length = maxPoint.getX() - minPoint.getX();
         double width = maxPoint.getY() - minPoint.getY();
         double height = maxPoint.getZ() - minPoint.getZ();
 
-        return  width * height;
+        return  width * height *length;
     }
 
     public boolean intersectsWith(Ray ray) {
