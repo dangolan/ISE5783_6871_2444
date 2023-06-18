@@ -24,10 +24,10 @@ public class PictureTest {
         List<Sphere> balls = new LinkedList<>();
         Material material = new Material().setKd(0.4).setKs(1).setShininess(100).setKt(0).setKr(0.9);
 
-        for(double i = 0,j = 6; i <500 ;i+=1,j+=0.04){
+        for(double i = 10,j = 3; i <500 ;i+=1,j+=0.04){
             double x = Math.cos(i);
             double y = Math.sin(i);
-            balls.add((Sphere) new Sphere(new Point(i*y, i*x, (i*2 - 150)), j).setMaterial(material).setEmission(new Color(255,0,0)));
+            balls.add((Sphere) new Sphere(new Point(i*y, i*x, (i - 130)), j).setMaterial(material).setEmission(new Color(255,0,0)));
         }
         return balls;
     }

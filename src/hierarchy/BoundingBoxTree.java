@@ -1,6 +1,8 @@
 package hierarchy;
 
 import geometries.Intersectable;
+import geometries.Plane;
+import geometries.Tube;
 import primitives.Point;
 import primitives.Ray;
 
@@ -132,19 +134,30 @@ public class BoundingBoxTree extends Intersectable {
         }
 
         public void insertGeometry(Intersectable otherGeometry, AABB geometryAABB) {
+            if (otherGeometry instanceof Plane ||otherGeometry instanceof Tube) {
+                addChild(new Box(otherGeometry, geometryAABB));
+                aabb.expand(geometryAABB);
+            }
+
+            System.out.print(" * ");
             if (isLeaf() && this.geometry != null) {
                     // Create a new internal node and convert the leaf node into a child of the internal node
                     Box internalNode = new Box(this.geometry,this.geometry.calculateAABB());
                     children.clear();
                     this.addChild(internalNode);
                     this.geometry = null;
-                    addChild(new Box(otherGeometry,otherGeometry.calculateAABB()));
-                    aabb.expand(geometryAABB); // Update the AABB of the internal node
+                    this.addChild(new Box(otherGeometry,otherGeometry.calculateAABB()));
+                    aabb.expand(geometryAABB); // Update the AABB of the internal nod
+                    System.out.print("\n");
+
 
             } else {
                 // Find the child node that fully contains the geometry's AABB
                 for (Box child : children) {
-                    if (child.getAABB().contains(geometryAABB) || child.getAABB().isOverlapping(geometryAABB)) {
+                    if (child.geometry instanceof Plane ||child.geometry instanceof Tube) {
+                        continue;
+                    }
+                    if ((child.getAABB().contains(geometryAABB) || child.getAABB().isOverlapping(geometryAABB)) || (child.children.size() < 5 && aabb.isAABBClose(geometryAABB,50)) ) {
                         aabb.expand(geometryAABB);
                         child.insertGeometry(otherGeometry, geometryAABB);
                         return;
@@ -154,6 +167,7 @@ public class BoundingBoxTree extends Intersectable {
                 // If no child fully contains or overlaps the geometry's AABB, create a new leaf node
                 addChild(new Box(otherGeometry, geometryAABB));
                 aabb.expand(geometryAABB); // Update the AABB of the current node
+                System.out.print("\n");
             }
         }
 

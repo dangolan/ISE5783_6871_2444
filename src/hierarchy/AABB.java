@@ -122,6 +122,29 @@ public class AABB {
                 maxPoint.getY() >= other.minPoint.getY() && minPoint.getY() <= other.maxPoint.getY() &&
                 maxPoint.getZ() >= other.minPoint.getZ() && minPoint.getZ() <= other.maxPoint.getZ();
     }
+    public boolean isAABBClose(AABB aabb2, double threshold) {
+        // Calculate the center points of AABB1
+        Point center1 = new Point(
+                (minPoint.getX() + maxPoint.getX()) / 2,
+                (minPoint.getY() + maxPoint.getY()) / 2,
+                (minPoint.getZ() + maxPoint.getZ()) / 2
+        );
+
+        // Calculate the center points of AABB2
+        Point center2 = new Point(
+                (aabb2.getMinPoint().getX() + aabb2.getMaxPoint().getX()) / 2,
+                (aabb2.getMinPoint().getY() + aabb2.getMaxPoint().getY()) / 2,
+                (aabb2.getMinPoint().getZ() + aabb2.getMaxPoint().getZ()) / 2
+        );
+
+        // Calculate the distance between the center points
+        double distance = center1.distance(center2);
+
+        // Compare the distance with the threshold
+        return distance <= threshold;
+    }
+
+
 
     public Point getMinPoint() {
         return minPoint;
