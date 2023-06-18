@@ -44,10 +44,6 @@ public class BoundingBoxTree extends Intersectable {
         root.removeGeometry(geometry);
     }
 
-    public void updateGeometry(Intersectable geometry) {
-        AABB geometryAABB = geometry.calculateAABB();
-        root.updateGeometry(geometry, geometryAABB);
-    }
 
     // Utility methods
 
@@ -183,7 +179,7 @@ public class BoundingBoxTree extends Intersectable {
                         numOfShapes--;
                         return true;
                     }
-                    b = child.removeGeometry(geometry) && true;
+                    b = child.removeGeometry(geometry);
                     if (b){
                         numOfShapes--;
                         return b;
@@ -192,17 +188,6 @@ public class BoundingBoxTree extends Intersectable {
                 return false;
         }
 
-        public void updateGeometry(Intersectable geometry, AABB newAABB) {
-            if (isLeaf() && this.geometry == geometry) {
-                // Update the AABB for the leaf node
-                aabb = newAABB;
-            } else {
-                // Recursively update the geometry in child nodes
-                for (Box child : children) {
-                    child.updateGeometry(geometry, newAABB);
-                }
-            }
-        }
 
         public List<Box> getChildren() {
             return children;

@@ -79,9 +79,10 @@ class BoundingBoxTreeTest {
 
         /* Create a list of geometries */
         List<Intersectable> geometries = new ArrayList<>();
-        Sphere ForDelete = new Sphere(new Point(0, 0, 310), 3d);
-        for (int i = 0;i < 300;i+=5){
+        Sphere ForDelete = new Sphere(new Point(0, 0, 60), 3d);
+        for (int i = 0;i < 50;i+=5){
             geometries.add( new Sphere(new Point(0, 0, i), 3d));
+            geometries.add( new Sphere(new Point(i, 0, i), 3d));
         }
         geometries.add(ForDelete);
 
@@ -89,31 +90,42 @@ class BoundingBoxTreeTest {
         tree.buildHierarchy(geometries);
 
         // Verify that the geometry is added to the tree
-        assertEquals(61, tree.getRoot().getNumOfShapes(), "Number of child nodes after removal");
+        assertEquals(21, tree.getRoot().getNumOfShapes(), "Number of child nodes after removal");
 
         // Remove the geometry from the tree
         tree.removeGeometry(ForDelete);
 
         // Verify that the geometry is removed from the tree
-        assertEquals(60, tree.getRoot().getNumOfShapes(), "Number of child nodes after removal");
+        assertEquals(20, tree.getRoot().getNumOfShapes(), "Number of child nodes after removal");
 
-        // Optionally, you can perform additional assertions or checks to validate the removal
-
-        // For example, you can check if the removed geometry's AABB is no longer included in the root AABB
-
-        // You can add more assertions to validate the hierarchy structure or other properties
-
-        // You can also perform intersection tests to ensure the accuracy of the hierarchy after removal
-
-        // ...
     }
 
-
-    @Test
-    void updateGeometry() {
-    }
 
     @Test
     void calculateCombinedAABB() {
+        // Create a list of geometries
+        List<Intersectable> geometries = new ArrayList<>();
+        for (int i = 0;i < 50;i+=5){
+            geometries.add( new Sphere(new Point(0, 0, i), 3d));
+            geometries.add( new Sphere(new Point(i, 0, i), 3d));
+        }
+
+        // Calculate the combined AABB
+        AABB combinedAABB = BoundingBoxTree.calculateCombinedAABB(geometries);
+
+        // Perform assertions to verify the combined AABB
+
+        // Check if the combined AABB is not null
+        assertNotNull(combinedAABB, "Combined AABB is not null");
+
+        // Optionally, you can perform more specific assertions on the combined AABB
+
+        // For example, you can check if the combined AABB contains or overlaps with each individual geometry's AABB
+        for (Intersectable geometry : geometries) {
+            AABB geometryAABB = geometry.calculateAABB();
+            assertTrue(combinedAABB.contains(geometryAABB) || combinedAABB.isOverlapping(geometryAABB),
+                    "Combined AABB contains or overlaps with individual geometry AABB");
+        }
+
     }
 }

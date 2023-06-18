@@ -111,4 +111,8 @@ class PlaneTest {
         result = pl.findIntersections(r);
         assertNull(result, "Ray starts on the reference point of the plane and not orthogonal nor parallel - found and intersection");
     }
+
+    @Test
+    void calculateAABB() {
+    }
 }
