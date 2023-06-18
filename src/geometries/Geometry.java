@@ -1,6 +1,5 @@
 package geometries;
 
-import hierarchy.AABB;
 import primitives.Color;
 import primitives.Material;
 import primitives.Point;

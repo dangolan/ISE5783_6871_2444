@@ -19,18 +19,38 @@ public class PictureTest {
      *
      * @return a list of Sphere objects representing the spheres in the scene
      */
-    private List<Sphere>  initializeBalls() {
-
-        List<Sphere> balls = new LinkedList<>();
+    private List<Intersectable> initializeBalls() {
+        List<Intersectable> balls = new LinkedList<>();
         Material material = new Material().setKd(0.4).setKs(1).setShininess(100).setKt(0).setKr(0.9);
 
-        for(double i = 10,j = 3; i <1000 ;i+=1,j+=0.04){
+        for (double i = 10, j = 3; i < 1000; i += 1, j += 0.04) {
             double x = Math.cos(i);
             double y = Math.sin(i);
-            balls.add((Sphere) new Sphere(new Point(i*y, i*x, (i - 130)), j).setMaterial(material).setEmission(new Color(255,0,0)));
+            Point center = new Point(i * y, i * x, (i - 130));
+
+            // Add sphere
+            Sphere sphere = (Sphere) new Sphere(center, j).setMaterial(material).setEmission(new Color(255, 0, 0));
+            balls.add(sphere);
+
+            // Add polygon with four vertices above the sphere
+            Point v1 = new Point(center.getX() - j, center.getY(), center.getZ() + j);
+            Point v2 = new Point(center.getX() - j, center.getY(), center.getZ() - j);
+            Point v3 = new Point(center.getX() + j, center.getY(), center.getZ() - j);
+            Point v4 = new Point(center.getX() + j, center.getY(), center.getZ() + j);
+            Polygon polygonAbove = (Polygon) new Polygon(v1, v2, v3, v4).setMaterial(material).setEmission(new Color(0, 255, 0));
+            balls.add(polygonAbove);
+
+            // Add polygon with three vertices on the left side of the sphere
+            Point v5 = new Point(center.getX(), center.getY() + j, center.getZ() - j);
+            Point v6 = new Point(center.getX(), center.getY() + j, center.getZ() + j);
+            Point v7 = new Point(center.getX(), center.getY() - j, center.getZ());
+            Polygon polygonLeft = (Polygon) new Polygon(v5, v6, v7).setMaterial(material).setEmission(new Color(0, 0, 255));
+            balls.add(polygonLeft);
         }
+
         return balls;
     }
+
     /**
      * Test method for rendering the picture.
      */
@@ -71,7 +91,7 @@ public class PictureTest {
 
         scene.geometries.add(pln, sphere);
 
-        for (Sphere item : initializeBalls()) {
+        for (Intersectable item : initializeBalls()) {
             scene.geometries.add(item);
 
         }

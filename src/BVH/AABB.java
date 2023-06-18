@@ -1,4 +1,4 @@
-package hierarchy;
+package BVH;
 
 import primitives.Point;
 import primitives.Ray;

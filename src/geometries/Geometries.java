@@ -1,13 +1,11 @@
 package geometries;
 
-import hierarchy.AABB;
-import hierarchy.BoundingBoxTree;
+import BVH.AABB;
+import BVH.BoundingBoxTree;
 import primitives.Ray;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import static primitives.Util.alignZero;
 
 /**
  * Geometries' class.

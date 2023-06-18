@@ -1,4 +1,4 @@
-package hierarchy;
+package BVH;
 
 import geometries.Intersectable;
 import geometries.Plane;
@@ -89,6 +89,11 @@ public class BoundingBoxTree extends Intersectable {
             }
         }
     }
+
+    public Box getRoot() {
+        return root;
+    }
+
     public static class Box {
         private  int numOfShapes = 0;
         private final List<Box> children;
@@ -109,6 +114,10 @@ public class BoundingBoxTree extends Intersectable {
 
         public Intersectable getGeometry() {
             return geometry;
+        }
+
+        public int getNumOfShapes() {
+            return numOfShapes;
         }
 
         public void addChild(Box child) {
@@ -154,6 +163,7 @@ public class BoundingBoxTree extends Intersectable {
                 // If no child fully contains or overlaps the geometry's AABB, create a new leaf node
                 addChild(new Box(otherGeometry, geometryAABB));
                 aabb.expand(geometryAABB); // Update the AABB of the current node
+                numOfShapes++;
                 System.out.print("\n");
             }
         }
@@ -161,16 +171,25 @@ public class BoundingBoxTree extends Intersectable {
             return aabb.calculateAABBVolume()  / (1000000000  * numOfShapes);
         }
 
-        public void removeGeometry(Intersectable geometry) {
-            if (isLeaf() && this.geometry == geometry) {
-                // Remove the leaf node associated with the geometry
-                children.clear();
-            } else {
+        public boolean removeGeometry(Intersectable geometry) {
+                boolean b;
+                if(isLeaf()){
+                    return false;
+                }
                 // Recursively remove the geometry from child nodes
                 for (Box child : children) {
-                    child.removeGeometry(geometry);
+                    if(child.geometry == geometry){
+                        children.remove(child);
+                        numOfShapes--;
+                        return true;
+                    }
+                    b = child.removeGeometry(geometry) && true;
+                    if (b){
+                        numOfShapes--;
+                        return b;
+                    }
                 }
-            }
+                return false;
         }
 
         public void updateGeometry(Intersectable geometry, AABB newAABB) {
