@@ -31,7 +31,6 @@ public class BoundingBoxTree extends Intersectable {
     private void buildHierarchyRecursive(List<Intersectable> geometries, Box node) {
 
             for (Intersectable item : geometries) {
-
                 node.insertGeometry(item,item.calculateAABB());
             }
     }
@@ -52,7 +51,7 @@ public class BoundingBoxTree extends Intersectable {
 
     // Utility methods
 
-    private AABB calculateCombinedAABB(List<Intersectable> geometries) {
+    public static AABB calculateCombinedAABB(List<Intersectable> geometries) {
         AABB combinedAABB = null;
 
         for (Intersectable geometry : geometries) {
@@ -63,23 +62,9 @@ public class BoundingBoxTree extends Intersectable {
                 combinedAABB.expand(geometryAABB);
             }
         }
-
         return combinedAABB;
     }
 
-    private List<List<Intersectable>> partitionGeometries(List<Intersectable> geometries) {
-        // Implement your preferred partitioning scheme here
-        // For simplicity, let's assume a basic partitioning scheme where each geometry is in its own subgroup
-
-        List<List<Intersectable>> subgroups = new ArrayList<>();
-        for (Intersectable geometry : geometries) {
-            List<Intersectable> subgroup = new ArrayList<>();
-            subgroup.add(geometry);
-            subgroups.add(subgroup);
-        }
-
-        return subgroups;
-    }
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
         List<GeoPoint> intersections = new ArrayList<>();
         findIntersectionsRecursive(ray, root, intersections,maxDistance);
@@ -157,7 +142,7 @@ public class BoundingBoxTree extends Intersectable {
                     if (child.geometry instanceof Plane ||child.geometry instanceof Tube) {
                         continue;
                     }
-                    if ((child.getAABB().contains(geometryAABB) || child.getAABB().isOverlapping(geometryAABB)) || (child.children.size() < 5 && aabb.isAABBClose(geometryAABB,50)) ) {
+                    if ((child.getAABB().contains(geometryAABB) || child.getAABB().isOverlapping(geometryAABB)) || (child.children.size() < 10 && aabb.isAABBClose(geometryAABB,50)) ) {
                         aabb.expand(geometryAABB);
                         child.insertGeometry(otherGeometry, geometryAABB);
                         return;

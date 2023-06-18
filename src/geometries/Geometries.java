@@ -16,27 +16,10 @@ import static primitives.Util.alignZero;
 public class Geometries extends Intersectable {
     private final BoundingBoxTree boundingBoxTree  = new BoundingBoxTree();;
     private final List<Intersectable> geometriesInScene = new LinkedList<>();
+
     public AABB calculateAABB() {
-        if (geometriesInScene.isEmpty()) {
-            return null;
-        }
-
-        AABB combinedAABB = null;
-        for (Intersectable geometry : geometriesInScene) {
-            if (geometry instanceof Geometry) {
-                AABB geometryAABB = ((Geometry) geometry).calculateAABB();
-                if (combinedAABB == null) {
-                    combinedAABB = geometryAABB;
-                } else {
-                    combinedAABB.expand(geometryAABB);
-                }
-            }
-        }
-
-        return combinedAABB;
+        return boundingBoxTree.calculateAABB();
     }
-
-
 
     /**
      * A default constructor that create new empty arrayList intersectable-geometries
