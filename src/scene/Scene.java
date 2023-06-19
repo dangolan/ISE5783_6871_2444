@@ -40,6 +40,7 @@ public class Scene {
 
     /**
      * construct a scene with its name
+     *
      * @param name the name of the scene
      */
     public Scene(String name) {

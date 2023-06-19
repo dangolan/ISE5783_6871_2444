@@ -46,6 +46,13 @@ public class Plane extends Geometry {
         Vector v2 = p2.subtract(p0);
         this.normal = (p1.subtract(p0).crossProduct(p2.subtract(p0))).normalize();
     }
+
+    /**
+     * Calculates the Axis-Aligned Bounding Box (AABB) for the BoundingBoxTree.
+     * The AABB is defined by minimum and maximum points in 3D space.
+     *
+     * @return The AABB of the BoundingBoxTree.
+     */
     @Override
     public AABB calculateAABB() {
         double minX = Double.NEGATIVE_INFINITY;

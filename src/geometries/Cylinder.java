@@ -1,5 +1,6 @@
 package geometries;
 
+import BVH.AABB;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
@@ -23,21 +24,27 @@ public class Cylinder extends Tube {
         super(axisRay, radius);
         this.height = height;
     }
-//    @Override
-//    public AABB calculateAABB() {
-//        double radius = getRadius();
-//        double height = getHeight();
-//        Point center = getCenter();
-//
-//        double minX = center.getX() - radius;
-//        double minY = center.getY() - height / 2.0;
-//        double minZ = center.getZ() - radius;
-//        double maxX = center.getX() + radius;
-//        double maxY = center.getY() + height / 2.0;
-//        double maxZ = center.getZ() + radius;
-//
-//        return new AABB(new Point(minX, minY, minZ), new Point(maxX, maxY, maxZ));
-//    }
+    /**
+     * Calculates the Axis-Aligned Bounding Box (AABB) for the BoundingBoxTree.
+     * The AABB is defined by minimum and maximum points in 3D space.
+     *
+     * @return The AABB of the BoundingBoxTree.
+     */
+    @Override
+    public AABB calculateAABB() {
+        double radius = getRadius();
+        Point center = axisRay.getP0();
+
+        double minX = center.getX() - radius;
+        double minY = center.getY() - (height / 2.0);
+        double minZ = center.getZ() - radius;
+        double maxX = center.getX() + radius;
+        double maxY = center.getY() + (height / 2.0);
+        double maxZ = center.getZ() + radius;
+
+        return new AABB(new Point(minX, minY, minZ), new Point(maxX, maxY, maxZ));
+    }
+
 
     /**
      * getter for height of the Cylinder.
@@ -65,4 +72,5 @@ public class Cylinder extends Tube {
 
         return super.getNormal(p);
     }
+
 }

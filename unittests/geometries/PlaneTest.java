@@ -1,5 +1,6 @@
 package geometries;
 
+import BVH.AABB;
 import org.junit.jupiter.api.Test;
 import primitives.Point;
 import primitives.Ray;
@@ -112,7 +113,23 @@ class PlaneTest {
         assertNull(result, "Ray starts on the reference point of the plane and not orthogonal nor parallel - found and intersection");
     }
 
+    /**
+     * Test method for {@link Plane#calculateAABB()}.
+     */
     @Test
     void calculateAABB() {
+        // Create a plane with the necessary parameters
+        Plane plane = new Plane(new Point(0, 0, 0), new Vector(1, 1, 1));
+
+        // Calculate the AABB for the plane
+        AABB aabb = plane.calculateAABB();
+
+        // Perform assertions to verify the AABB
+
+        // Check if the AABB is not null
+        assertNotNull(aabb, "AABB is not null");
+
     }
+
+
 }

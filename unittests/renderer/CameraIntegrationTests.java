@@ -5,11 +5,12 @@ import geometries.Plane;
 import geometries.Sphere;
 import geometries.Triangle;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 import primitives.Point;
 import primitives.Vector;
 
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * camera integration tests with a sphere, plane, and triangle.

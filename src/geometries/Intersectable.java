@@ -11,7 +11,12 @@ import java.util.List;
  * Implementing classes provide methods to find intersections between the geometry and a given ray.
  */
 public abstract class Intersectable {
-
+    /**
+     * Calculates the Axis-Aligned Bounding Box (AABB) for the BoundingBoxTree.
+     * The AABB is defined by minimum and maximum points in 3D space.
+     *
+     * @return The AABB of the BoundingBoxTree.
+     */
     public abstract AABB calculateAABB();
 
     /**
@@ -23,6 +28,7 @@ public abstract class Intersectable {
         return geoList == null ? null
                 : geoList.stream().map(gp -> gp.point).toList();
     }
+
     /**
      * Finds the intersections between a ray and geometric objects, up to a maximum distance.
      * This method searches for intersections up to a distance of positive infinity.
@@ -33,6 +39,7 @@ public abstract class Intersectable {
     public final List<GeoPoint> findGeoIntersections(Ray ray) {
         return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
     }
+
     /**
      * Finds the intersections between a ray and geometric objects, up to a maximum distance.
      *
@@ -44,6 +51,7 @@ public abstract class Intersectable {
     public final List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         return findGeoIntersectionsHelper(ray, maxDistance);
     }
+
     /**
      * Helper method to find the intersections between a ray and geometric objects, up to a maximum distance.
      *
@@ -59,14 +67,13 @@ public abstract class Intersectable {
      */
     public static class GeoPoint {
         /**
-         * The geometry object associated with the point.
-         */
-        public Geometry geometry;
-
-        /**
          * The point of intersection between the ray and the geometry.
          */
         public final Point point;
+        /**
+         * The geometry object associated with the point.
+         */
+        public Geometry geometry;
 
         /**
          * Constructs a new GeoPoint object.

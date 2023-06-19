@@ -23,8 +23,9 @@ class GeometriesTest {
      * It includes equivalence partitions and boundary values tests to ensure correct behavior.
      * For each test case, a ray is created and passed to the findIntersections() method,
      * and the result is compared against the expected number of intersections or a null value.
-     *
+     * <p>
      * {@link Geometries#findIntersections(Ray)}
+     *
      * @see Geometries
      */
     @Test

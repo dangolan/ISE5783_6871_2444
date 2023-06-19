@@ -12,12 +12,9 @@ import java.util.List;
  * Represents a collection of geometries.
  */
 public class Geometries extends Intersectable {
-    private final BoundingBoxTree boundingBoxTree  = new BoundingBoxTree();;
+    private final BoundingBoxTree boundingBoxTree = new BoundingBoxTree();
+    ;
     private final List<Intersectable> geometriesInScene = new LinkedList<>();
-
-    public AABB calculateAABB() {
-        return boundingBoxTree.calculateAABB();
-    }
 
     /**
      * A default constructor that create new empty arrayList intersectable-geometries
@@ -30,7 +27,12 @@ public class Geometries extends Intersectable {
      *
      * @param geometries The geometries to add to the list.
      */
-    public Geometries(Intersectable... geometries) {boundingBoxTree.buildHierarchy(List.of(geometries));
+    public Geometries(Intersectable... geometries) {
+        boundingBoxTree.buildHierarchy(List.of(geometries));
+    }
+
+    public AABB calculateAABB() {
+        return boundingBoxTree.calculateAABB();
     }
 
     /**

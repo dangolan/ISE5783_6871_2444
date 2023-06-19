@@ -17,14 +17,14 @@ public class Material {
      */
     public Double3 ks = Double3.ZERO;
     /**
-     *  Kt - transparency component
+     * Kt - transparency component
      * 0.0 is opaque
      * 1.0 is clear
      */
     public Double3 kt = Double3.ZERO;
 
     /**
-     *  Kr - reflection component
+     * Kr - reflection component
      * 0.0 is matte
      * 1.0 is very reflexive
      */
@@ -78,8 +78,10 @@ public class Material {
         this.kd = kd;
         return this;
     }
+
     /**
      * set (According to the builder design template)
+     *
      * @param kt typed double
      * @return this material
      */
@@ -88,7 +90,9 @@ public class Material {
         return this;
     }
 
-    /** set (According to the builder design template)
+    /**
+     * set (According to the builder design template)
+     *
      * @param kr typed double
      * @return this material
      */
@@ -96,8 +100,10 @@ public class Material {
         this.kr = new Double3(kr);
         return this;
     }
+
     /**
      * set (According to the builder design template)
+     *
      * @param kt typed Double3
      * @return this material
      */
@@ -106,7 +112,9 @@ public class Material {
         return this;
     }
 
-    /** set (According to the builder design template)
+    /**
+     * set (According to the builder design template)
+     *
      * @param kr typed Double3
      * @return this material
      */

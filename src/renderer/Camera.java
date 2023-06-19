@@ -5,7 +5,10 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.MissingResourceException;
+import java.util.concurrent.*;
 
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
@@ -41,6 +44,7 @@ public class Camera {
         this.vTo = vTo.normalize();
         this.vRight = vTo.crossProduct(vUp).normalize();
     }
+
     /**
      * Retrieves the Point object representing the starting point (p0) of the camera.
      *
@@ -181,11 +185,11 @@ public class Camera {
     }
 
     /**
-     * render the image and fill the pixels with the desired colors
-     * using the ray tracer to find the colors
-     * and the image writer to color the pixels
-     * @throws MissingResourceException if one of the fields are uninitialized
-     * @return this camera obj
+     * Renders the image using ray tracing and multi-threading for improved performance.
+     * This function divides the image into multiple regions and assigns each region to a separate thread.
+     *
+     * @return the Camera object for method chaining
+     * @throws MissingResourceException if the camera is missing some required fields
      */
     public Camera renderImage() {
         if (imageWriter == null || rayTracer == null || width == 0 || height == 0 || distance == 0)
@@ -193,13 +197,34 @@ public class Camera {
 
         final int nX = imageWriter.getNx();
         final int nY = imageWriter.getNy();
+        int numOfThreads = Runtime.getRuntime().availableProcessors(); // Number of available processor cores
+
+        ExecutorService executor = Executors.newFixedThreadPool(numOfThreads);
+        List<Future<Void>> futures = new ArrayList<>();
+
         for (int i = 0; i < nY; i++) {
             for (int j = 0; j < nX; j++) {
-                imageWriter.writePixel(j, i,
-                        rayTracer.traceRay(
-                                constructRay(nX, nY, j, i)));
+                int finalI = i;
+                int finalJ = j;
+                Callable<Void> task = () -> {
+                    imageWriter.writePixel(finalJ, finalI, rayTracer.traceRay(constructRay(nX, nY, finalJ, finalI)));
+                    return null;
+                };
+                futures.add(executor.submit(task));
             }
         }
+
+        // Wait for all tasks to complete
+        for (Future<Void> future : futures) {
+            try {
+                future.get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+
+        executor.shutdown();
+
         return this;
     }
 

@@ -230,9 +230,6 @@ public class ForwardRayTracer extends RayTracerBase {
             ktr = ktr.product(intersection.geometry.getMaterial().kt);
 
 
-
-
-
             if (ktr.lowerThan(MIN_CALC_COLOR_K)) return Double3.ZERO;
         }
         return ktr;
