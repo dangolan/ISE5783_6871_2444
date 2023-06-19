@@ -196,8 +196,6 @@ public class BoundingBoxTree extends Intersectable {
                 aabb.expand(geometryAABB);
                 return;
             }
-
-            System.out.print(" * ");
             if (isLeaf() && this.geometry != null) {
                 // Create a new internal node and convert the leaf node into a child of the internal node
                 Box internalNode = new Box(this.geometry, this.geometry.calculateAABB());
@@ -206,8 +204,6 @@ public class BoundingBoxTree extends Intersectable {
                 this.geometry = null;
                 this.addChild(new Box(otherGeometry, geometryAABB));
                 numOfShapes += 2;
-                System.out.print("\n");
-
             } else {
                 // Find the child node that fully contains the geometry's AABB
                 for (Box child : children) {
@@ -225,7 +221,6 @@ public class BoundingBoxTree extends Intersectable {
                 // If no child fully contains or overlaps the geometry's AABB, create a new leaf node
                 addChild(new Box(otherGeometry, geometryAABB));
                 numOfShapes++;
-                System.out.print("\n");
             }
             aabb.expand(geometryAABB); // Update the AABB of the current node
         }
