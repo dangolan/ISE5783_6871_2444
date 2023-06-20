@@ -31,7 +31,7 @@ public class PictureTest {
         List<Intersectable> balls = new LinkedList<>();
         Material material = new Material().setKd(0.4).setKs(1).setShininess(100).setKt(0).setKr(0.9);
 
-        for (double i = 10, j = 3; i < 2000; i += 1, j += 0.04) {
+        for (double i = 10, j = 3; i < 5000; i += 1, j += 0.04) {
             double x = Math.cos(i);
             double y = Math.sin(i);
             Point center = new Point(i * y, i * x, (i - 130));
