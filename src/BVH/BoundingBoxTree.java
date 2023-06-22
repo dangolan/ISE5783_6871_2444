@@ -49,13 +49,21 @@ public class BoundingBoxTree extends Intersectable {
         }
         return root.getAABB();
     }
+    public void buildBoxes(List<Intersectable> geometries) {
+        double min = Double.NEGATIVE_INFINITY;
+        double max = Double.POSITIVE_INFINITY;
+        root = new Box(null, new AABB(new Point(min, min, min), new Point(max, max, max)));
+        for (Intersectable item: geometries) {
+            root.addChild(new Box(item,item.calculateAABB()));
+        }
+    }
     /**
      * Builds the hierarchy of the BoundingBoxTree using a list of intersectable objects.
      *
      * @param geometries The list of intersectable objects.
      */
     public void buildHierarchy(List<Intersectable> geometries) {
-
+        root = new Box(null, new AABB(new Point(0, 0, 0), new Point(0, 0, 0)));
         // Build the hierarchy recursively
         buildHierarchyRecursive(geometries, root);
     }
