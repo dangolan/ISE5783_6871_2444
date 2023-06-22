@@ -227,6 +227,28 @@ public class Camera {
 
         return this;
     }
+    /**
+     * render the image and fill the pixels with the desired colors
+     * using the ray tracer to find the colors
+     * and the image writer to color the pixels
+     * @throws MissingResourceException if one of the fields are uninitialized
+     * @return this camera obj
+     */
+    public Camera renderImageNoThreads() {
+        if (imageWriter == null || rayTracer == null || width == 0 || height == 0 || distance == 0)
+            throw new MissingResourceException("Camera is missing some fields", "Camera", "field");
+
+        final int nX = imageWriter.getNx();
+        final int nY = imageWriter.getNy();
+        for (int i = 0; i < nY; i++) {
+            for (int j = 0; j < nX; j++) {
+                imageWriter.writePixel(j, i,
+                        rayTracer.traceRay(
+                                constructRay(nX, nY, j, i)));
+            }
+        }
+        return this;
+    }
 
     /**
      * print a grid on the image without running over the original image
