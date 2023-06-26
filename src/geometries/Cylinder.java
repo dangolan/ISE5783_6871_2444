@@ -27,6 +27,7 @@ public class Cylinder extends Tube {
         super(axisRay, radius);
         this.height = height;
     }
+
     /**
      * Calculates the Axis-Aligned Bounding Box (AABB) for the BoundingBoxTree.
      * The AABB is defined by minimum and maximum points in 3D space.
@@ -75,9 +76,9 @@ public class Cylinder extends Tube {
 
         return super.getNormal(p);
     }
+
     /**
-     *
-     * @param ray the ray
+     * @param ray         the ray
      * @param maxDistance the distance
      * @return List Of GeoPoint
      */
@@ -90,7 +91,7 @@ public class Cylinder extends Tube {
         Vector Va = axisRay.getDir();
 
 
-        List<GeoPoint> list = super.findGeoIntersectionsHelper(ray,maxDistance);
+        List<GeoPoint> list = super.findGeoIntersectionsHelper(ray, maxDistance);
 
         // the intersections with the cylinder
         List<GeoPoint> result = new LinkedList<>();
@@ -106,7 +107,7 @@ public class Cylinder extends Tube {
         // Step 2 - checking the intersections with the bases
 
         // cannot be more than 2 intersections
-        if(result.size() < 2) {
+        if (result.size() < 2) {
             //creating 2 planes for the 2 bases
             Plane bottomBase = new Plane(p1, Va);
             Plane upperBase = new Plane(p2, Va);

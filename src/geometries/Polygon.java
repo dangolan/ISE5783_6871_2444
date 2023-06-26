@@ -78,6 +78,7 @@ public class Polygon extends Geometry {
     public Vector getNormal(Point point) {
         return plane.getNormal();
     }
+
     /**
      * Calculates the Axis-Aligned Bounding Box (AABB) for the BoundingBoxTree.
      * The AABB is defined by minimum and maximum points in 3D space.

@@ -115,12 +115,18 @@ public class Vector extends Point {
         return new Vector(xyz.reduce((length())));
     }
 
+    /**
+     Creates a normal vector based on the current vector.
+
+     @return A new Vector object representing the normal vector.
+     */
     public Vector createNormal() {
         if (isZero(this.getX()))
             return new Vector(1, 0, 0);
 
         return new Vector(this.getY(), -this.getX(), 0).normalize();
     }
+
     @Override
     public String toString() {
         return "Vector " + xyz;

@@ -28,6 +28,7 @@ public class Tube extends RadialGeometry {
         super(radius);
         this.axisRay = axisRay;
     }
+
     /**
      * Calculates the Axis-Aligned Bounding Box (AABB) for the BoundingBoxTree.
      * The AABB is defined by minimum and maximum points in 3D space.

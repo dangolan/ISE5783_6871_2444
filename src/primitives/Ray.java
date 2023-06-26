@@ -2,12 +2,10 @@ package primitives;
 
 import geometries.Intersectable.GeoPoint;
 
-import static primitives.Util.alignZero;
-import static primitives.Util.isZero;
-import static primitives.Util.random;
-import static primitives.Util.randomSign;
 import java.util.LinkedList;
 import java.util.List;
+
+import static primitives.Util.*;
 
 /**
  * Represents a ray in 3D space, defined by a starting point and a normalized direction vector.
@@ -120,10 +118,24 @@ public class Ray {
                 ", dir=" + dir +
                 '}';
     }
+    /**
+     * Returns the point at a distance `length` from `p0` in the direction of `dir`.
+     *
+     * @param length The distance from `p0`.
+     * @return The point at a distance `length` from `p0` in the direction of `dir`.
+     */
     public Point getTargetPoint(double length) {
         return isZero(length) ? p0 : p0.add(dir.scale(length));
     }
-
+    /**
+     * Generates a beam of rays from the current ray.
+     *
+     * @param n The normal vector of the surface.
+     * @param radius The radius of the beam.
+     * @param distance The distance from the current ray to the target point.
+     * @param numOfRays The number of rays in the beam.
+     * @return The list of rays in the beam.
+     */
     public List<Ray> generateBeam(Vector n, double radius, double distance, int numOfRays) {
         List<Ray> rays = new LinkedList<Ray>();
         rays.add(this);// Including the main ray

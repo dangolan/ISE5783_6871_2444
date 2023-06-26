@@ -34,7 +34,7 @@ public class ImageForStage7Test {
         createTable();
         createChess();
         scene.setAmbientLight(new AmbientLight(new Color(white), new Double3(0.1)));
-        camera.setImageWriter(new ImageWriter("FinalImage", 1000, 1000)) //
+        camera.setImageWriter(new ImageWriter("FinalImage", 500, 500)) //
                 .setRayTracer(new ForwardRayTracer(scene))
                 .renderImage()
                 .writeToImage();

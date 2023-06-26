@@ -15,8 +15,8 @@ import static primitives.Util.alignZero;
  */
 public class Geometries extends Intersectable {
     private final BoundingBoxTree boundingBoxTree = new BoundingBoxTree();
-    private boolean buildBoxes =false;
     private final List<Intersectable> geometriesInScene = new LinkedList<>();
+    private boolean buildBoxes = false;
 
     /**
      * A default constructor that create new empty arrayList intersectable-geometries
@@ -46,12 +46,24 @@ public class Geometries extends Intersectable {
         geometriesInScene.addAll(List.of(geometries));
 
     }
+    /**
+     * Builds the hierarchy of intersectable objects using the provided geometries.
+     * This method sets the flag to enable building bounding boxes and invokes the
+     * {@link BoundingBoxTree#buildHierarchy(List)}} method to construct the hierarchy.
+     *
+     * @param geometries the array of intersectable objects to be included in the hierarchy.
+     */
     public void buildHierarchy(Intersectable... geometries) {
         buildBoxes = true;
         boundingBoxTree.buildHierarchy(geometriesInScene);
 
     }
-    public void buildBoxes(){
+    /**
+     * Builds the bounding boxes for the intersectable objects in the scene.
+     * This method sets the flag to enable building bounding boxes and invokes the
+     * {@link BoundingBoxTree#buildHierarchy(List)}} method to construct the boxes.
+     */
+    public void buildBoxes() {
         buildBoxes = true;
         boundingBoxTree.buildBoxes(geometriesInScene);
     }
@@ -65,13 +77,13 @@ public class Geometries extends Intersectable {
     @Override
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
         List<GeoPoint> result;
-        if(buildBoxes){
+        if (buildBoxes) {
             result = boundingBoxTree.findGeoIntersections(ray, maxDistance);
 
             if (result.isEmpty()) {
                 return null;
             }
-        }else{
+        } else {
 
             result = null;
             for (Intersectable item : geometriesInScene) {

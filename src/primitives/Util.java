@@ -72,6 +72,11 @@ public abstract class Util {
     public static double random(double min, double max) {
         return Math.random() * (max - min) + min;
     }
+    /**
+
+     Generates a random sign.
+     @return 1 if the randomly generated value is true, indicating a positive sign,
+     */
     public static int randomSign() {
         return random.nextBoolean() ? 1 : -1;
     }

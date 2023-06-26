@@ -33,6 +33,7 @@ public class Sphere extends RadialGeometry {
         this.center = center;
 
     }
+
     /**
      * Calculates the Axis-Aligned Bounding Box (AABB) for the BoundingBoxTree.
      * The AABB is defined by minimum and maximum points in 3D space.

@@ -227,12 +227,14 @@ public class Camera {
 
         return this;
     }
+
     /**
      * render the image and fill the pixels with the desired colors
      * using the ray tracer to find the colors
      * and the image writer to color the pixels
-     * @throws MissingResourceException if one of the fields are uninitialized
+     *
      * @return this camera obj
+     * @throws MissingResourceException if one of the fields are uninitialized
      */
     public Camera renderImageNoThreads() {
         if (imageWriter == null || rayTracer == null || width == 0 || height == 0 || distance == 0)

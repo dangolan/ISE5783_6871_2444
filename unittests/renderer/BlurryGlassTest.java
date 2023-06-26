@@ -10,10 +10,17 @@ import org.junit.jupiter.api.Test;
 import primitives.*;
 import scene.Scene;
 
-import static java.awt.Color.*;
+import static java.awt.Color.gray;
 import static java.awt.Color.white;
-
+/** test for BlurryGlass */
 public class BlurryGlassTest {
+    /**
+     * Test case for rendering the "BlurryGlass" scenario.
+     * The test sets up a scene with multiple spheres and a polygon, each with specific materials
+     * and positions. The scene includes ambient light, directional light, and a spot light. The
+     * camera is positioned and oriented to capture the scene. The image is rendered and saved to
+     * a file.
+     */
     @Test
     public void testBlurryGlass() {
 
@@ -29,7 +36,7 @@ public class BlurryGlassTest {
 
         for (int i = -6; i < 10; i += 4) {
             scene.geometries.add(
-                    new Sphere(new Point(5 * i, 5, 3),5).setMaterial(material1).setEmission(new Color(102, 178, 255)),
+                    new Sphere(new Point(5 * i, 5, 3), 5).setMaterial(material1).setEmission(new Color(43, 156, 149)),
                     new Polygon(new Point(5 * i - 4, -5, -11), new Point(5 * i - 4, -5, 5), new Point(5 * i + 4, -5, 5),
                             new Point(5 * i + 4, -5, -11)).setEmission(new Color(250, 235, 215).reduce(2.5))
                             .setMaterial(new Material().setKd(0.001).setKs(0.002).setShininess(1).setKt(0.95)
@@ -46,11 +53,12 @@ public class BlurryGlassTest {
         scene.lights.add(new SpotLight(new Color(white).reduce(2), new Point(20.43303, -7.37104, 13.77329),
                 new Vector(-20.43, 7.37, -13.77)).setKl(0.6));
 
-        ImageWriter imageWriter = new ImageWriter("blurryGlass", 2000, 2000);
+        ImageWriter imageWriter = new ImageWriter("blurryGlass", 5000, 5000);
         camera.setImageWriter(imageWriter) //
                 .setRayTracer(new ForwardRayTracer(scene)) //
                 .renderImage() //
                 .writeToImage();
 
     }
+
 }

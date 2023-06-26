@@ -2,6 +2,7 @@ package BVH;
 
 import primitives.Point;
 import primitives.Ray;
+
 /**
  * AABB (Axis-Aligned Bounding Box) represents a rectangular volume in 3D space
  * defined by a minimum and maximum point with axes aligned to the coordinate axes.
@@ -9,6 +10,7 @@ import primitives.Ray;
 public class AABB {
     private Point minPoint;
     private Point maxPoint;
+
     /**
      * Constructs an AABB with the given minimum and maximum points.
      *
@@ -19,13 +21,7 @@ public class AABB {
         this.minPoint = minPoint;
         this.maxPoint = maxPoint;
     }
-    public Point getCenter() {
-        double centerX = (minPoint.getX() + maxPoint.getX()) / 2.0;
-        double centerY = (minPoint.getY() + maxPoint.getY()) / 2.0;
-        double centerZ = (minPoint.getZ() + maxPoint.getZ()) / 2.0;
 
-        return new Point(centerX, centerY, centerZ);
-    }
     /**
      * Calculates the volume of the AABB.
      *
@@ -39,6 +35,7 @@ public class AABB {
 
         return width * height * length;
     }
+
     /**
      * Checks if a ray intersects with the AABB.
      *
@@ -113,6 +110,7 @@ public class AABB {
 
         return true;
     }
+
     /**
      * Expands the AABB to include the bounds of another AABB.
      *
@@ -135,6 +133,7 @@ public class AABB {
         minPoint = new Point(newMinX, newMinY, newMinZ);
         maxPoint = new Point(newMaxX, newMaxY, newMaxZ);
     }
+
     /**
      * Checks if the AABB contains a point.
      *
@@ -151,6 +150,7 @@ public class AABB {
                 pointY >= minPoint.getY() && pointY <= maxPoint.getY() &&
                 pointZ >= minPoint.getZ() && pointZ <= maxPoint.getZ();
     }
+
     /**
      * Checks if the AABB contains another AABB.
      *
@@ -163,6 +163,7 @@ public class AABB {
 
         return contains(otherMinPoint) && contains(otherMaxPoint);
     }
+
     /**
      * Checks if the AABB is overlapping with another AABB.
      *
@@ -175,6 +176,7 @@ public class AABB {
                 maxPoint.getY() >= other.minPoint.getY() && minPoint.getY() <= other.maxPoint.getY() &&
                 maxPoint.getZ() >= other.minPoint.getZ() && minPoint.getZ() <= other.maxPoint.getZ();
     }
+
     /**
      * Checks if the AABB is close to another AABB within a given threshold.
      *
@@ -212,6 +214,7 @@ public class AABB {
     public Point getMinPoint() {
         return minPoint;
     }
+
     /**
      * Gets the maximum point of the AABB.
      *

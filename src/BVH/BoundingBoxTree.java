@@ -8,17 +8,20 @@ import primitives.Ray;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * BoundingBoxTree represents a hierarchical data structure used for efficient spatial subdivision
  * and collision detection in a scene containing intersectable objects.
  */
 public class BoundingBoxTree extends Intersectable {
     private Box root = new Box(null, new AABB(new Point(0, 0, 0), new Point(0, 0, 0)));
+
     /**
      * Constructs an empty BoundingBoxTree.
      */
     public BoundingBoxTree() {
     }
+
     /**
      * Calculates the combined axis-aligned bounding box (AABB) for a list of intersectable objects.
      *
@@ -38,6 +41,7 @@ public class BoundingBoxTree extends Intersectable {
         }
         return combinedAABB;
     }
+
     /**
      * Calculates the AABB of the BoundingBoxTree.
      *
@@ -49,13 +53,22 @@ public class BoundingBoxTree extends Intersectable {
         }
         return root.getAABB();
     }
+    /**
+     * Builds bounding boxes for a list of intersectable geometries and adds them to the hierarchy.
+     * Each geometry is wrapped in a {@link Box} object that represents its bounding box, and the
+     * bounding boxes are added as children to the root node of the hierarchy. The root node's AABB
+     * is expanded to encompass the newly added bounding boxes.
+     *
+     * @param geometries the list of intersectable geometries for which to build bounding boxes.
+     */
     public void buildBoxes(List<Intersectable> geometries) {
-        for (Intersectable item: geometries) {
+        for (Intersectable item : geometries) {
             AABB aabbGeometry = item.calculateAABB();
-            root.addChild(new Box(item,aabbGeometry));
+            root.addChild(new Box(item, aabbGeometry));
             root.aabb.expand(aabbGeometry);
         }
     }
+
     /**
      * Builds the hierarchy of the BoundingBoxTree using a list of intersectable objects.
      *
@@ -72,6 +85,7 @@ public class BoundingBoxTree extends Intersectable {
             node.insertGeometry(item, item.calculateAABB());
         }
     }
+
     /**
      * Adds an intersectable geometry to the BoundingBoxTree.
      *
@@ -90,6 +104,7 @@ public class BoundingBoxTree extends Intersectable {
     public void removeGeometry(Intersectable geometry) {
         root.removeGeometry(geometry);
     }
+
     /**
      * Finds the geometric intersections of a ray with the objects in the BoundingBoxTree.
      *
@@ -121,6 +136,7 @@ public class BoundingBoxTree extends Intersectable {
             }
         }
     }
+
     /**
      * Gets the root of the Tree.
      *
@@ -138,6 +154,7 @@ public class BoundingBoxTree extends Intersectable {
         private int numOfShapes = 0;
         private Intersectable geometry; // Only applicable for leaf nodes
         private AABB aabb;
+
         /**
          * Constructs an empty Box.
          */
@@ -146,6 +163,7 @@ public class BoundingBoxTree extends Intersectable {
             geometry = null;
             aabb = null;
         }
+
         /**
          * Constructs a Box with the given geometry and AABB.
          *
@@ -157,6 +175,7 @@ public class BoundingBoxTree extends Intersectable {
             this.geometry = geometry;
             this.aabb = aabb;
         }
+
         /**
          * Gets the geometry associated with the Box.
          *
@@ -165,6 +184,7 @@ public class BoundingBoxTree extends Intersectable {
         public Intersectable getGeometry() {
             return geometry;
         }
+
         /**
          * Gets the number of shapes contained in the Box.
          *
@@ -173,6 +193,7 @@ public class BoundingBoxTree extends Intersectable {
         public int getNumOfShapes() {
             return numOfShapes;
         }
+
         /**
          * Adds a child Box to the current Box.
          *
@@ -181,6 +202,7 @@ public class BoundingBoxTree extends Intersectable {
         public void addChild(Box child) {
             children.add(child);
         }
+
         /**
          * Removes a child Box from the current Box.
          *
@@ -189,6 +211,7 @@ public class BoundingBoxTree extends Intersectable {
         public void removeChild(Box child) {
             children.remove(child);
         }
+
         /**
          * Inserts a geometry into the Box with its associated AABB.
          *
@@ -202,7 +225,7 @@ public class BoundingBoxTree extends Intersectable {
                 aabb.expand(geometryAABB);
                 return;
             }
-            if (isLeaf() && this.geometry != null ) {
+            if (isLeaf() && this.geometry != null) {
                 // Create a new internal node and convert the leaf node into a child of the internal node
                 Box internalNode = new Box(this.geometry, this.geometry.calculateAABB());
                 children.clear();
@@ -216,7 +239,7 @@ public class BoundingBoxTree extends Intersectable {
                     if (child.geometry instanceof Plane || child.geometry instanceof Tube) {
                         continue;
                     }
-                    if (((child.getAABB().contains(geometryAABB) || child.getAABB().isOverlapping(geometryAABB)) || (child.children.size() < 10 && aabb.isAABBClose(geometryAABB, calculateDistance())))&& !isInfinity(child.geometry)) {
+                    if (((child.getAABB().contains(geometryAABB) || child.getAABB().isOverlapping(geometryAABB)) || (child.children.size() < 10 && aabb.isAABBClose(geometryAABB, calculateDistance()))) && !isInfinity(child.geometry)) {
                         aabb.expand(geometryAABB);
                         numOfShapes++;
                         child.insertGeometry(otherGeometry, geometryAABB);
@@ -230,6 +253,7 @@ public class BoundingBoxTree extends Intersectable {
             }
             aabb.expand(geometryAABB); // Update the AABB of the current node
         }
+
         /**
          * Calculates the distance of the Box based on its AABB volume and the number of shapes.
          *
@@ -248,6 +272,7 @@ public class BoundingBoxTree extends Intersectable {
         private boolean isInfinity(Intersectable geometry) {
             return geometry instanceof Plane;
         }
+
         /**
          * Removes a geometry from the Box and its child Boxes.
          *
@@ -274,6 +299,7 @@ public class BoundingBoxTree extends Intersectable {
             }
             return false;
         }
+
         /**
          * Gets the list of child Boxes.
          *
@@ -282,6 +308,7 @@ public class BoundingBoxTree extends Intersectable {
         public List<Box> getChildren() {
             return children;
         }
+
         /**
          * Checks if the Box is a leaf node.
          *
@@ -290,6 +317,7 @@ public class BoundingBoxTree extends Intersectable {
         public boolean isLeaf() {
             return children.isEmpty();
         }
+
         /**
          * Gets the AABB of the Box.
          *

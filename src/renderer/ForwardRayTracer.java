@@ -4,10 +4,9 @@ import lighting.LightSource;
 import primitives.*;
 import scene.Scene;
 
-import static geometries.Intersectable.GeoPoint;
-
 import java.util.List;
 
+import static geometries.Intersectable.GeoPoint;
 import static primitives.Util.alignZero;
 
 /**
@@ -78,7 +77,7 @@ public class ForwardRayTracer extends RayTracerBase {
      */
     private GeoPoint findClosestIntersection(Ray ray) {
         List<GeoPoint> intersections = scene.geometries.findGeoIntersections(ray);
-        if(intersections == null)
+        if (intersections == null)
             return null;
         //returns closest point
         return ray.findClosestGeoPoint(intersections);
@@ -184,9 +183,9 @@ public class ForwardRayTracer extends RayTracerBase {
     /**
      * function will construct a reflection ray
      *
-     * @param gp geometry point to check
-     * @param normal   normal vector
-     * @param vector   direction of ray to point
+     * @param gp     geometry point to check
+     * @param normal normal vector
+     * @param vector direction of ray to point
      * @return reflection ray
      */
     private Ray constructReflectedRay(GeoPoint gp, Vector normal, Vector vector) {
@@ -198,13 +197,14 @@ public class ForwardRayTracer extends RayTracerBase {
      * Construct and return a refracted ray
      *
      * @param gp The GeoPoint of intersection between the ray and the object
-     * @param v the vector from the point to the light source
-     * @param n the normal vector of the point of intersection
+     * @param v  the vector from the point to the light source
+     * @param n  the normal vector of the point of intersection
      * @return The refracted ray.
      */
     private Ray constructRefractedRay(GeoPoint gp, Vector v, Vector n) {
         return new Ray(gp.point, n, v);
     }
+
     /**
      * function will return double that represents transparency
      *
@@ -232,6 +232,14 @@ public class ForwardRayTracer extends RayTracerBase {
         }
         return ktr;
     }
+    /**
+     * Calculates the average color based on a list of rays by tracing them through the scene.
+     *
+     * @param rays the list of rays to be traced.
+     * @param level the recursion level for ray tracing.
+     * @param kkx the additional parameter for color calculation.
+     * @return the average color obtained from tracing the rays.
+     */
     Color calcAverageColor(List<Ray> rays, int level, Double3 kkx) {
         Color color = Color.BLACK;
 
@@ -241,13 +249,5 @@ public class ForwardRayTracer extends RayTracerBase {
         }
 
         return color.reduce(rays.size());
-    }
-    private Color calcGlobalEffect(Material material, Vector n, Ray ray, int level, Double3 kx, Double3 k) {
-        Double3 kkx = kx.product(k);
-        if (kkx.lowerThan(MIN_CALC_COLOR_K))
-            return Color.BLACK;
-
-        var rays = ray.generateBeam(n, material.blurGlassRadius, material.blurGlassDistance, material.numOfRays);
-        return calcAverageColor(rays, level - 1, kkx).scale(kx);
     }
 }

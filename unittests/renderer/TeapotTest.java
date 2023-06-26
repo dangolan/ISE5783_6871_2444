@@ -1,20 +1,16 @@
 package renderer;
 
 
-import static java.awt.Color.YELLOW;
-
-import org.junit.jupiter.api.Test;
-
 import geometries.Triangle;
 import lighting.PointLight;
+import org.junit.jupiter.api.Test;
 import primitives.Color;
 import primitives.Material;
 import primitives.Point;
 import primitives.Vector;
-import renderer.Camera;
-import renderer.ImageWriter;
-import renderer.ForwardRayTracer;
 import scene.Scene;
+
+import static java.awt.Color.YELLOW;
 
 /**
  * Test rendering an image
@@ -22,18 +18,9 @@ import scene.Scene;
  * @author Dan
  */
 public class TeapotTest {
-    private final ImageWriter imageWriter = new ImageWriter("teapot", 800, 800);
-
-    private final Camera camera = new Camera(new Point(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, 1, 0)) //
-            .setVPDistance(1000).setVPSize(200, 200) //
-            .setImageWriter(imageWriter);
-
-    private final Scene scene = new Scene("Test scene");
-
     private static final Color color = new Color(200, 0, 0);
     private static final Material mat = new Material().setKd(0.5).setKs(0.5).setShininess(60);
-
-    private static Point[] pnts = new Point[] { null, //
+    private static Point[] pnts = new Point[]{null, //
             new Point(40.6266, 28.3457, -1.10804), //
             new Point(40.0714, 30.4443, -1.10804), //
             new Point(40.7155, 31.1438, -1.10804), //
@@ -565,12 +552,18 @@ public class TeapotTest {
             new Point(31.1507, 30.8773, -14.0083), //
             new Point(34.8094, 17.1865, -35.0864) //
     };
+    private final ImageWriter imageWriter = new ImageWriter("teapot", 800, 800);
+    private final Camera camera = new Camera(new Point(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, 1, 0)) //
+            .setVPDistance(1000).setVPSize(200, 200) //
+            .setImageWriter(imageWriter);
+    private Scene scene;
 
     /**
      * Produce a scene with a 3D model and render it into a png image
      */
-    @Test
+
     public void teapot() {
+        scene = new Scene("Test scene");
         scene.geometries.add( //
                 new Triangle(pnts[7], pnts[6], pnts[1]).setEmission(color).setMaterial(mat), //
                 new Triangle(pnts[1], pnts[2], pnts[7]).setEmission(color).setMaterial(mat), //
@@ -1566,10 +1559,69 @@ public class TeapotTest {
                 new Triangle(pnts[529], pnts[530], pnts[470]).setEmission(color).setMaterial(mat) //
         );
         scene.lights.add(new PointLight(new Color(500, 500, 500), new Point(100, 0, -100)).setKq(0.000001));
-//        scene.geometries.buildBoxes();
-//        scene.geometries.buildHierarchy();
-        camera.setRayTracer(new ForwardRayTracer(scene)).renderImage().printGrid(50, new Color(YELLOW));
-        camera.writeToImage();
+    }
+    /**
+     * Sets the camera and renders the image.
+     *
+     * @param threads Whether to use multiple threads for rendering.
+     */
+    public void setCamera(boolean threads) {
+
+        camera.setRayTracer(new ForwardRayTracer(scene));
+        if (threads) {
+            camera.renderImage().printGrid(50, new Color(YELLOW));
+            camera.writeToImage();
+        } else {
+            camera.renderImageNoThreads().printGrid(50, new Color(YELLOW));
+            camera.writeToImage();
+        }
+    }
+    /**
+     * Renders a simple teapot with no optimizations.
+     */
+    @Test
+    public void pictureTestNoImprovement() {
+        teapot();
+        setCamera(false);
+    }
+    /**
+     * Renders a simple teapot with a simple boxes.
+     */
+    @Test
+    public void pictureTestBoxes() {
+        teapot();
+        scene.geometries.buildBoxes();
+        setCamera(false);
+
+    }
+    /**
+     * Renders a simple teapot with a more complex box hierarchy.
+     */
+    @Test
+    public void pictureTestHierarchy() {
+        teapot();
+        scene.geometries.buildHierarchy();
+        setCamera(false);
+
+    }
+    /**
+     * Renders a simple teapot using multiple threads.
+     */
+    @Test
+    public void pictureTestThreads() {
+        teapot();
+        setCamera(true);
+
+    }
+    /**
+     * Renders a simple teapot with all the optimizations enabled.
+     */
+    @Test
+    public void pictureTestAllImprovement() {
+        teapot();
+        scene.geometries.buildHierarchy();
+        setCamera(true);
+
     }
 
 }
