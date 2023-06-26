@@ -128,11 +128,10 @@ public class ForwardRayTracer extends RayTracerBase {
     private Color calcGlobalEffects(GeoPoint geoPoint, int level, Color color, Double3 kx, Double3 k, Ray ray) {
         Double3 kkx = kx.product(k);
         if (kkx.lowerThan(MIN_CALC_COLOR_K)) return Color.BLACK;
-        GeoPoint reflectedPoint = findClosestIntersection(ray);
-        if (reflectedPoint != null) {
-            color = color.add(calcColor(reflectedPoint, ray, level - 1, kkx).scale(kx));
-        }
-        return color;
+        Material material = geoPoint.geometry.getMaterial();
+
+        var rays = ray.generateBeam(geoPoint.geometry.getNormal(geoPoint.point), material.blurGlassRadius, material.blurGlassDistance, material.numOfRays);
+        return calcAverageColor(rays, level - 1, kkx).scale(kx);
     }
 
     /**
@@ -232,5 +231,23 @@ public class ForwardRayTracer extends RayTracerBase {
             }
         }
         return ktr;
+    }
+    Color calcAverageColor(List<Ray> rays, int level, Double3 kkx) {
+        Color color = Color.BLACK;
+
+        for (Ray ray : rays) {
+            GeoPoint intersection = findClosestIntersection(ray);
+            color = color.add(intersection == null ? scene.background : calcColor(intersection, ray, level - 1, kkx));
+        }
+
+        return color.reduce(rays.size());
+    }
+    private Color calcGlobalEffect(Material material, Vector n, Ray ray, int level, Double3 kx, Double3 k) {
+        Double3 kkx = kx.product(k);
+        if (kkx.lowerThan(MIN_CALC_COLOR_K))
+            return Color.BLACK;
+
+        var rays = ray.generateBeam(n, material.blurGlassRadius, material.blurGlassDistance, material.numOfRays);
+        return calcAverageColor(rays, level - 1, kkx).scale(kx);
     }
 }

@@ -1,5 +1,7 @@
 package primitives;
 
+import static primitives.Util.isZero;
+
 /**
  * The Vector class represents a three-dimensional vector in Euclidean space.
  * It extends the Point class and inherits its x, y, and z coordinates.
@@ -113,6 +115,12 @@ public class Vector extends Point {
         return new Vector(xyz.reduce((length())));
     }
 
+    public Vector createNormal() {
+        if (isZero(this.getX()))
+            return new Vector(1, 0, 0);
+
+        return new Vector(this.getY(), -this.getX(), 0).normalize();
+    }
     @Override
     public String toString() {
         return "Vector " + xyz;

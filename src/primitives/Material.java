@@ -8,6 +8,11 @@ package primitives;
 public class Material {
 
     /**
+     * Parameters for blur glass
+     */
+    public int numOfRays = 1;
+    public double blurGlassDistance = 1, blurGlassRadius = 1;
+    /**
      * kd - diffuse component, represents the scattering of light rays to all directions from the surface
      */
     public Double3 kd = Double3.ZERO;
@@ -125,5 +130,17 @@ public class Material {
         this.nShininess = nShininess;
         return this;
     }
+    public Material setBlurGlass(int numOfRays, double distance ,double radius) {
+
+        if(numOfRays<1 || distance<=0 ||  radius<=0)
+            throw new IllegalArgumentException("illegal argument in setBlurGlass ");
+
+        this.numOfRays = numOfRays;
+        this.blurGlassDistance=distance;
+        this.blurGlassRadius = radius;
+
+        return this;
+    }
+
 }
 
