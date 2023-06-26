@@ -19,6 +19,13 @@ public class AABB {
         this.minPoint = minPoint;
         this.maxPoint = maxPoint;
     }
+    public Point getCenter() {
+        double centerX = (minPoint.getX() + maxPoint.getX()) / 2.0;
+        double centerY = (minPoint.getY() + maxPoint.getY()) / 2.0;
+        double centerZ = (minPoint.getZ() + maxPoint.getZ()) / 2.0;
+
+        return new Point(centerX, centerY, centerZ);
+    }
     /**
      * Calculates the volume of the AABB.
      *

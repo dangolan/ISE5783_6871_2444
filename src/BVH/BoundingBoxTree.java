@@ -50,11 +50,10 @@ public class BoundingBoxTree extends Intersectable {
         return root.getAABB();
     }
     public void buildBoxes(List<Intersectable> geometries) {
-        double min = Double.NEGATIVE_INFINITY;
-        double max = Double.POSITIVE_INFINITY;
-        root = new Box(null, new AABB(new Point(min, min, min), new Point(max, max, max)));
         for (Intersectable item: geometries) {
-            root.addChild(new Box(item,item.calculateAABB()));
+            AABB aabbGeometry = item.calculateAABB();
+            root.addChild(new Box(item,aabbGeometry));
+            root.aabb.expand(aabbGeometry);
         }
     }
     /**
@@ -69,7 +68,6 @@ public class BoundingBoxTree extends Intersectable {
     }
 
     private void buildHierarchyRecursive(List<Intersectable> geometries, Box node) {
-
         for (Intersectable item : geometries) {
             node.insertGeometry(item, item.calculateAABB());
         }
@@ -204,7 +202,7 @@ public class BoundingBoxTree extends Intersectable {
                 aabb.expand(geometryAABB);
                 return;
             }
-            if (isLeaf() && this.geometry != null) {
+            if (isLeaf() && this.geometry != null ) {
                 // Create a new internal node and convert the leaf node into a child of the internal node
                 Box internalNode = new Box(this.geometry, this.geometry.calculateAABB());
                 children.clear();
@@ -218,7 +216,7 @@ public class BoundingBoxTree extends Intersectable {
                     if (child.geometry instanceof Plane || child.geometry instanceof Tube) {
                         continue;
                     }
-                    if ((child.getAABB().contains(geometryAABB) || child.getAABB().isOverlapping(geometryAABB)) || (child.children.size() < 10 && aabb.isAABBClose(geometryAABB, calculateDistance()))) {
+                    if (((child.getAABB().contains(geometryAABB) || child.getAABB().isOverlapping(geometryAABB)) || (child.children.size() < 10 && aabb.isAABBClose(geometryAABB, calculateDistance())))&& !isInfinity(child.geometry)) {
                         aabb.expand(geometryAABB);
                         numOfShapes++;
                         child.insertGeometry(otherGeometry, geometryAABB);
@@ -240,6 +238,7 @@ public class BoundingBoxTree extends Intersectable {
         public double calculateDistance() {
             return aabb.calculateAABBVolume() / (1000000000 * numOfShapes);
         }
+
         /**
          * Checks if the given geometry is an infinite plane.
          *
