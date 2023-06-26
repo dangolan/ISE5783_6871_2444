@@ -33,5 +33,4 @@ public interface LightSource {
     public double getDistance(Point point);
 
 
-
 }

@@ -10,11 +10,12 @@ import primitives.Vector;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * camera integration tests with a sphere, plane, and triangle.
  */
 public class CameraIntegrationTests {
-    static final Point ZERO_POINT = new Point(0, 0, 0);
 
     /**
      * Performs camera integration test for a given geometry and camera configuration.
@@ -37,7 +38,7 @@ public class CameraIntegrationTests {
                     intersections += intersectionPoints.size();
             }
         }
-        assertEquals("ERROR " + testCase + ": Wrong amount of intersections", intersections, expected);
+        assertEquals(expected, intersections, "ERROR " + testCase + ": Wrong amount of intersections");
     }
 
     /**
@@ -47,7 +48,7 @@ public class CameraIntegrationTests {
     @Test
     public void SphereIntegration() {
 
-        Camera camera = new Camera(ZERO_POINT, new Vector(0, 0, -1), new Vector(0, -1, 0)).setVPDistance(1).setVPSize(3,
+        Camera camera = new Camera(Point.ZERO, new Vector(0, 0, -1), new Vector(0, -1, 0)).setVPDistance(1).setVPSize(3,
                 3);
         Camera camera2 = new Camera(new Point(0, 0, 0.5), new Vector(0, 0, -1), new Vector(0, -1, 0)).setVPDistance(1)
                 .setVPSize(3, 3);
@@ -69,22 +70,12 @@ public class CameraIntegrationTests {
     }
 
     /**
-     * Asserts that the two integer values are equal and throws an assertion error if they are not.
-     *
-     * @param string        The error message to be displayed if the assertion fails.
-     * @param i             The expected integer value.
-     * @param intersections The actual integer value to compare against the expected value.
-     */
-    private void assertEquals(String string, int i, int intersections) {
-    }
-
-    /**
      * integration tests for constructing a ray through a pixel with a plane
      * {@link renderer.Camera#constructRay(int, int, int, int)}.
      */
     @Test
     public void PlaneIntegration() {
-        Camera camera = new Camera(ZERO_POINT, new Vector(0, 0, 1), new Vector(0, -1, 0)).setVPDistance(1).setVPSize(3,
+        Camera camera = new Camera(Point.ZERO, new Vector(0, 0, 1), new Vector(0, -1, 0)).setVPDistance(1).setVPSize(3,
                 3);
         // Tc01: 9 intersection points - plane against camera
         cameraIntegrations(new Plane(new Point(0, 0, 5), new Vector(0, 0, 1)), camera, 9, "TC01");
@@ -102,7 +93,7 @@ public class CameraIntegrationTests {
      */
     @Test
     public void TriangleIntegration() {
-        Camera camera = new Camera(ZERO_POINT, new Vector(0, 0, -1), new Vector(0, -1, 0)).setVPDistance(1).setVPSize(3,
+        Camera camera = new Camera(Point.ZERO, new Vector(0, 0, -1), new Vector(0, -1, 0)).setVPDistance(1).setVPSize(3,
                 3);
         // TC01: 1 intersection point - small triangle
         cameraIntegrations(new Triangle(new Point(0, 1, -2), new Point(1, -1, -2), new Point(-1, -1, -2)), camera, 1,

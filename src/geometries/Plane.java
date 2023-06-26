@@ -1,5 +1,6 @@
 package geometries;
 
+import BVH.AABB;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
@@ -47,6 +48,25 @@ public class Plane extends Geometry {
     }
 
     /**
+     * Calculates the Axis-Aligned Bounding Box (AABB) for the BoundingBoxTree.
+     * The AABB is defined by minimum and maximum points in 3D space.
+     *
+     * @return The AABB of the BoundingBoxTree.
+     */
+    @Override
+    public AABB calculateAABB() {
+        double minX = Double.NEGATIVE_INFINITY;
+        double minY = Double.NEGATIVE_INFINITY;
+        double minZ = Double.NEGATIVE_INFINITY;
+        double maxX = Double.POSITIVE_INFINITY;
+        double maxY = Double.POSITIVE_INFINITY;
+        double maxZ = Double.POSITIVE_INFINITY;
+
+        return new AABB(new Point(minX, minY, minZ), new Point(maxX, maxY, maxZ));
+    }
+
+
+    /**
      * getter
      *
      * @return the point 0
@@ -73,8 +93,9 @@ public class Plane extends Geometry {
     public Vector getNormal(Point p) {
         return normal;
     }
+
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
         Point p1 = ray.getP0();
         if (p0.equals(p1))
             return null;
@@ -90,9 +111,8 @@ public class Plane extends Geometry {
             return null;
 
         double t = alignZero(numerator / denominator);
-        if (alignZero(t - maxDistance) > 0)
-            return null;
-        return t <= 0 ? null : List.of(new GeoPoint(this, ray.getPoint(t)));
+        return t <= 0 || alignZero(t - maxDistance) > 0 ? null
+                : List.of(new GeoPoint(this, ray.getPoint(t)));
     }
 
     @Override

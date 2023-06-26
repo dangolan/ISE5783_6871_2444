@@ -3,27 +3,29 @@ package renderer;
 
 import geometries.Intersectable;
 import geometries.Plane;
-import geometries.Polygon;
 import geometries.Sphere;
-import lighting.AmbientLight;
 import lighting.DirectionalLight;
 import lighting.PointLight;
 import lighting.SpotLight;
 import org.junit.jupiter.api.Test;
-import primitives.*;
+import primitives.Color;
+import primitives.Material;
+import primitives.Point;
+import primitives.Vector;
 import scene.Scene;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import static java.awt.Color.*;
-import static java.awt.Color.white;
 
 /**
  * The PictureTest class is a test class for rendering a picture using the Ray Tracing algorithm.
  * It sets up the scene, camera, lights, and objects to create a desired picture and renders it.
  */
 public class PictureTest {
+    Scene scene = new Scene("pictureForBonus").setBackground(new Color(0, 0, 0));
+    Camera camera = new Camera(new Point(0, -600, 10), new Vector(0, 1, 0), new Vector(0, 0, 1));
+
+
     /**
      * Initializes a list of Sphere objects to be added to the scene.
      *
@@ -33,7 +35,7 @@ public class PictureTest {
         List<Intersectable> balls = new LinkedList<>();
         Material material = new Material().setKd(0.4).setKs(1).setShininess(100).setKt(0).setKr(0.9);
 
-        for (double i = 0, j = 3; i < 5000; i += 1, j += 0.04) {
+        for (double i = 10, j = 3; i < 11; i += 1, j += 0.02) {
             double x = Math.cos(i);
             double y = Math.sin(i);
             Point center = new Point(i * y, i * x, (i - 130));
@@ -60,17 +62,9 @@ public class PictureTest {
 
         return balls;
     }
+    public void serPicture() {
 
-    /**
-     * Test method for rendering the picture.
-     */
-    @Test
-    public void PictureTest() {
-
-        Scene scene = new Scene("pictureForBonus").setBackground(new Color(0, 0, 0));
-        Camera camera = new Camera(new Point(0, -600, 10), new Vector(0, 1, 0), new Vector(0, 0, 1));
         camera.setVPSize(150, 150).setVPDistance(100);
-
         Material material = new Material().setKd(0.4).setKs(1).setShininess(50).setKt(0).setKr(0.5).setKs(0.5);
         Material material1 = new Material().setKd(0.4).setKs(1).setShininess(100).setKt(0.5).setKr(0);
         SpotLight light = new SpotLight(new Color(255, 255, 255), new Point(0, -50, 25), new Vector(0, 2, -1));
@@ -98,16 +92,60 @@ public class PictureTest {
         Plane pln = new Plane(new Point(100, -100, -150), new Vector(0, 0, 1));
 
         pln.setMaterial(material).setEmission(new Color(0, 0, 0));
+
         scene.geometries.add(pln, sphere);
 
         for (Intersectable item : initializeBalls()) {
             scene.geometries.add(item);
 
         }
+    }
+    public void setCamera(boolean threads) {
+
         camera.setImageWriter(new ImageWriter("pictureForBonus", 1000, 1000))
-                .setRayTracer(new ForwardRayTracer(scene))
-                .renderImage()
-                .writeToImage();
+                .setRayTracer(new ForwardRayTracer(scene));
+        if (threads) {
+            camera.renderImage().writeToImage();
+        } else {
+            camera.renderImageNoThreads().writeToImage();
+        }
     }
 
+    @Test
+    public void pictureTestNoImprovement()
+    {
+        serPicture();
+        setCamera(false);
+    }
+    @Test
+    public void pictureTestBoxes()
+    {
+        serPicture();
+        scene.geometries.buildBoxes();
+        setCamera(false);
+
+    }
+    @Test
+    public void pictureTestHierarchy()
+    {
+        serPicture();
+        scene.geometries.buildHierarchy();
+        setCamera(false);
+
+    }
+    @Test
+    public void pictureTestThreads()
+    {
+        serPicture();
+        setCamera(true);
+
+    }
+    @Test
+    public void pictureTestAllImprovement()
+    {
+        serPicture();
+        scene.geometries.buildHierarchy();
+        setCamera(true);
+
+    }
 }

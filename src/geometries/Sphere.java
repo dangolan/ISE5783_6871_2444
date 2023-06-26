@@ -1,5 +1,6 @@
 package geometries;
 
+import BVH.AABB;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
@@ -32,13 +33,37 @@ public class Sphere extends RadialGeometry {
         this.center = center;
 
     }
+    /**
+     * Calculates the Axis-Aligned Bounding Box (AABB) for the BoundingBoxTree.
+     * The AABB is defined by minimum and maximum points in 3D space.
+     *
+     * @return The AABB of the BoundingBoxTree.
+     */
+    @Override
+    public AABB calculateAABB() {
+        double radius = getRadius();
+        double centerX = center.getX();
+        double centerY = center.getY();
+        double centerZ = center.getZ();
+
+        double minX = centerX - radius;
+        double minY = centerY - radius;
+        double minZ = centerZ - radius;
+        double maxX = centerX + radius;
+        double maxY = centerY + radius;
+        double maxZ = centerZ + radius;
+
+        return new AABB(new Point(minX, minY, minZ), new Point(maxX, maxY, maxZ));
+    }
+
+
     @Override
     public Vector getNormal(Point p) {
         return p.subtract(center).normalize();
     }
 
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
         Point p0 = ray.getP0();
         if (p0.equals(center))
             return List.of(new GeoPoint(this, ray.getPoint(radius)));
@@ -52,13 +77,16 @@ public class Sphere extends RadialGeometry {
             return null;
 
         double th = Math.sqrt(thSquared);
-        double t1 = alignZero(tm + th);
-        if (t1 <= 0) return null;
+        double t2 = alignZero(tm + th);
+        if (t2 <= 0) return null;
 
-        double t2 = alignZero(tm - th);
-        if(t2 <= 0 && alignZero(t1 - maxDistance) <= 0) return List.of(new GeoPoint(this, ray.getPoint(t1)));
-        else if (t2 > 0 && alignZero(t1 - maxDistance) <= 0 && alignZero(t2 - maxDistance) <= 0) return List.of(new GeoPoint(this, ray.getPoint(t2)), new GeoPoint(this, ray.getPoint(t1)));
-        return null;
+        double t1 = alignZero(tm - th);
+        if (alignZero(t1 - maxDistance) > 0) return null;
+
+        if (alignZero(t2 - maxDistance) > 0)
+            return t1 <= 0 ? null : List.of(new GeoPoint(this, ray.getPoint(t1)));
+        return t1 <= 0 ? List.of(new GeoPoint(this, ray.getPoint(t2)))
+                : List.of(new GeoPoint(this, ray.getPoint(t1)), new GeoPoint(this, ray.getPoint(t2)));
     }
 
     @Override

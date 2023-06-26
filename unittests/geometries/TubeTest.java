@@ -1,5 +1,6 @@
 package geometries;
 
+import BVH.AABB;
 import org.junit.jupiter.api.Test;
 import primitives.Point;
 import primitives.Ray;
@@ -419,5 +420,29 @@ class TubeTest {
         ray = new Ray(new Point(value2, value2, value2), new Vector(1, 1, 1));
         result = tube2.findIntersections(ray);
         assertNull(result, "Bad intersections");
+    }
+
+    /**
+     * Test method for {@link Tube#calculateAABB()}.
+     */
+    @Test
+    void calculateAABB() {
+        // Create the axis ray and radius for the tube
+        Ray axisRay = new Ray(new Point(0, 0, 0), new Vector(0, 1, 0));
+        double radius = 2.0;
+
+        // Create the tube
+        Tube tube = new Tube(axisRay, radius);
+
+        // Calculate the AABB
+        AABB aabb = tube.calculateAABB();
+
+        // Verify the AABB values
+        assertEquals(-2.0, aabb.getMinPoint().getX(), 1e-6);
+        assertEquals(Double.NEGATIVE_INFINITY, aabb.getMinPoint().getY(), 1e-6);
+        assertEquals(-2.0, aabb.getMinPoint().getZ(), 1e-6);
+        assertEquals(2.0, aabb.getMaxPoint().getX(), 1e-6);
+        assertEquals(Double.POSITIVE_INFINITY, aabb.getMaxPoint().getY(), 1e-6);
+        assertEquals(2.0, aabb.getMaxPoint().getZ(), 1e-6);
     }
 }

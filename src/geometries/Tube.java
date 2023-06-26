@@ -1,5 +1,6 @@
 package geometries;
 
+import BVH.AABB;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
@@ -16,6 +17,7 @@ public class Tube extends RadialGeometry {
      * The axis ray of the tube, representing its direction and position.
      */
     protected final Ray axisRay;
+
     /**
      * constructor
      *
@@ -26,6 +28,27 @@ public class Tube extends RadialGeometry {
         super(radius);
         this.axisRay = axisRay;
     }
+    /**
+     * Calculates the Axis-Aligned Bounding Box (AABB) for the BoundingBoxTree.
+     * The AABB is defined by minimum and maximum points in 3D space.
+     *
+     * @return The AABB of the BoundingBoxTree.
+     */
+    @Override
+    public AABB calculateAABB() {
+        double radius = getRadius();
+        Point center = axisRay.getP0();
+
+        double minX = center.getX() - radius;
+        double minY = Double.NEGATIVE_INFINITY;
+        double minZ = center.getZ() - radius;
+        double maxX = center.getX() + radius;
+        double maxY = Double.POSITIVE_INFINITY;
+        double maxZ = center.getZ() + radius;
+
+        return new AABB(new Point(minX, minY, minZ), new Point(maxX, maxY, maxZ));
+    }
+
 
     /**
      * The normal of the Tube
@@ -42,13 +65,10 @@ public class Tube extends RadialGeometry {
      * A method that receives a ray and checks the points of GeoIntersection of the ray with the tube
      *
      * @param ray the ray received
-     *
      * @return null / list that includes all the GeoIntersection points (contains the geometry (shape) and the point in 3D)
      */
     @Override
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
-
-
         Vector v = ray.getDir();
         Vector va = this.axisRay.getDir();
 
@@ -64,50 +84,43 @@ public class Tube extends RadialGeometry {
         double c;
 
         // check every variable to avoid ZERO vector
-        if (ray.getP0().equals(this.axisRay.getP0())){
+        if (ray.getP0().equals(this.axisRay.getP0())) {
             vva = v.dotProduct(va);
-            if (vva == 0){
+            if (vva == 0) {
                 a = v.dotProduct(v);
-            }
-            else{
+            } else {
                 a = (v.subtract(va.scale(vva))).dotProduct(v.subtract(va.scale(vva)));
             }
             b = 0;
-            c = - getRadius() * getRadius();
-        }
-        else{
+            c = -getRadius() * getRadius();
+        } else {
             Vector deltaP = ray.getP0().subtract(this.axisRay.getP0());
             vva = v.dotProduct(va);
             pva = deltaP.dotProduct(va);
 
-            if (vva == 0 && pva == 0){
+            if (vva == 0 && pva == 0) {
                 a = v.dotProduct(v);
                 b = 2 * v.dotProduct(deltaP);
                 c = deltaP.dotProduct(deltaP) - getRadius() * getRadius();
-            }
-            else if (vva == 0){
+            } else if (vva == 0) {
                 a = v.dotProduct(v);
-                if (deltaP.equals(va.scale(deltaP.dotProduct(va)))){
+                if (deltaP.equals(va.scale(deltaP.dotProduct(va)))) {
                     b = 0;
-                    c = - getRadius() * getRadius();
-                }
-                else{
+                    c = -getRadius() * getRadius();
+                } else {
                     b = 2 * v.dotProduct(deltaP.subtract(va.scale(deltaP.dotProduct(va))));
                     c = (deltaP.subtract(va.scale(deltaP.dotProduct(va))).dotProduct(deltaP.subtract(va.scale(deltaP.dotProduct(va))))) - this.getRadius() * this.getRadius();
                 }
-            }
-            else if (pva == 0){
+            } else if (pva == 0) {
                 a = (v.subtract(va.scale(vva))).dotProduct(v.subtract(va.scale(vva)));
                 b = 2 * v.subtract(va.scale(vva)).dotProduct(deltaP);
                 c = (deltaP.dotProduct(deltaP)) - this.getRadius() * this.getRadius();
-            }
-            else {
+            } else {
                 a = (v.subtract(va.scale(vva))).dotProduct(v.subtract(va.scale(vva)));
-                if (deltaP.equals(va.scale(deltaP.dotProduct(va)))){
+                if (deltaP.equals(va.scale(deltaP.dotProduct(va)))) {
                     b = 0;
-                    c = - getRadius() * getRadius();
-                }
-                else{
+                    c = -getRadius() * getRadius();
+                } else {
                     b = 2 * v.subtract(va.scale(vva)).dotProduct(deltaP.subtract(va.scale(deltaP.dotProduct(va))));
                     c = (deltaP.subtract(va.scale(deltaP.dotProduct(va))).dotProduct(deltaP.subtract(va.scale(deltaP.dotProduct(va))))) - this.getRadius() * this.getRadius();
                 }
@@ -119,23 +132,20 @@ public class Tube extends RadialGeometry {
 
         if (delta <= 0) {
             return null; // no intersections
-        }
-        else {
+        } else {
             // calculate points taking only those with t > 0
-            double t1 = alignZero((- b - Math.sqrt(delta)) / (2 * a));
-            double t2 = alignZero((- b + Math.sqrt(delta)) / (2 * a));
+            double t1 = alignZero((-b - Math.sqrt(delta)) / (2 * a));
+            double t2 = alignZero((-b + Math.sqrt(delta)) / (2 * a));
             if (t1 > 0 && t2 > 0) {
                 Point p1 = ray.getPoint(t1);
                 Point p2 = ray.getPoint(t2);
-                return List.of(new GeoPoint(this,p1),new GeoPoint(this, p2));
-            }
-            else if (t1 > 0) {
+                return List.of(new GeoPoint(this, p1), new GeoPoint(this, p2));
+            } else if (t1 > 0) {
                 Point p1 = ray.getPoint(t1);
-                return List.of(new GeoPoint(this,p1));
-            }
-            else if (t2 > 0) {
+                return List.of(new GeoPoint(this, p1));
+            } else if (t2 > 0) {
                 Point p2 = ray.getPoint(t2);
-                return List.of(new GeoPoint(this,p2));
+                return List.of(new GeoPoint(this, p2));
             }
         }
         return null;

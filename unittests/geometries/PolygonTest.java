@@ -1,5 +1,6 @@
 package geometries;
 
+import BVH.AABB;
 import org.junit.jupiter.api.Test;
 import primitives.Point;
 import primitives.Ray;
@@ -82,6 +83,9 @@ public class PolygonTest {
                     "Polygon's normal is not orthogonal to one of the edges");
     }
 
+    /**
+     * Test for {@link Polygon#findIntersections(Ray)}
+     */
     @Test
     void testFindIntsersections() {
         Polygon polygon = new Polygon(new Point(0, -2, 0), new Point(0, 1, 0),
@@ -120,5 +124,26 @@ public class PolygonTest {
         ray = new Ray(new Point(0, 0, 2), new Vector(0.5, -0.8, -1.5));
         p = new Point(0.5, -0.8, 0.5);
         assertEquals(p, polygon.findIntersections(ray).get(0), "ray intersects inside the polygon- wrong intersection");
+    }
+
+    /**
+     * Test method for {@link Polygon#calculateAABB()}.
+     */
+    @Test
+    void calculateAABB() {
+
+        Point p4 = new Point(-1, -2, -3);
+        Point p5 = new Point(0, 1, 2);
+        Point p6 = new Point(3, 4, 5);
+        Polygon polygon2 = new Polygon(p4, p5, p6);
+
+        // Calculate the AABB for the second polygon
+        AABB aabb2 = polygon2.calculateAABB();
+
+        // Verify the coordinates of the minimum and maximum points of the second AABB
+        Point expectedMinPoint2 = new Point(-1, -2, -3);
+        Point expectedMaxPoint2 = new Point(3, 4, 5);
+        assertEquals(expectedMinPoint2, aabb2.getMinPoint(), "Minimum point of second AABB");
+        assertEquals(expectedMaxPoint2, aabb2.getMaxPoint(), "Maximum point of second AABB");
     }
 }

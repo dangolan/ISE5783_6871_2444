@@ -1,5 +1,6 @@
 package geometries;
 
+import BVH.AABB;
 import org.junit.jupiter.api.Test;
 import primitives.Point;
 import primitives.Ray;
@@ -129,5 +130,32 @@ class SphereTest {
         // TC16: Ray's line is outside, ray is orthogonal to ray start to sphere's center line (0 points)
         assertNull(sphere.findIntersections(new Ray(new Point(3, 0, 0), new Vector(0, 0, 1))),
                 "Ray's line out of sphere");
+    }
+
+    /**
+     * Test method for {@link Sphere#calculateAABB()}.
+     */
+    @Test
+    void calculateAABB() {
+        // Create a sphere with the necessary parameters
+        Point center = new Point(1, 2, 3);
+        double radius = 5.0;
+        Sphere sphere = new Sphere(center, radius);
+
+        // Calculate the AABB for the sphere
+        AABB aabb = sphere.calculateAABB();
+
+        // Perform assertions to verify the AABB
+
+        // Check if the AABB is not null
+        assertNotNull(aabb, "AABB is not null");
+
+        // Verify the coordinates of the minimum and maximum points of the AABB
+        Point expectedMinPoint = new Point(-4, -3, -2);
+        Point expectedMaxPoint = new Point(6, 7, 8);
+        assertEquals(expectedMinPoint, aabb.getMinPoint(), "Minimum point of AABB");
+        assertEquals(expectedMaxPoint, aabb.getMaxPoint(), "Maximum point of AABB");
+
+
     }
 }
