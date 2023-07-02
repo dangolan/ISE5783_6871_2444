@@ -66,7 +66,7 @@ public class ForwardRayTracer extends RayTracerBase {
      */
     private Color calcColor(GeoPoint gp, Ray ray, int level, Double3 k) {
         Color color = calcLocalEffects(gp, ray, k);
-        return level == 1 ? color : color.add(calcGlobalEffects(gp, ray, level, k));
+        return level == 1 ? color : color.add(calcGlobalEffect(gp, ray, level, k));
     }
 
     /**
@@ -124,7 +124,7 @@ public class ForwardRayTracer extends RayTracerBase {
      * @param kx    the attenuation factor of reflection or transparency
      * @return the calculated color.
      */
-    private Color calcGlobalEffects(GeoPoint geoPoint, int level, Color color, Double3 kx, Double3 k, Ray ray) {
+    private Color calcGlobalEffect(GeoPoint geoPoint, int level, Color color, Double3 kx, Double3 k, Ray ray) {
         Double3 kkx = kx.product(k);
         if (kkx.lowerThan(MIN_CALC_COLOR_K)) return Color.BLACK;
         Material material = geoPoint.geometry.getMaterial();
@@ -143,13 +143,13 @@ public class ForwardRayTracer extends RayTracerBase {
      * @param k     the level of insignificance for the k.
      * @return the calculated color.
      */
-    private Color calcGlobalEffects(GeoPoint gp, Ray ray, int level, Double3 k) {
+    private Color calcGlobalEffect(GeoPoint gp, Ray ray, int level, Double3 k) {
         Color color = Color.BLACK;
         Material material = gp.geometry.getMaterial();
         Ray reflectedRay = constructReflectedRay(gp, gp.geometry.getNormal(gp.point), ray.getDir());
         Ray refractedRay = constructRefractedRay(gp, gp.geometry.getNormal(gp.point), ray.getDir());
-        return calcGlobalEffects(gp, level, color, material.kr, k, reflectedRay)
-                .add(calcGlobalEffects(gp, level, color, material.kt, k, refractedRay));
+        return calcGlobalEffect(gp, level, color, material.kr, k, reflectedRay)
+                .add(calcGlobalEffect(gp, level, color, material.kt, k, refractedRay));
     }
 
     /**

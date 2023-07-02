@@ -2,6 +2,7 @@ package primitives;
 
 import geometries.Intersectable.GeoPoint;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -179,4 +180,6 @@ public class Ray {
         }
         return rays;
     }
+
+
 }

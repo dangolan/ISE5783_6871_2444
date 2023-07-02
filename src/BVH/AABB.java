@@ -2,6 +2,7 @@ package BVH;
 
 import primitives.Point;
 import primitives.Ray;
+import primitives.Vector;
 
 /**
  * AABB (Axis-Aligned Bounding Box) represents a rectangular volume in 3D space
@@ -46,69 +47,52 @@ public class AABB {
         double tMin = Double.NEGATIVE_INFINITY;
         double tMax = Double.POSITIVE_INFINITY;
 
-        double originX = ray.getP0().getX();
-        double originY = ray.getP0().getY();
-        double originZ = ray.getP0().getZ();
-
-        double dirX = ray.getDir().getX();
-        double dirY = ray.getDir().getY();
-        double dirZ = ray.getDir().getZ();
-
+        Point p0 = ray.getP0();
+        Vector dir = ray.getDir();
         // Check intersection with X slabs
+        double originX = p0.getX();
+        double dirX = dir.getX();
         double invDirX = 1.0 / dirX;
         double t1 = (minPoint.getX() - originX) * invDirX;
         double t2 = (maxPoint.getX() - originX) * invDirX;
-
         if (invDirX < 0) {
             double temp = t1;
             t1 = t2;
             t2 = temp;
         }
-
         tMin = (t1 > tMin) ? t1 : tMin;
         tMax = (t2 < tMax) ? t2 : tMax;
-
-        if (tMin > tMax) {
-            return false;
-        }
+        if (tMin > tMax) return false;
 
         // Check intersection with Y slabs
+        double originY = p0.getY();
+        double dirY = dir.getY();
         double invDirY = 1.0 / dirY;
         t1 = (minPoint.getY() - originY) * invDirY;
         t2 = (maxPoint.getY() - originY) * invDirY;
-
         if (invDirY < 0) {
             double temp = t1;
             t1 = t2;
             t2 = temp;
         }
-
         tMin = (t1 > tMin) ? t1 : tMin;
         tMax = (t2 < tMax) ? t2 : tMax;
-
-        if (tMin > tMax) {
-            return false;
-        }
+        if (tMin > tMax) return false;
 
         // Check intersection with Z slabs
+        double originZ = p0.getZ();
+        double dirZ = dir.getZ();
         double invDirZ = 1.0 / dirZ;
         t1 = (minPoint.getZ() - originZ) * invDirZ;
         t2 = (maxPoint.getZ() - originZ) * invDirZ;
-
         if (invDirZ < 0) {
             double temp = t1;
             t1 = t2;
             t2 = temp;
         }
-
         tMin = (t1 > tMin) ? t1 : tMin;
         tMax = (t2 < tMax) ? t2 : tMax;
-
-        if (tMin > tMax) {
-            return false;
-        }
-
-        return true;
+        return tMin <= tMax;
     }
 
     /**
